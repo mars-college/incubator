@@ -4,6 +4,7 @@ Static files, no build step. Hosted on Vercel, same account and same pattern as
 the other camp subdomains (see `web/mars-v2/AI-LEGIBILITY.md`).
 
 ```
+Git repo        github.com/mars-college/incubator (private, branch main)
 Vercel team     gene-kogans-projects
 Vercel project  incubator-mars-college
 Fallback URL    https://incubator-mars-college.vercel.app
