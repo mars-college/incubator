@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Incubator Camp — Mars College, Winter 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0B0907;
+  --bone:#EDE8DE;
+  --quiet:#8A857B;
+  --time:#E2622A;
+  --line:rgba(237,232,222,.09);
+  --rule:rgba(237,232,222,.14);
+  --display:"Bodoni Moda",Georgia,serif;
+  --mass:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Literata",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --rebate:52px;
+  --gutter:clamp(20px,5vw,88px);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--ground);color:var(--bone);font-family:var(--body);
+  font-size:19px;line-height:1.68;font-optical-sizing:auto;overflow-x:hidden;
+  text-rendering:optimizeLegibility;-webkit-font-smoothing:subpixel-antialiased;}
+/* design-integrated scrollbar — a flat rule, not a system widget */
+html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--quiet);border:0;}
+::-webkit-scrollbar-thumb:hover{background:var(--time);}
+
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.26;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
+
+/* rebate */
+.rebate{position:fixed;top:0;left:0;bottom:0;width:var(--rebate);z-index:80;
+  border-right:1px solid var(--rule);background:var(--ground);display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between;padding:18px 0;}
+.rebate .stock{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);
+  font-size:9.5px;letter-spacing:.34em;color:var(--quiet);text-transform:uppercase;white-space:nowrap;}
+.frames{display:flex;flex-direction:column;gap:9px;align-items:center;}
+.frames a{font-family:var(--mono);font-size:11px;color:var(--quiet);text-decoration:none;
+  position:relative;width:22px;text-align:center;padding:1px 0;}
+.frames a:hover{color:var(--bone);}
+.frames a[aria-current="true"]{color:var(--bone);}
+.frames a[aria-current="true"]::before{content:"";position:absolute;left:-8px;top:50%;width:0;height:0;
+  margin-top:-3.5px;border-left:6px solid var(--time);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;}
+.rebate .mark{color:var(--quiet);font-size:13px;letter-spacing:.18em;}
+
+main{margin-left:var(--rebate);}
+section{position:relative;padding:clamp(88px,12vh,150px) var(--gutter);max-width:1180px;}
+.col{max-width:62ch;}
+.wide{max-width:76ch;}
+.sep{margin-left:var(--rebate);text-align:center;color:var(--quiet);font-size:16px;
+  letter-spacing:.5em;padding:8px 0;user-select:none;}
+
+h1,h2,h3{margin:0;font-weight:400;}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.28em;color:var(--quiet);
+  text-transform:uppercase;margin-bottom:30px;}
+h2{font-family:var(--mass);font-weight:700;font-size:clamp(27px,3.4vw,42px);line-height:1.12;
+  letter-spacing:-.018em;margin-bottom:26px;max-width:22ch;}
+h3{font-family:var(--mass);font-weight:700;font-size:15px;letter-spacing:.02em;margin:44px 0 12px;}
+p{margin:0 0 20px;}
+p.lead{font-size:21px;line-height:1.6;}
+a{color:inherit;}
+a.inline{color:var(--bone);text-decoration:none;border-bottom:1px solid var(--time);}
+a.inline:hover{border-bottom-width:3px;}
+em{font-style:italic;}
+.quiet{color:var(--quiet);}
+.dd{color:var(--quiet);font-family:var(--mono);font-size:.82em;letter-spacing:.06em;padding:0 .18em;}
+
+/* TTP heading — mixed register, used sparingly */
+.ttp-head{margin:66px 0 26px;line-height:.92;}
+.ttp-head .a{font-family:var(--display);font-style:italic;font-size:clamp(44px,7vw,104px);display:block;}
+.ttp-head .b{font-family:var(--mass);font-weight:900;text-transform:uppercase;
+  font-size:clamp(26px,4.4vw,64px);letter-spacing:-.03em;display:block;margin-left:.03em;}
+.ttp-head .c{font-family:var(--mono);font-size:clamp(10px,1.2vw,13px);letter-spacing:.4em;
+  text-transform:uppercase;color:var(--quiet);display:block;margin-top:1.4em;}
+
+/* quote environment */
+.quote{margin:clamp(56px,9vh,110px) 0;display:grid;grid-template-columns:minmax(0,1fr) 240px;
+  gap:clamp(24px,5vw,64px);align-items:center;border-top:1px solid var(--rule);padding-top:40px;}
+.quote blockquote{margin:0;font-family:var(--display);font-size:clamp(24px,3.3vw,44px);
+  line-height:1.24;max-width:20ch;}
+.quote figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--quiet);
+  text-transform:uppercase;margin-top:26px;line-height:2;}
+.codex{width:100%;height:auto;}
+.codex .ln{stroke:var(--bone);fill:none;opacity:.32;}
+.codex .fx{stroke:var(--time);fill:none;opacity:.75;}
+.codex .dot{fill:var(--bone);opacity:.5;}
+.codex text{font-family:var(--mono);font-size:7px;letter-spacing:.16em;fill:var(--quiet);text-transform:uppercase;}
+
+/* hero */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding-top:70px;padding-bottom:44px;max-width:none;overflow:hidden;}
+.sunfield{position:absolute;top:0;left:0;right:0;height:100svh;z-index:0;pointer-events:none;overflow:hidden;}
+.sun{position:absolute;left:34%;bottom:16%;width:min(84vw,980px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(226,98,42,.34) 0%,rgba(226,98,42,.13) 40%,rgba(226,98,42,0) 66%);
+  transform:translateY(42%) scale(.92);opacity:0;animation:rise 4.2s cubic-bezier(.16,.7,.2,1) .25s forwards;}
+@keyframes rise{to{transform:translateY(0) scale(1);opacity:1;}}
+.horizon{position:absolute;left:0;right:0;bottom:31%;height:1px;background:linear-gradient(
+  90deg,rgba(226,98,42,0),rgba(226,98,42,.55) 20%,rgba(237,232,222,.3) 60%,rgba(226,98,42,0));
+  transform:scaleX(0);transform-origin:8% 50%;animation:draw 2.6s cubic-bezier(.16,.7,.2,1) .5s forwards;}
+@keyframes draw{to{transform:scaleX(1);}}
+.hero .stack{margin-bottom:auto;padding-top:5vh;position:relative;z-index:2;}
+.wake{font-family:var(--mass);font-weight:900;font-size:clamp(30px,5.6vw,74px);line-height:.94;
+  letter-spacing:-.035em;text-transform:uppercase;}
+.infinity{font-family:var(--display);font-style:italic;font-weight:500;
+  font-optical-sizing:none;font-variation-settings:"opsz" 34,"wght" 520;
+  font-size:clamp(78px,17.5vw,250px);line-height:.78;letter-spacing:-.028em;
+  margin:.06em 0 0 -.045em;white-space:nowrap;
+  paint-order:stroke fill;-webkit-text-stroke:.35px var(--bone);}
+.withwifi{font-family:var(--mass);font-weight:900;
+  font-size:clamp(18px,3.1vw,36px);letter-spacing:.04em;line-height:1.1;
+  text-transform:uppercase;color:var(--bone);margin-top:.2em;
+  display:inline-block;
+  text-shadow:0 0 10px rgba(226,98,42,.85),0 0 36px rgba(226,98,42,.5),0 0 90px rgba(226,98,42,.25);}
+.withwifi .loc{font-family:var(--mono);font-weight:500;font-size:clamp(11px,1.35vw,17px);
+  letter-spacing:.22em;color:#C4BCAF;text-shadow:none;margin-left:.5em;}
+.hero .below{position:relative;z-index:2;}
+.hero .offer{max-width:46ch;margin-top:clamp(34px,6vh,64px);font-size:20px;line-height:1.58;}
+
+/* facts */
+.facts{margin:34px 0 0;border-top:1px solid var(--rule);max-width:660px;}
+.facts div{display:flex;justify-content:space-between;gap:24px;padding:11px 0;
+  border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12.5px;letter-spacing:.055em;}
+.facts .k{color:var(--quiet);text-transform:uppercase;letter-spacing:.16em;font-size:11px;align-self:center;}
+.facts .v{text-align:right;font-variant-numeric:tabular-nums;}
+.facts .opt{color:var(--quiet);}
+
+/* cta */
+.cta{display:inline-block;font-family:var(--mass);font-weight:700;font-size:16px;text-decoration:none;
+  border-bottom:2px solid var(--time);padding-bottom:3px;margin-top:34px;margin-right:32px;
+  transition:border-bottom-width .15s;}
+.cta:hover,.cta:focus-visible{border-bottom-width:6px;}
+.cta.soft{border-bottom-color:var(--rule);}
+.cta.soft:hover{border-bottom-color:var(--bone);}
+:focus-visible{outline:2px solid var(--time);outline-offset:4px;}
+
+/* phases */
+.phase{padding:24px 0;border-top:1px solid var(--line);display:grid;
+  grid-template-columns:190px minmax(0,1fr);gap:30px;align-items:start;}
+.phase:last-child{border-bottom:1px solid var(--line);}
+.phase .name{font-family:var(--mass);font-weight:700;font-size:14px;letter-spacing:.16em;
+  text-transform:uppercase;padding-top:3px;}
+.phase .when{font-family:var(--mono);font-size:11px;color:var(--quiet);letter-spacing:.09em;
+  margin-top:5px;display:block;font-weight:400;}
+.phase p{margin:0;font-size:17px;line-height:1.62;max-width:56ch;}
+
+/* ledger — the TTP table */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,68px);margin-top:40px;}
+.ledger .side{min-width:0;}
+.ledger .cap{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;
+  border-bottom:2px solid var(--time);margin-bottom:0;}
+.ledger .side.wait .cap{border-bottom-color:var(--rule);}
+.ledger .cap .n{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--quiet);}
+.ledger .cap .t{font-family:var(--mass);font-weight:900;text-transform:uppercase;
+  font-size:clamp(15px,1.9vw,23px);letter-spacing:-.01em;line-height:1;}
+.ledger ol{list-style:none;margin:0;padding:0;counter-reset:row;}
+.ledger li{counter-increment:row;display:grid;grid-template-columns:30px 12px minmax(0,1fr);gap:10px;
+  align-items:baseline;padding:13px 0;border-bottom:1px solid var(--line);font-size:16.5px;line-height:1.42;}
+.ledger li::before{content:counter(row,decimal-leading-zero);font-family:var(--mono);
+  font-size:10.5px;color:var(--quiet);letter-spacing:.08em;}
+.ledger li em{font-style:normal;color:var(--time);font-family:var(--mono);font-size:10px;}
+.ledger .foot{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--quiet);
+  text-transform:uppercase;padding-top:14px;}
+
+/* glossary */
+.gloss{position:relative;display:inline;}
+.gloss > button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;
+  border-bottom:1px dotted var(--time);}
+.gloss .panel{position:absolute;left:0;top:calc(100% + 12px);width:min(400px,78vw);z-index:70;
+  background:var(--ground);border:1px solid var(--rule);border-top:2px solid var(--time);
+  padding:18px 20px;font-size:15.5px;line-height:1.56;opacity:0;visibility:hidden;
+  transition:opacity .18s;box-shadow:0 18px 50px rgba(0,0,0,.7);}
+.gloss .panel h4{margin:0 0 8px;font-family:var(--mono);font-size:10px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--quiet);font-weight:400;}
+.gloss .panel p{margin:0 0 10px;}
+.gloss .panel p:last-child{margin:0;}
+.gloss:hover .panel,.gloss:focus-within .panel{opacity:1;visibility:visible;}
+
+/* el niño panelist */
+.panelist{border-top:1px solid var(--time);padding-top:16px;margin-bottom:40px;
+  font-family:var(--mono);font-size:12.5px;line-height:1.9;letter-spacing:.05em;max-width:54ch;}
+.panelist b{color:var(--time);font-weight:500;letter-spacing:.2em;}
+.panelist span{color:var(--quiet);text-transform:uppercase;font-size:10.5px;letter-spacing:.18em;}
+
+/* month table */
+.months{margin-top:26px;border-top:1px solid var(--rule);max-width:660px;}
+.months div{display:grid;grid-template-columns:112px minmax(0,1fr);gap:20px;padding:13px 0;
+  border-bottom:1px solid var(--line);font-size:16.5px;line-height:1.45;}
+.months .m{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--quiet);
+  text-transform:uppercase;align-self:start;padding-top:4px;}
+
+/* questions */
+.q{border-bottom:1px solid var(--line);}
+.q summary{list-style:none;cursor:pointer;padding:17px 0;font-family:var(--mass);font-weight:700;
+  font-size:16px;display:flex;justify-content:space-between;gap:20px;align-items:baseline;}
+.q summary::-webkit-details-marker{display:none;}
+.q summary::after{content:"+";font-family:var(--mono);color:var(--time);font-size:17px;}
+.q[open] summary::after{content:"–";}
+.q p{font-size:17px;max-width:58ch;padding-bottom:6px;}
+
+/* TTP interstitial */
+.interstitial{margin-left:var(--rebate);padding:clamp(80px,16vh,190px) var(--gutter);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;}
+.interstitial .l1{font-family:var(--mono);font-size:clamp(10px,1.1vw,13px);letter-spacing:.42em;
+  text-transform:uppercase;color:var(--quiet);}
+.interstitial .l2{font-family:var(--mass);font-weight:900;text-transform:uppercase;
+  font-size:clamp(38px,10vw,150px);line-height:.86;letter-spacing:-.04em;margin-top:.16em;}
+.interstitial .l3{font-family:var(--display);font-style:italic;font-size:clamp(34px,9vw,132px);
+  line-height:.9;margin-top:.04em;margin-left:.02em;}
+.interstitial .l4{font-family:var(--mono);font-size:clamp(10px,1.1vw,13px);letter-spacing:.42em;
+  text-transform:uppercase;color:var(--quiet);margin-top:2em;text-align:right;}
+
+/* weather bug */
+.bug{position:fixed;right:16px;bottom:16px;z-index:85;border:1px solid var(--rule);
+  background:rgba(11,9,7,.93);padding:10px 13px;font-family:var(--mono);font-size:10.5px;
+  line-height:1.85;letter-spacing:.11em;color:var(--quiet);text-transform:uppercase;
+  text-decoration:none;display:block;backdrop-filter:blur(3px);}
+.bug b{color:var(--bone);font-weight:400;}
+.bug .on{color:var(--time);}
+.bug:hover{border-color:var(--bone);}
+
+/* line art */
+.art{position:absolute;pointer-events:none;z-index:0;stroke:var(--bone);fill:none;opacity:.07;}
+section > *:not(.art):not(.sunfield){position:relative;z-index:1;}
+
+.thresh{filter:blur(13px);opacity:0;transition:filter 1.1s ease,opacity 1.1s ease;}
+.thresh.lit{filter:blur(0);opacity:1;}
+
+footer{margin-left:var(--rebate);padding:70px var(--gutter) 90px;border-top:1px solid var(--rule);}
+footer .close{font-family:var(--display);color:var(--bone);
+  font-size:clamp(23px,3.4vw,42px);margin-bottom:26px;}
+footer p.meta{font-family:var(--mono);font-size:11px;letter-spacing:.17em;color:var(--quiet);
+  text-transform:uppercase;margin:0;}
+
+@media (max-width:900px){
+  .quote{grid-template-columns:1fr;}
+  .codex{max-width:280px;}
+}
+@media (max-width:820px){
+  :root{--rebate:30px;}
+  body{font-size:17.5px;}
+  .rebate .stock{font-size:8px;letter-spacing:.24em;}
+  .frames a{font-size:10px;width:18px;}
+  .phase{grid-template-columns:1fr;gap:8px;}
+  .ledger{grid-template-columns:1fr;gap:14px;}
+  .months div{grid-template-columns:1fr;gap:4px;}
+  .infinity{font-size:clamp(64px,20vw,140px);-webkit-text-stroke:.25px var(--bone);}
+  .withwifi{letter-spacing:.02em;font-size:18px;margin-top:.16em;}
+  .withwifi .loc{display:block;font-size:11px;letter-spacing:.16em;margin-left:0;margin-top:.6em;}
+  .hero .offer{font-size:18px;}
+  .bug{right:10px;bottom:10px;font-size:9.5px;}
+  .gloss .panel{left:auto;right:0;}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  .thresh{filter:none;opacity:1;transition:none;}
+  .sun{animation:none;opacity:1;transform:none;}
+  .horizon{animation:none;transform:none;}
+  *{transition-duration:.01ms !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="rebate" aria-label="Sections">
+  <div class="stock">Incubator Camp · Mars College</div>
+  <div class="frames">
+    <a href="#p0" data-f="0">0</a><a href="#p1">1</a><a href="#p2">2</a><a href="#p3">3</a>
+    <a href="#p4">4</a><a href="#p5">5</a><a href="#p6">6</a><a href="#p7">7</a>
+    <a href="#p8">8</a><a href="./apply.html">9</a>
+  </div>
+  <div class="mark" aria-hidden="true">∴</div>
+</nav>
+
+<main>
+
+<!-- 0 -->
+<section class="hero" id="p0" data-stage="early">
+  <div class="sunfield" aria-hidden="true">
+    <div class="sun" id="sun"></div>
+    <div class="horizon" id="horizon"></div>
+  </div>
+
+  <div class="stack" id="heroStack">
+    <div class="wake">Wake up to</div>
+    <div class="infinity">Infinity</div>
+    <div class="withwifi">with wifi <span class="loc">@ Mars College Incubator Camp</span></div>
+  </div>
+
+  <div class="below">
+    <p class="offer">Incubator Camp is a nine-month incubation for people building programs in inner work. Three of those months happen in the California desert, at Mars College, living in one camp with eight to twelve other practitioners.</p>
+
+    <div class="facts">
+      <div><span class="k">Mars College semester</span><span class="v">Jan 11 – Mar 29, 2027</span></div>
+      <div><span class="k">Build season, in</span><span class="v">Dec 1 – Jan 11 <span class="opt">optional</span></span></div>
+      <div><span class="k">Build season, out</span><span class="v">Apr 1 – May 12 <span class="opt">optional</span></span></div>
+      <div><span class="k">Camp size</span><span class="v">8 – 12 practitioners</span></div>
+      <div><span class="k">Where</span><span class="v">Bombay Beach, California</span></div>
+    </div>
+
+    <a class="cta" href="./apply.html">Apply for a spot</a>
+    <a class="cta soft" href="#p3">See the nine phases</a>
+  </div>
+</section>
+
+<div class="sep">∴</div>
+
+<!-- 1 -->
+<section id="p1" data-stage="early">
+  <div class="tag">01 &nbsp;The invitation</div>
+  <h2>Bring your practice to the desert on its way to becoming.</h2>
+
+  <div class="col">
+    <p>For twelve weeks you teach your own work, take other people's courses, and cook dinner with the same eight to twelve people <span class="dd">::</span> and a whole colony of Martians in motion.</p>
+    <p>In this world of collaborative education and program growth, the scholar who sat through your workshop on Tuesday is washing dishes beside you on Wednesday, presenting their thesis to the campus on Thursday, and repairing a leak in your roof on Saturday.</p>
+    <p>That arrangement is the whole reason Incubator Camp exists <span class="dd">::</span> to foster an environment where exchanging feedback with someone who is prepping dinner with you afterward is a different substance than feedback from a survey.</p>
+    <p class="lead">You may arrive with something half-built, yet you will leave with something that has been taught, watched, studied, and rebuilt in community with peers and presence to your genius.</p>
+  </div>
+
+  <figure class="quote">
+    <div>
+      <blockquote>It is like standing on a new earth and learning that the new earth also has sunsets.</blockquote>
+      <figcaption>
+        Kamau Zuberi Akabueze<br>
+        Mars '26 Alum <span class="dd">::</span> Incubator Camp Lead
+      </figcaption>
+    </div>
+    <svg class="codex" viewBox="0 0 240 240" role="img" aria-label="Codex of a macrocosmic sunset: a sun crossing a horizon inside nested orbital shells.">
+      <defs>
+        <clipPath id="above"><rect x="0" y="0" width="240" height="150"/></clipPath>
+        <radialGradient id="glow"><stop offset="0%" stop-color="#E2622A" stop-opacity=".5"/><stop offset="100%" stop-color="#E2622A" stop-opacity="0"/></radialGradient>
+      </defs>
+      <circle cx="120" cy="150" r="86" fill="url(#glow)"/>
+      <g clip-path="url(#above)">
+        <circle class="ln" cx="120" cy="150" r="30" stroke-width="1"/>
+        <circle class="ln" cx="120" cy="150" r="58" stroke-width=".7"/>
+        <circle class="ln" cx="120" cy="150" r="86" stroke-width=".7"/>
+        <circle class="ln" cx="120" cy="150" r="114" stroke-width=".5"/>
+        <g class="ln" stroke-width=".5">
+          <line x1="120" y1="150" x2="120" y2="18"/>
+          <line x1="120" y1="150" x2="27" y2="57"/>
+          <line x1="120" y1="150" x2="213" y2="57"/>
+          <line x1="120" y1="150" x2="6" y2="112"/>
+          <line x1="120" y1="150" x2="234" y2="112"/>
+        </g>
+      </g>
+      <circle class="fx" cx="120" cy="150" r="30" stroke-width="1.4"/>
+      <line class="fx" x1="4" y1="150" x2="236" y2="150" stroke-width="1"/>
+      <circle class="dot" cx="120" cy="150" r="2"/>
+      <text x="4" y="164">horizon</text>
+      <text x="236" y="164" text-anchor="end">new earth</text>
+      <text x="120" y="26" text-anchor="middle">macrocosm</text>
+      <text x="120" y="228" text-anchor="middle">∴ setting ∴</text>
+    </svg>
+  </figure>
+</section>
+
+<div class="sep">∴</div>
+
+<!-- 2 -->
+<section id="p2" data-stage="early">
+  <div class="tag">02 &nbsp;Incubation on Mars</div>
+  <h2>An off-grid college, built in the winter and struck in the spring.</h2>
+
+  <div class="col">
+    <p>Every winter, about a hundred people walk onto an empty desert lake bed near the Salton Sea to build, attend, and co-create a working college out of pallet racks, plywood, and the potency of sunlight. Classes, art, a gallery, a film festival, a kitchen. Three months later the whole thing comes down and the desert is desert again.</p>
+<!-- LEARN MORE -->
+<style>
+.learnmore{
+  border-top:1px solid var(--line); margin-top:30px; padding-top:18px;
+  font-family:var(--mono); font-size:12px; letter-spacing:.06em; color:var(--quiet);
+  max-width:60ch;
+}
+.learnmore a{
+  color:var(--quiet); text-decoration:none; border-bottom:1px dotted var(--quiet);
+}
+.learnmore a:hover{ color:var(--bone); border-bottom-color:var(--bone); }
+.learnmore .ext{ font-size:10px; vertical-align:1px; margin-left:2px; }
+</style>
+
+<div class="learnmore">
+  Incubator Camp is one camp inside Mars College, now entering its eighth season.
+  For the open call, the other camps, and the wider context <span class="dd">::</span>
+  <a href="https://marscollege.substack.com/p/open-call-for-mars-college-2027" target="_blank" rel="noopener">the 2027 open call<span class="ext">↗</span></a>
+  and <a href="https://marscollege.substack.com/" target="_blank" rel="noopener">the Mars College Substack<span class="ext">↗</span></a>.
+</div>
+<!-- /LEARN MORE -->
+
+    <p>At Mars College scholars and visionaries organize into camps. There is a camp that builds the infrastructure, a camp for off-grid AI, a makerspace, a music academy, and a camp researching how a group becomes coherent. Incubator Camp is the camp for practitioners with a program to finish from an idea in progress.</p>
+    <p class="lead">The 2027 Incubator Camp focus is Innerversal Health Evolution.</p>
+  </div>
+
+  <div class="ttp-head">
+    <span class="a">There is a universe</span>
+    <span class="b">on the inside</span>
+    <span class="c">∴ and the inside can be navigated ∴</span>
+  </div>
+
+  <div class="col">
+    <p>Innerversal health is the discipline of navigating your own inner universe with awareness, and then building something that helps other people navigate theirs. That half-finished framework you keep returning to and setting down <span class="dd">::</span> that is the program.</p>
+  </div>
+
+  <div class="ledger">
+    <div class="side">
+      <div class="cap"><span class="n">A</span><span class="t">Apply if you<br>are building</span></div>
+      <ol>
+        <li><em>▸</em> a course, a curriculum, or a cohort program</li>
+        <li><em>▸</em> a facilitation practice, protocol, or ritual structure</li>
+        <li><em>▸</em> a somatic, contemplative, or breath-based methodology</li>
+        <li><em>▸</em> a coaching or mentorship architecture</li>
+        <li><em>▸</em> a platform or learning environment for inner work</li>
+      </ol>
+      <div class="foot">Half-formed is the ideal condition</div>
+    </div>
+    <div class="side wait">
+      <div class="cap"><span class="n">B</span><span class="t">Wait a<br>season if</span></div>
+      <ol>
+        <li><em>▸</em> your program is finished and needs an audience</li>
+        <li><em>▸</em> you would rather develop your work privately</li>
+        <li><em>▸</em> three months away is out of reach this year</li>
+        <li><em>▸</em> luxuriously hot showers and full signal are required</li>
+      </ol>
+      <div class="foot">Both lists are honest. Read them twice.</div>
+    </div>
+  </div>
+</section>
+
+<div class="sep">∴</div>
+
+<!-- 3 -->
+<section id="p3" data-stage="mid">
+  <svg class="art" width="620" height="620" viewBox="0 0 620 620" style="right:-140px;top:60px" aria-hidden="true">
+    <ellipse cx="310" cy="310" rx="212" ry="278" stroke-width="1"/>
+    <ellipse cx="310" cy="310" rx="160" ry="212" stroke-width=".8"/>
+    <ellipse cx="310" cy="310" rx="104" ry="140" stroke-width=".8"/>
+    <ellipse cx="310" cy="310" rx="50" ry="70" stroke-width=".8"/>
+    <line x1="310" y1="20" x2="310" y2="600" stroke-width=".6"/>
+    <line x1="90" y1="310" x2="530" y2="310" stroke-width=".6"/>
+  </svg>
+
+  <div class="tag">03 &nbsp;Incubation in action</div>
+  <h2>Incubation is an inspiring process worth learning from.</h2>
+
+  <div class="col">
+    <p>The word <em>incubator</em> has three ancestries, and Incubator Camp is where the three meet.</p>
+
+    <h3>The temple</h3>
+    <p>In the healing sanctuaries of the ancient world you did not book a consultation. You entered, you stayed, you slept in the sanctuary, and the healing arrived through you. Incubation was a health practice long before incubation was anything else. What we borrow: staying long enough for the work to happen to you, rather than scheduling an appointment with it.</p>
+
+    <h3>The egg</h3>
+    <p>Across Egypt, Greece, Polynesia, Finland and India, the world begins as an egg. The Sanskrit <em>Brahmanda</em> is literally the cosmic egg from which everything unfolds. Long before the egg was breakfast, the egg was the shape people reached for when explaining how something whole comes from something enclosed.</p>
+    <p>The geometry earns the reverence. An eggshell is roughly three tenths of a millimetre thick, and its double curvature distributes load so completely that the shell survives pressure that would collapse a cylinder many times thicker. Architects have copied that arithmetic for a century to build domes that hold themselves up. Dalí kept eggs on his roofline for the same reason artists keep returning to them: the form is already finished.</p>
+    <p>Three things we borrow from the egg. <b>A shell strong enough to be thin</b> <span class="dd">::</span> the camp protects the work without adding weight to it. <b>Everything needed is already inside</b> <span class="dd">::</span> we add conditions, not ingredients. <b>Nothing opens from the outside</b> <span class="dd">::</span> the practitioner does the last part alone, and the cohort makes that possible rather than doing it for them.</p>
+    <p class="quiet" style="font-size:16px">Setting. Turning. Candling. Lockdown. Hatch. Five stages, borrowed as vocabulary, because each one names a real condition rather than a stretch of calendar.</p>
+
+    <h3>The cohort</h3>
+    <p>Curation, resource, demo day. The modern incubator understood one true thing: ideas mature swifter in the company of other maturing ideas. What we borrow: the company. What we leave: the pitch.</p>
+  </div>
+
+  <figure class="quote">
+    <div>
+      <blockquote>Growth is a process. Process is unencumbered by time. Time and process are sparring partners, and they work each other into shape.</blockquote>
+      <figcaption>
+        Kamau Zuberi Akabueze<br>
+        Mars '26 Alum <span class="dd">::</span> Incubator Camp Lead
+      </figcaption>
+    </div>
+    <svg class="codex" viewBox="0 0 240 240" role="img" aria-label="Codex of collaborative growth: ten practitioners on a ring, every one connected to every other.">
+      <circle class="ln" cx="120" cy="120" r="98" stroke-width=".6"/>
+      <circle class="ln" cx="120" cy="120" r="74" stroke-width=".4"/>
+      <g id="web" class="ln" stroke-width=".45"></g>
+      <g id="nodes"></g>
+      <circle class="fx" cx="120" cy="120" r="15" stroke-width="1.2"/>
+      <text x="120" y="18" text-anchor="middle">co-incubation</text>
+      <text x="120" y="232" text-anchor="middle">∴ every one to every other ∴</text>
+    </svg>
+  </figure>
+
+  <h3 style="margin-top:20px">Nine months of incubation. Three of them in the desert.</h3>
+
+  <div style="margin-top:26px">
+    <div class="phase"><div class="name">Setting<span class="when">from acceptance</span></div>
+      <p>The clutch is gathered. You join the panel. You meet the practitioners who become your first real readers.</p></div>
+    <div class="phase"><div class="name">Turning<span class="when">Sep – Nov 2026</span></div>
+      <p>Cohort calls every two weeks. Every project gets rotated so no side sets. Turning is where we learn each other's work well enough to be useful to it.</p></div>
+    <div class="phase"><div class="name">Candling<span class="when">Dec 2026</span></div>
+      <p>Each program held up to the light. What is developing, what is clear, what needs more warmth. Candling happens on calls, and braids with the start of the build, because the first hands are already in the desert.</p></div>
+    <div class="phase"><div class="name">Grounding<span class="when">Dec 1 – Jan 17</span></div>
+      <p>We build. Living pods, the communal kitchen, and the Steeping Space itself. Come early if you want your hands on the room. A practitioner who lifted the room teaches differently inside it.</p></div>
+    <div class="phase"><div class="name">Presenting<span class="when">Jan 18 – 24</span></div>
+      <p>Ideas Week. All of Mars presents in seven-minute talks. You meet your wider audience, your collaborators, and about four people who will change your program without meaning to.</p></div>
+    <div class="phase"><div class="name">Steeping<span class="when">Jan 25 – Mar 15</span></div>
+      <p>The heart of the season. Weekly immersions, one conscious pause held daily, your program taught and tested and rebuilt in front of the people it is for.</p></div>
+    <div class="phase"><div class="name">Settling<span class="when">Mar 16 – 25</span></div>
+      <p>We stop turning. Final form. Rehearsal.</p></div>
+    <div class="phase"><div class="name">Hatching<span class="when">Mar 27 – 29</span></div>
+      <p>Mars Electronica. The whole college presents. Your program meets the world with a room behind it.</p></div>
+    <div class="phase"><div class="name">Exploring<span class="when">April onward</span></div>
+      <p>The archive stays open. The panel keeps going. The out-build runs April 1 to May 12 for whoever stays.</p></div>
+  </div>
+
+  <h3 style="margin-top:58px">A sample week in Incubator Camp on Mars</h3>
+  <div class="months col" style="margin-top:20px">
+    <div><span class="m">Daily</span><span><span class="gloss"><button type="button" aria-describedby="g-steep">The Steeping Space</button><span class="panel" id="g-steep" role="tooltip">
+      <h4>The Steeping Space</h4>
+      <p>The built room at the centre of camp, and the hour that happens inside it.</p>
+      <p>Steeping is the conscious pause. You take a prompt, a goal, an intention, and you sit with it. You let it stay adaptable. You let it meet the environment and change, and you let the environment change too. A tea leaf has never tasted its own flavor in water. The expression arrives only in the meeting.</p>
+      <p>Held together, once a day, for as long as it takes. The room is public, so practitioners from across Mars come in. You have steeped before, most likely on a walk. You simply did not have a word for it yet.</p>
+    </span></span> opens. The conscious pause, held together.</span></div>
+
+    <div><span class="m">Weekly</span><span>One practitioner leads an immersion for the camp and for Mars. Afterward we practice <span class="gloss"><button type="button" aria-describedby="g-oio">open integrity observation</button><span class="panel" id="g-oio" role="tooltip">
+      <h4>Open integrity observation</h4>
+      <p>You tell the person where you got bored, where you leaned in, and where your mind wandered off, and you leave your opinion of their work out of it.</p>
+      <p>The distinction carries the whole practice. Where your attention went is a fact the builder can use. What you thought of the work is a review, and a review is a small act of authorship over someone else's thing.</p>
+      <p>Open means everyone hears everyone, with no private note afterward. Integrity is the requirement precisely because you will be eating dinner with this person in four hours.</p>
+    </span></span>.</span></div>
+
+    <div><span class="m">Weekly</span><span>Thunder Talks. The whole college gathers to hear each other's work.</span></div>
+    <div><span class="m">Weekly</span><span>Logistics circle. Roles, kitchen rotation, maintenance, care.</span></div>
+    <div><span class="m">Rotating</span><span>We cook for each other. The kitchen is communal and so is the cleaning.</span></div>
+  </div>
+</section>
+
+<div class="sep">∴</div>
+
+<!-- 4 -->
+<section id="p4" data-stage="mid">
+  <div class="tag">04 &nbsp;Active advisory</div>
+  <h2>Incubator Camp is a work in progress with you.</h2>
+
+  <div class="col">
+    <p class="lead">Applying early earns more than a spot. Applying early earns a hand in who your cohort becomes.</p>
+    <p>By January, every program in camp has already been considered, questioned and chosen by everyone else in camp. Nobody arrives as a stranger to anybody's work. We are invested in your program because we selected your program, and that is a different kind of attention than an audience gives.</p>
+    <p>When you are accepted you get more than a patch of desert. You take a seat on the panel that selects the practitioners who come after you. You read the applications. You sit in the curation. You help decide what this cohort becomes.</p>
+  </div>
+
+  <figure class="quote">
+    <div>
+      <blockquote>Every practitioner engages every practitioner's central project. That includes mine.</blockquote>
+      <figcaption>
+        Kamau Zuberi Akabueze<br>
+        Mars '26 Alum <span class="dd">::</span> Incubator Camp Lead
+      </figcaption>
+    </div>
+    <svg class="codex" viewBox="0 0 240 240" role="img" aria-label="Codex of reciprocal engagement: nested rings turning around a shared centre.">
+      <circle class="ln" cx="120" cy="120" r="100" stroke-width=".6"/>
+      <circle class="ln" cx="120" cy="120" r="66" stroke-width=".6"/>
+      <circle class="ln" cx="120" cy="120" r="34" stroke-width=".6"/>
+      <g class="ln" stroke-width=".45">
+        <line x1="120" y1="20" x2="120" y2="220"/><line x1="20" y1="120" x2="220" y2="120"/>
+        <line x1="49" y1="49" x2="191" y2="191"/><line x1="191" y1="49" x2="49" y2="191"/>
+      </g>
+      <circle class="fx" cx="120" cy="120" r="8" stroke-width="1.2"/>
+      <text x="120" y="234" text-anchor="middle">∴ in every direction ∴</text>
+    </svg>
+  </figure>
+
+  <div class="col">
+    <p>Attending every course is not required, and not possible. What is required is engagement with the camp intention and practices, in every direction. Decision weight rotates across the cohort on an even meter, so no single person carries the final call across the season. Safety and money stay with the camp lead, permanently. Everything else moves.</p>
+    <p>CREÅTIVE STEEPING <span class="dd">::</span> a course taught by Kamau during Mars '26 <span class="dd">::</span> is offered. It is the course that inspired Incubator Camp and it returns in the 2027 season. You can learn more at <a class="inline" href="https://creativesteeping.com/about" target="_blank" rel="noopener">creativesteeping.com</a>, a website designed on Mars to support the emerging creative attunement course.</p>
+  </div>
+
+  <div class="ledger">
+    <div class="side">
+      <div class="cap"><span class="n">C</span><span class="t">Settled before<br>you arrive</span></div>
+      <ol>
+        <li><em>▸</em> the platform and the nine phases</li>
+        <li><em>▸</em> the house rule</li>
+        <li><em>▸</em> the weekly immersion</li>
+        <li><em>▸</em> safety and the budget</li>
+        <li><em>▸</em> dates, dues, and the archive</li>
+      </ol>
+      <div class="foot">Fixed, so you can plan against it</div>
+    </div>
+    <div class="side wait">
+      <div class="cap"><span class="n">D</span><span class="t">Open, and<br>waiting for you</span></div>
+      <ol>
+        <li><em>▸</em> the culture of the camp</li>
+        <li><em>▸</em> what each immersion contains</li>
+        <li><em>▸</em> the rituals, the meals, the meter of the rotation</li>
+        <li><em>▸</em> the design and build of the Steeping Space</li>
+        <li><em>▸</em> what the camp offers the wider college</li>
+      </ol>
+      <div class="foot">Open on purpose, not by omission</div>
+    </div>
+  </div>
+
+  <p class="quiet" style="margin-top:34px;font-size:17px;max-width:56ch">We will know what the full scale of Incubator Camp is when everyone has had a chance to help shape it.</p>
+</section>
+
+<!-- TTP interstitial -->
+<div class="interstitial">
+  <div class="l1">the house rule ∴ four ∴ five</div>
+  <div class="l2">Every practitioner</div>
+  <div class="l3">engages every</div>
+  <div class="l2 thresh">practitioner's project</div>
+  <div class="l4">including the weather</div>
+</div>
+
+<!-- 5 -->
+<section id="p5" data-stage="mid">
+  <svg class="art" width="700" height="360" viewBox="0 0 700 360" style="right:-120px;top:120px" aria-hidden="true">
+    <path d="M0 300 C 90 296, 150 288, 210 262 S 330 150, 420 96 S 560 46, 700 30" stroke-width="1.2"/>
+    <path d="M0 312 C 90 310, 150 306, 210 292 S 330 214, 420 168 S 560 128, 700 112" stroke-width="1"/>
+    <g stroke-width=".6">
+      <line x1="0" y1="60" x2="700" y2="60"/><line x1="0" y1="150" x2="700" y2="150"/>
+      <line x1="0" y1="240" x2="700" y2="240"/><line x1="0" y1="330" x2="700" y2="330"/>
+    </g>
+  </svg>
+
+  <div class="tag">05 &nbsp;Meet El Niño</div>
+  <h2>Meet El Niño <span class="dd">::</span> a notable 2026 guest on Mars.</h2>
+
+  <div class="panelist">
+    <b>EL NIÑO</b><br>
+    <span>On panel since</span> 1525, when fishermen off Peru named the warm current for the child who arrives at Christmas.<br>
+    <span>Central project</span> Moving the Pacific's warm water east, and the jet stream south with it.<br>
+    <span>Status</span> Already here. Peaking during your season.
+  </div>
+
+  <div class="col">
+    <p class="lead">You are deciding whether to spend three months in a desert basin during a very strong El Niño. Here is what is actually known, so you can decide with real information.</p>
+
+    <h3>As a being</h3>
+    <p>El Niño is a warming of the eastern tropical Pacific that returns every two to seven years on no schedule anyone can hold. It changes probabilities. It does not determine individual days. A very strong El Niño makes a wet, stormy, cool winter much more likely in Southern California <span class="dd">::</span> it does not guarantee one, and it does not rule out warm dry stretches or an occasional hot spell.</p>
+    <p>One correction worth making early: a very strong El Niño does <b>not</b> mean another hot winter at Bombay Beach. March 2026 was extraordinary, with Southern California's worst March heat wave on record and Woodland Hills reaching 102°F. Do not use March 2026 as a template for March 2027.</p>
+
+    <h3>As an operation</h3>
+    <p>As of the August 2026 assessment, NOAA puts the chance of the 2026–27 El Niño becoming <b>very strong</b> during fall and winter at greater than ninety percent. The eastern tropical Pacific is already exceptionally warm.</p>
+    <p>Strong events push the Pacific storm track further south and aim moisture at Southern California, which raises the risk of heavy rainfall, flash flooding and debris flows. In a NOAA-hosted study covering 1901 to 2010, eight of ten moderate-to-strong El Niño events placed Southern California in the wettest third of winters during late winter. The relationship strengthens as winter goes on.</p>
+    <p>NOAA is also tracking unusually warm ocean water off Southern California alongside the El Niño, which adds a second source of variability. Anomalous warmth is not off the table.</p>
+    <p><b>The forecast sharpens between now and December.</b> By late November we will have a much better picture of January through March. Check it before you commit, and we will publish what we learn on the field notes.</p>
+
+    <h3>As an elemental system</h3>
+    <p>What that means on the ground, month by month:</p>
+  </div>
+
+  <div class="months">
+    <div><span class="m">December</span><span>Plenty of pleasant desert weather, with storm episodes possible. Best window for building.</span></div>
+    <div><span class="m">January</span><span>El Niño influence becoming consequential. Expect the first real storm sequences.</span></div>
+    <div><span class="m">February</span><span>Potentially quite active. Stronger chance of Pacific storms and cool spells.</span></div>
+    <div><span class="m">March</span><span>The month to be most cautious about. The precipitation signal is historically strongest in late winter. Do not plan on desert heat.</span></div>
+  </div>
+
+  <div class="col" style="margin-top:36px">
+    <h3>What to prepare for, plainly</h3>
+    <p>The Salton Sea basin reacts dramatically when significant rain hits normally dry ground. Prepare for muddy and temporarily unusable campsites, high winds, and sequences of cold rainy days. Structures want elevation, drainage and tie-downs planned in December rather than improvised in February. Vehicles stay off soft ground. Bring more warm and waterproof clothing than a desert usually asks for, and expect to be cold at night.</p>
+    <p>And the other half, equally true: a wet Colorado Desert winter is the condition that produces a superbloom.</p>
+  </div>
+
+  <figure class="quote">
+    <div>
+      <blockquote>The same system makes the mud and the flowers.</blockquote>
+      <figcaption>Winter 2027 <span class="dd">::</span> Bombay Beach, California</figcaption>
+    </div>
+    <svg class="codex" viewBox="0 0 240 240" role="img" aria-label="Codex of the El Niño chain: heat becoming water, water becoming wind, wind becoming ground.">
+      <g class="ln" stroke-width=".6">
+        <line x1="20" y1="60" x2="220" y2="60"/><line x1="20" y1="112" x2="220" y2="112"/>
+        <line x1="20" y1="164" x2="220" y2="164"/><line x1="20" y1="204" x2="220" y2="204"/>
+      </g>
+      <path class="fx" d="M20 60 C 70 60, 90 96, 120 112 S 180 150, 220 164" stroke-width="1.3"/>
+      <circle class="dot" cx="20" cy="60" r="2.6"/><circle class="dot" cx="120" cy="112" r="2.6"/>
+      <circle class="dot" cx="220" cy="164" r="2.6"/>
+      <text x="24" y="52">heat</text><text x="124" y="104">water · wind</text>
+      <text x="216" y="180" text-anchor="end">ground</text>
+      <text x="120" y="228" text-anchor="middle">∴ the chain we live on ∴</text>
+    </svg>
+  </figure>
+</section>
+
+<div class="sep">∴</div>
+
+<!-- 6 -->
+<section id="p6" data-stage="late">
+  <div class="tag">06 &nbsp;The convergence</div>
+  <h2>Kamau Zuberi Akabueze <span class="dd">::</span> KzA</h2>
+  <div class="col">
+    <p>KzA spent thirty years in advertising and strategic consulting, most of it making other people's ideas land. In 2022 he left a Chief Creative Officer job. In January 2023 he opened THE ÅLïEN SCõÖL, a school for creative thinking.</p>
+    <p>Since then he has built the practices this camp runs on. Creative Steeping is a journaling method for sitting with an idea long enough to hear what it wants. a•i•Contemplation is a practice for moving an idea from thinking into action. He also leads the <a class="inline" href="https://artizen.fund/index/mf/neuroarts-fund-for-innerversal-health-practitioners?season=7" target="_blank" rel="noopener">Neuroarts Fund for Innerversal Health Practitioners</a>, which puts money behind practitioners <span class="dd">::</span> like yourself <span class="dd">::</span> building programs for inner work.</p>
+    <p>In 2026 he came to Mars College and taught Creative Steeping as a nine-week course. He lived in the camp with his students the whole time, while studying music theory, live coding, pottery and drawing, and building AI infrastructure for his work <span class="dd">::</span> learning from and with the peers and scholars in his course.</p>
+    <p>He is a father and a photographer.</p>
+
+    <h3>Why he is running this camp</h3>
+  </div>
+
+  <figure class="quote">
+    <div>
+      <blockquote style="font-size:clamp(20px,2.4vw,30px);max-width:30ch">I sincerely appreciated the opportunity to place my course into a new format, in a co-living and communally designed environment, because every aspect of teaching was a learning experience. The feedback is raw, real, and in the moment, along with the opportunity to make real-time shifts alongside other creative leaders and idealists who want to see the work succeed.</blockquote>
+      <figcaption>
+        Kamau Zuberi Akabueze<br>
+        Mars '26 Alum <span class="dd">::</span> Incubator Camp Lead
+      </figcaption>
+    </div>
+    <svg class="codex" viewBox="0 0 240 240" role="img" aria-label="Codex of convergence: separate paths meeting at one point.">
+      <g class="ln" stroke-width=".6">
+        <path d="M10 20 C 70 70, 90 100, 120 120"/><path d="M10 120 C 60 120, 90 120, 120 120"/>
+        <path d="M10 220 C 70 170, 90 140, 120 120"/><path d="M70 10 C 100 60, 110 100, 120 120"/>
+      </g>
+      <path class="fx" d="M120 120 L 230 120" stroke-width="1.3"/>
+      <circle class="fx" cx="120" cy="120" r="11" stroke-width="1.2"/>
+      <circle class="dot" cx="230" cy="120" r="2.6"/>
+      <text x="120" y="232" text-anchor="middle">∴ one job, for twelve weeks ∴</text>
+    </svg>
+  </figure>
+
+  <div class="col">
+    <p class="quiet">Eight to twelve practitioners, because in this first year for Incubator Camp, a small cohort will optimize the learning experiences, the educational intimacy, and create real value for the voices shaping the Incubator experience.</p>
+  </div>
+</section>
+
+<div class="sep">∴</div>
+
+<!-- 7 -->
+<section id="p7" data-stage="late">
+  <div class="tag">07 &nbsp;FAQs</div>
+  <h2>The Incubator Camp FAQs</h2>
+  <div class="wide">
+    <details class="q"><summary>Do I need a finished program?</summary><p>No. Half-formed is the ideal condition. Bring what is real and unfinished.</p></details>
+    <details class="q"><summary>What does "practitioner" mean here?</summary><p>Someone building work in service of inner navigation, translated into programs for other people. Raw projects with strong vision are welcome. If you are unsure whether your project fits, write to us. We answer for real.</p></details>
+    <details class="q"><summary>Can I keep my remote job?</summary><p>Yes, and people do exactly that at Mars every year. Put your working hours on your application and we will build the rhythm around them.</p></details>
+    <details class="q"><summary>What if I can come for only part of the season?</summary><p>Welcome. One month, two, or all three. Dues stay equal and the archive stays open.</p></details>
+    <details class="q"><summary>Do I have to come for the builds?</summary><p>No. Both build seasons are optional. Come for the parts your life can give, and tell us on the application which weeks those are so we can plan the room.</p></details>
+    <details class="q"><summary>What are the living conditions?</summary><p>Off-grid desert. Solar power, hauled water, cold nights, dust always, chores on a rotation. We build living pods, and trailers may be available through Mars. Once the building stops, the sound out there is air.</p></details>
+    <details class="q"><summary>Can I bring my own vehicle or RV?</summary><p>Yes, and doing so helps everyone. A working vehicle in camp is a real contribution to the group.</p></details>
+    <details class="q"><summary>Do I take classes from the rest of Mars?</summary><p>All of them, if you want. Ceramics, AI, filmmaking, fermentation, solar, philosophy, movement. Learning from other Martians is part of the incubation.</p></details>
+    <details class="q"><summary>How does selection work?</summary><p>Rolling. Applications are read by the standing panel, meaning practitioners already accepted. Early applicants shape the cohort that follows.</p></details>
+  </div>
+</section>
+
+<div class="sep">∴</div>
+
+<!-- 8 -->
+<section id="p8" data-stage="late">
+  <div class="tag">08 &nbsp;Investment</div>
+  <h2>What you pay, and what it covers.</h2>
+
+  <div class="col">
+    <p class="lead">Two payments. One goes to Mars College. One goes to Incubator Camp. Nothing is paid to an individual.</p>
+  </div>
+
+  <div class="facts" style="margin-top:34px">
+    <div><span class="k">Mars College treasury</span><span class="v">2027 figure pending</span></div>
+    <div><span class="k">Shelter, if no vehicle</span><span class="v">2027 figure pending</span></div>
+    <div><span class="k">Incubator Camp dues</span><span class="v">Pooled · equal · 3 installments</span></div>
+    <div><span class="k">Personal extras</span><span class="v">Budget ~$200</span></div>
+  </div>
+
+  <div class="col" style="margin-top:30px">
+    <p><b>Mars College Treasury</b> is paid by every Martian, whatever camp you are in. It covers toilets, internet, shared water and aid. Shelter is a separate cost, and only applies if you arrive without a vehicle. Mars sets both figures, and we will publish the 2027 numbers here as soon as Mars confirms them.</p>
+    <p><b>Incubator Camp dues</b> are one figure, paid in three installments across the fall. The dues pool into a single camp budget that the panel stewards together. They cover food, build materials, camp infrastructure, and daily living.</p>
+    <p><b>Everyone pays the same camp dues</b>, whether you come for one month or all three. The kitchen, the build, and the Steeping Space cost the same to run either way. Your dues keep the camp whole and keep Mars College supported as the neighborhood that holds us. The archive stays open to you across all nine months regardless of how long you are on the ground.</p>
+    <p><b>If money is left over</b> at the end of the season, the panel decides together where it goes.</p>
+
+    <h3>If cost is the thing standing in your way</h3>
+    <p>Incubator Camp is the annual convening of the <a class="inline" href="https://artizen.fund/index/mf/neuroarts-fund-for-innerversal-health-practitioners?season=7" target="_blank" rel="noopener">Neuroarts Fund for Innerversal Health Practitioners</a>. The Fund intends to cover travel and participation costs for practitioners who need the support, so that geography and finances keep nobody out.</p>
+    <p>Say so on your application. There is a question for it. Asking does not affect whether you are accepted, and the panel reading your project does not see your answer.</p>
+  </div>
+</section>
+
+<div class="sep">∴</div>
+
+<!-- 9 -->
+<section id="p9" data-stage="late">
+  <svg class="art" width="560" height="560" viewBox="0 0 560 560" style="right:-100px;top:40px" aria-hidden="true">
+    <circle cx="280" cy="280" r="270" stroke-width="1"/>
+    <g stroke-width=".8">
+      <line x1="280" y1="10" x2="280" y2="550"/><line x1="10" y1="280" x2="550" y2="280"/>
+      <line x1="89" y1="89" x2="471" y2="471"/><line x1="471" y1="89" x2="89" y2="471"/>
+    </g>
+    <circle cx="280" cy="280" r="180" stroke-width=".8"/><circle cx="280" cy="280" r="90" stroke-width=".8"/>
+  </svg>
+
+  <div class="tag">09 &nbsp;Apply</div>
+  <h2 class="thresh">Nine months. One idea. Finished.</h2>
+  <div class="col">
+    <p>The camp is small on purpose, and the panel fills in the order people arrive.</p>
+  </div>
+
+  <div class="facts">
+    <div><span class="k">Semester</span><span class="v">Jan 11 – Mar 29, 2027</span></div>
+    <div><span class="k">Where</span><span class="v">Bombay Beach, California</span></div>
+    <div><span class="k">Spots</span><span class="v">8 – 12</span></div>
+    <div><span class="k">Dues</span><span class="v">Pooled, equal for all</span></div>
+    <div><span class="k">Admissions</span><span class="v">Rolling</span></div>
+  </div>
+
+  <a class="cta" href="./apply.html">Apply for a spot</a>
+  <p class="quiet" style="margin-top:30px;font-size:16px">Questions go to a real person, and get a real answer.</p>
+</section>
+
+</main>
+
+<footer>
+  <p class="close">You are not alone.</p>
+  <p class="meta">Incubator Camp &nbsp;∴&nbsp; A camp of Mars College &nbsp;∴&nbsp; Bombay Beach, California</p>
+</footer>
+
+<a class="bug" href="#p5" aria-label="El Niño conditions, section five">
+  <span class="on">El Niño</span> · on panel<br>
+  Niño 3.4 &nbsp;<b>+2.1°C</b><br>
+  Playa &nbsp;<b>firm</b><br>
+  Season &nbsp;<b>134 days</b>
+</a>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* --- collaborative-growth codex: draw the complete graph --- */
+  var web = document.getElementById('web'), nodes = document.getElementById('nodes');
+  if (web && nodes){
+    var N = 10, R = 86, cx = 120, cy = 120, pts = [];
+    for (var i=0;i<N;i++){
+      var a = (i/N)*Math.PI*2 - Math.PI/2;
+      pts.push([cx + R*Math.cos(a), cy + R*Math.sin(a)]);
+    }
+    var svgns = 'http://www.w3.org/2000/svg', d = '';
+    for (var i=0;i<N;i++) for (var j=i+1;j<N;j++)
+      d += 'M'+pts[i][0].toFixed(1)+' '+pts[i][1].toFixed(1)+'L'+pts[j][0].toFixed(1)+' '+pts[j][1].toFixed(1);
+    var path = document.createElementNS(svgns,'path');
+    path.setAttribute('d', d); path.setAttribute('stroke-width','.45');
+    web.appendChild(path);
+    pts.forEach(function(p){
+      var c = document.createElementNS(svgns,'circle');
+      c.setAttribute('cx',p[0].toFixed(1)); c.setAttribute('cy',p[1].toFixed(1));
+      c.setAttribute('r','3.2'); c.setAttribute('class','dot');
+      nodes.appendChild(c);
+    });
+  }
+
+  /* --- rebate position --- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.frames a'));
+  var secs  = Array.prototype.slice.call(document.querySelectorAll('main section'));
+  function setActive(id){
+    links.forEach(function(a){
+      a.setAttribute('aria-current', a.getAttribute('href') === '#'+id ? 'true':'false');
+    });
+  }
+  setActive('p0');
+
+  if ('IntersectionObserver' in window){
+    var spy = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting) setActive(e.target.id); });
+    }, { rootMargin:'-45% 0px -50% 0px', threshold:0 });
+    secs.forEach(function(s){ spy.observe(s); });
+
+    var reveal = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('lit'); reveal.unobserve(e.target); }
+      });
+    }, { rootMargin:'0px 0px -18% 0px', threshold:.2 });
+    document.querySelectorAll('.thresh').forEach(function(t){ reveal.observe(t); });
+  } else {
+    document.querySelectorAll('.thresh').forEach(function(t){ t.classList.add('lit'); });
+  }
+
+  /* --- sunrise parallax --- */
+  if (!reduce){
+    var sun = document.getElementById('sun'),
+        hz  = document.getElementById('horizon'),
+        stk = document.getElementById('heroStack'),
+        ticking = false;
+    function frame(){
+      var y = window.scrollY || window.pageYOffset;
+      if (y < window.innerHeight * 1.2){
+        sun.style.transform = 'translate3d(0,' + (-y * 0.16) + 'px,0)';
+        hz.style.transform  = 'translate3d(0,' + (-y * 0.30) + 'px,0)';
+        stk.style.transform = 'translate3d(0,' + (-y * 0.42) + 'px,0)';
+        stk.style.opacity   = String(Math.max(0, 1 - y / (window.innerHeight * 0.82)));
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function(){
+      if (!ticking){ ticking = true; window.requestAnimationFrame(frame); }
+    }, {passive:true});
+  }
+})();
+</script>
+
+
+<!-- APPLY COMPANION -->
+<style>
+#companion{
+  position:fixed; left:var(--rebate); bottom:0; z-index:75;
+  max-width:min(420px, calc(100vw - var(--rebate) - 24px));
+  transform:translateY(0); transition:transform .35s cubic-bezier(.16,.7,.2,1), opacity .35s;
+  opacity:1;
+}
+#companion.hide{ transform:translateY(100%); opacity:0; pointer-events:none; }
+#companion .pill{
+  display:flex; align-items:center; gap:14px;
+  background:var(--ground); border:1px solid var(--rule); border-bottom:0;
+  padding:14px 18px; margin:0 14px;
+}
+#companion .txt{ flex:1; min-width:0; }
+#companion .lbl{
+  display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--time); margin-bottom:4px;
+}
+#companion .msg{
+  font-family:var(--body); font-size:14.5px; line-height:1.4; color:var(--bone);
+  margin:0;
+}
+#companion a.go{
+  flex:0 0 auto; font-family:var(--mass); font-weight:700; font-size:13.5px;
+  color:var(--bone); text-decoration:none; white-space:nowrap;
+  border-bottom:2px solid var(--time); padding-bottom:2px;
+}
+#companion a.go:hover{ border-bottom-width:5px; }
+#companion button.x{
+  flex:0 0 auto; background:none; border:0; color:var(--quiet); font-family:var(--mono);
+  font-size:16px; line-height:1; cursor:pointer; padding:2px 0 0;
+}
+#companion button.x:hover{ color:var(--bone); }
+
+@media (max-width:820px){
+  #companion{ left:0; right:0; max-width:none; }
+  #companion .pill{ margin:0 10px; padding:12px 14px; }
+  #companion .msg{ font-size:13.5px; }
+}
+@media (prefers-reduced-motion:reduce){
+  #companion{ transition:opacity .01ms; }
+}
+</style>
+
+<div id="companion" role="complementary" aria-label="Application reminder">
+  <div class="pill">
+    <div class="txt">
+      <span class="lbl" id="cp-lbl">Incubator Camp</span>
+      <p class="msg" id="cp-msg">Eight to twelve seats. The panel fills in the order people arrive.</p>
+    </div>
+    <a class="go" id="cp-go" href="./apply.html">Apply →</a>
+    <button class="x" id="cp-x" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var STAGES = {
+    early: {
+      label: 'Just arrived',
+      msg:   'Half-formed is the ideal condition here. Read on, or see what the season actually asks of you.',
+      cta:   'See the nine phases', href: './index.html#p3'
+    },
+    mid: {
+      label: 'Reading through',
+      msg:   'The application previews every question before you answer one, so you can draft with real answers rather than first thoughts.',
+      cta:   'Preview the application', href: './apply.html'
+    },
+    late: {
+      label: 'Incubator Camp',
+      msg:   'Eight to twelve seats. The panel fills in the order people arrive.',
+      cta:   'Apply now', href: './apply.html'
+    }
+  };
+
+  var el = document.getElementById('companion');
+  if (!el) return;
+  var lbl = document.getElementById('cp-lbl');
+  var msg = document.getElementById('cp-msg');
+  var go  = document.getElementById('cp-go');
+  var xB  = document.getElementById('cp-x');
+
+  function paint(stage){
+    var s = STAGES[stage] || STAGES.late;
+    lbl.textContent = s.label;
+    msg.textContent = s.msg;
+    go.textContent  = s.cta + ' →';
+    go.href = s.href;
+  }
+
+  // Dismiss for this browsing session only — reappears on the next page,
+  // never silenced permanently, never using persistent storage.
+  var KEY = 'ic_companion_dismissed';
+  try {
+    if (sessionStorage.getItem(KEY) === '1') { el.classList.add('hide'); }
+  } catch (err) { /* storage unavailable — companion just stays visible */ }
+
+  xB.addEventListener('click', function(){
+    el.classList.add('hide');
+    try { sessionStorage.setItem(KEY, '1'); } catch (err) {}
+  });
+
+  var marked = Array.prototype.slice.call(document.querySelectorAll('[data-stage]'));
+  if (!marked.length){ paint('late'); return; }
+
+  paint(marked[0].getAttribute('data-stage')); // sensible first paint before scroll
+
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) paint(e.target.getAttribute('data-stage'));
+      });
+    }, { rootMargin:'-40% 0px -55% 0px', threshold:0 });
+    marked.forEach(function(s){ io.observe(s); });
+  }
+})();
+</script>
+<!-- /APPLY COMPANION -->
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery — Mars '26 — Incubator Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0B0907;--bone:#EDE8DE;--quiet:#8A857B;--time:#E2622A;
+  --line:rgba(237,232,222,.09);--rule:rgba(237,232,222,.16);
+  --display:"Bodoni Moda",Georgia,serif;--mass:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Literata",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --rebate:52px;--tray-h:74px;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{margin:0;background:var(--ground);color:var(--bone);font-family:var(--body);
+  overflow:hidden; text-rendering:optimizeLegibility; -webkit-font-smoothing:subpixel-antialiased;}
+.grain{position:fixed;inset:0;z-index:95;pointer-events:none;opacity:.22;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
+
+.rebate{position:fixed;top:0;left:0;bottom:0;width:var(--rebate);z-index:90;border-right:1px solid var(--rule);
+  background:var(--ground);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 0;}
+.rebate .stock{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.34em;color:var(--quiet);text-transform:uppercase;white-space:nowrap;}
+.rebate .page{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);font-size:10px;
+  letter-spacing:.3em;color:var(--time);text-transform:uppercase;white-space:nowrap;}
+.rebate .back{font-family:var(--mono);font-size:15px;color:var(--quiet);text-decoration:none;line-height:1;}
+.rebate .back:hover{color:var(--bone);}
+
+/* ── stage ─────────────────────────────────────────────── */
+.stage{
+  position:fixed; inset:0; left:var(--rebate);
+  display:flex; align-items:center; justify-content:center;
+  background:var(--ground);
+}
+.frame-wrap{
+  position:relative; width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+}
+.frame{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; filter:blur(0);
+  transition:opacity 1.1s ease;
+}
+.frame.on{ opacity:1; z-index:2; }
+.frame.exit{ opacity:0; z-index:1; }
+.frame img{
+  max-width:min(92vw, calc(100vh * 1.4));
+  max-height:88vh;
+  width:auto; height:auto;
+  object-fit:contain;
+  filter:saturate(1.03) contrast(1.02);
+  box-shadow:0 40px 120px rgba(0,0,0,.55);
+}
+.frame.portrait img{ max-width:min(60vw, calc(100vh * .74)); }
+
+/* candling vignette — light gathers around the held frame */
+.candle{
+  position:absolute; inset:0; pointer-events:none; z-index:3;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0) 42%, rgba(11,9,7,.55) 78%, rgba(11,9,7,.92) 100%);
+}
+
+/* ── a dedicated floor of dark beneath the caption and the tray,
+   independent of any one frame's own brightness ──────────────── */
+.scrim{
+  position:fixed; left:var(--rebate); right:0; bottom:0; z-index:50; pointer-events:none;
+  height:calc(var(--tray-h) + 180px);
+  background:linear-gradient(to bottom,
+    rgba(11,9,7,0) 0%,
+    rgba(11,9,7,.38) 55%,
+    rgba(11,9,7,.72) 80%,
+    rgba(11,9,7,.94) 100%);
+}
+
+/* ── the rebate-side film data for the CURRENT frame ──────── */
+.meta{
+  position:fixed; left:calc(var(--rebate) + 22px); right:22px; bottom:calc(var(--tray-h) + 22px); z-index:60;
+  max-width:min(64vw, 560px);
+}
+.meta .n{
+  font-family:var(--mono); font-size:11px; letter-spacing:.24em; color:var(--time);
+  text-transform:uppercase; margin-bottom:6px; text-shadow:0 1px 10px rgba(11,9,7,.9);
+}
+.meta .cap{
+  font-family:var(--display); font-style:italic; font-optical-sizing:none;
+  font-variation-settings:"opsz" 30,"wght" 480; -webkit-text-stroke:.25px var(--bone);
+  font-size:clamp(17px,2vw,25px); line-height:1.3; color:var(--bone); margin:0;
+  text-shadow:0 2px 16px rgba(11,9,7,.95), 0 1px 2px rgba(11,9,7,.9);
+}
+.meta .sub{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; color:var(--quiet);
+  text-transform:uppercase; margin-top:8px; text-shadow:0 1px 10px rgba(11,9,7,.9);
+}
+
+/* ── frame counter, top right ─────────────────────────────── */
+.counter{
+  position:fixed; top:24px; right:26px; z-index:60;
+  font-family:var(--mono); font-size:11px; letter-spacing:.2em; color:var(--quiet);
+  text-transform:uppercase;
+}
+.counter b{ color:var(--bone); font-weight:400; }
+
+/* ── controls ──────────────────────────────────────────────── */
+.ctrl{
+  position:fixed; z-index:60; top:50%; transform:translateY(-50%);
+  background:none; border:0; color:var(--quiet); cursor:pointer;
+  font-family:var(--mono); font-size:28px; line-height:1; padding:20px 16px;
+  transition:color .15s;
+}
+.ctrl:hover, .ctrl:focus-visible{ color:var(--bone); }
+.ctrl.prev{ left:calc(var(--rebate) + 4px); }
+.ctrl.next{ right:6px; }
+
+.playbar{
+  position:fixed; left:var(--rebate); right:0; bottom:0; height:2px; z-index:60;
+  background:var(--line);
+}
+.playbar i{ display:block; height:100%; width:0%; background:var(--time); transition:width linear; }
+
+.tray{
+  position:fixed; left:var(--rebate); right:0; bottom:0; z-index:55;
+  display:flex; gap:8px; padding:10px 14px 12px; overflow-x:auto;
+  transform:translateY(0); transition:transform .3s ease, opacity .3s ease;
+  /* design-integrated scrollbar — a flat rule, not a system widget */
+  scrollbar-width:thin; scrollbar-color:var(--rule) transparent;
+}
+.tray.hide{ transform:translateY(100%); opacity:0; pointer-events:none; }
+.tray::-webkit-scrollbar{ height:3px; }
+.tray::-webkit-scrollbar-track{ background:transparent; }
+.tray::-webkit-scrollbar-thumb{ background:var(--quiet); border-radius:0; }
+.tray::-webkit-scrollbar-thumb:hover{ background:var(--time); }
+.tray button{
+  flex:0 0 auto; width:52px; height:52px; padding:0; border:1px solid var(--rule);
+  background:rgba(237,232,222,.04); cursor:pointer; position:relative; overflow:hidden;
+}
+.tray button img{ width:100%; height:100%; object-fit:cover; opacity:.55; transition:opacity .15s; }
+.tray button.on{ border-color:var(--time); }
+.tray button.on img{ opacity:1; }
+.tray button:hover img{ opacity:.85; }
+
+.playpause{
+  position:fixed; bottom:18px; right:20px; z-index:60;
+  font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--quiet); background:none; border:1px solid var(--rule); padding:7px 12px; cursor:pointer;
+}
+.playpause:hover{ color:var(--bone); border-color:var(--bone); }
+
+.empty{
+  position:relative; z-index:2; max-width:52ch; padding:0 40px; text-align:left;
+}
+.empty .tag{ font-family:var(--mono); font-size:11px; letter-spacing:.28em; color:var(--quiet);
+  text-transform:uppercase; margin-bottom:20px; }
+.empty h2{ font-family:var(--mass); font-weight:700; font-size:clamp(23px,3vw,34px); line-height:1.16;
+  margin:0 0 18px; color:var(--bone); }
+.empty p{ font-family:var(--body); font-size:17px; line-height:1.6; color:var(--bone); margin:0 0 16px; }
+.empty code{ font-family:var(--mono); font-size:13px; color:var(--time); background:rgba(226,98,42,.08);
+  padding:2px 6px; }
+
+@media (max-width:820px){
+  :root{--rebate:26px;--tray-h:64px;}
+  .rebate .stock{ font-size:8px; letter-spacing:.24em; }
+  .meta{ left:calc(var(--rebate) + 12px); right:14px; max-width:none; bottom:calc(var(--tray-h) + 14px); }
+  .meta .cap{ font-size:16px; }
+  .ctrl{ padding:14px 10px; font-size:22px; }
+  .ctrl.prev{ left:var(--rebate); }
+  .tray{ padding:10px 10px 12px; }
+  .tray button{ width:42px; height:42px; }
+  .counter{ top:16px; right:16px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .frame{ transition:opacity .01ms; }
+  .tray, .stage{ transition:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="rebate" aria-label="Site">
+  <div class="stock">Incubator Camp · Mars College</div>
+  <div class="page">Gallery</div>
+  <a class="back" href="./index.html" aria-label="Back to Incubator Camp">∴</a>
+</nav>
+
+<main class="stage" id="stage">
+  <!-- Frames are injected by the script below from the PHOTOS array. -->
+  <div class="frame-wrap" id="frameWrap"></div>
+  <div class="candle" aria-hidden="true"></div>
+  <!-- Shown only when PHOTOS is empty -->
+  <div class="empty" id="emptyState" style="display:none">
+    <div class="tag">Gallery <span class="dd">::</span> Mars '26</div>
+    <h2>The frames are not loaded yet.</h2>
+    <p>This page holds a cinematic slideshow of photographs from the 2026 season — landscape and portrait, mixed, held and released rather than cropped to fit a grid.</p>
+    <p>Add images to a folder named <code>photos/</code> beside this file, then list them in the <code>PHOTOS</code> array near the bottom of the page. Each entry can carry an optional caption.</p>
+  </div>
+</main>
+
+<div class="scrim" aria-hidden="true"></div>
+
+<div class="counter" id="counter"></div>
+<div class="meta" id="meta"><div class="n" id="metaN"></div><p class="cap" id="metaCap"></p><div class="sub" id="metaSub">Mars College · 2026</div></div>
+
+<button class="ctrl prev" id="prev" aria-label="Previous photograph">‹</button>
+<button class="ctrl next" id="next" aria-label="Next photograph">›</button>
+
+<div class="playbar"><i id="bar"></i></div>
+<div class="tray" id="tray"></div>
+<button class="playpause" id="playpause">Pause</button>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ADD YOUR PHOTOGRAPHS HERE.
+
+   Path is relative to this file. Caption is optional — omit it and
+   only the frame number and "Mars College · 2026" show, which is
+   often the more honest choice for a documentary set. Orientation
+   is auto-detected from the loaded image, so you do not need to
+   mark it, but you may set it explicitly if a picture ever loads
+   ambiguously (a near-square frame, for instance).
+
+   Example:
+   { src: 'photos/01-arrival.jpg', caption: 'The build, week one' },
+   { src: 'photos/02-lakebed.jpg' },
+   ═══════════════════════════════════════════════════════════════ */
+const PHOTOS = [
+  { src: 'photos/2026-02-MARS-0024.JPG', caption: 'Ceremonial walk on the Mars Campus honoring the ancestors.' },
+  { src: 'photos/2026-02-MARS-0024-55.JPG', caption: 'The opening of a sunset ceremony on the roof of the AI Camp Lecture and Study Hall called Chiba.' },
+  { src: 'photos/2026-02-MARS-0024-152.JPG', caption: 'Martians and Friends of Mars enjoying a Mid-Terms art fest in the Chiba atrium.' },
+  { src: 'photos/2026-02-MARS-0024-156.JPG', caption: 'Martians and Friends of Mars enjoying a Mid-Terms art fest in the Chiba atrium.' },
+  { src: 'photos/DSCF1046.JPG', caption: 'The boulders of the Painted Canyons Mars Electronica event make great tripods.' },
+  { src: 'photos/DSCF1389.JPG', caption: 'A Holi celebration captured at Sunset on the Mars campus.' },
+  { src: 'photos/IMG_1414.jpg', caption: 'Chiba at Night.' },
+  { src: 'photos/IMG_1429.jpg', caption: 'A rainbow over Mars and the Chocolate Mountains as seen from Bombay Beach.' },
+  { src: 'photos/IMG_1617.jpg', caption: 'A poster for CREATTIVe STEEPING on Mars :: A course led by Incubator Camp lead, Kamau Zuberi Akabueze.' },
+  { src: 'photos/IMG_1648.jpg', caption: 'Books are highly welcome on campus.' },
+  { src: 'photos/IMG_1676.jpg', caption: 'Pallet Rack structures near Bombay Beach.' },
+  { src: 'photos/IMG_1700.jpg', caption: 'Mars propaganda.' },
+  { src: 'photos/IMG_1751.JPG', caption: 'Kamau Zuberi Akabueze.' },
+  { src: 'photos/IMG_1754.jpg', caption: 'Sunsets on Mars.' },
+  { src: 'photos/IMG_1764.jpg', caption: 'The light on Mars is incredible, even at night.' },
+  { src: 'photos/IMG_1781.jpg', caption: 'Fire is spun on Mars as often as you want to spin fire.' },
+  { src: 'photos/IMG_1963.jpg', caption: 'A 3D Printed porcelain vase made on Mars as an experiment between Martians.' },
+  { src: 'photos/IMG_2111.jpg', caption: 'The Sun also sets on Mars.' },
+  { src: 'photos/IMG_2154.jpg', caption: 'Rooftop laundry taking its time in the sun.' },
+  { src: 'photos/IMG_2198.jpg', caption: 'Did we mention the sunsets on Mars?' },
+  { src: 'photos/IMG_2199.JPG', caption: 'A great meal on Mars form the communal kitchen.' },
+  { src: 'photos/IMG_2334.jpg', caption: 'Those boulders at the Painted Canyons festival.' },
+  { src: 'photos/IMG_2339.jpg', caption: 'Capable vehicles do really well on Mars.' },
+  { src: 'photos/IMG_2364.jpg', caption: 'The canyons are painted with our projected arts every year during the Mars semester.' },
+  { src: 'photos/IMG_2459.jpg', caption: 'See, you can spin fire whenever and wherever you want.' },
+  { src: 'photos/IMG_2473.jpg', caption: 'Chiba at night has seen a lot on its surface, and the surfaces of Mars are great places for your arts.' },
+  { src: 'photos/IMG_2502.jpg', caption: 'Drawing Klerb on Mars sometimes happens on a mezzanine.' },
+  { src: 'photos/IMG_2529.jpg', caption: 'Drawing Klerb on Mars in a collaborative experiment.' },
+  { src: 'photos/IMG_2555.jpg', caption: 'Kamau Zuberi Akabueze\'s first painting on Mars.' },
+  { src: 'photos/IMG_2674.jpg', caption: 'Project and protect your art.' },
+  { src: 'photos/IMG_2691.jpg', caption: 'Perform and project your voice in Mars.' },
+  { src: 'photos/IMG_2709.jpg', caption: 'Turn your arts and ideas into a dynamic projected experience on Mars.' },
+  { src: 'photos/IMG_2742.jpg', caption: 'Birds are very real on Mars.' },
+  { src: 'photos/IMG_2772.jpg', caption: 'Art and eating are communal on Mars.' },
+  { src: 'photos/IMG_2945.jpg', caption: 'Pets are welcome on Mars.' },
+  { src: 'photos/IMG_2952.jpg', caption: 'Rooftops are special places on Mars.' },
+  { src: 'photos/IMG_3020.jpg', caption: 'You may happen across a roadside Oracle Booth on Mars that sings the songs of your cosmic frequency.' },
+  { src: 'photos/IMG_3036.jpg', caption: 'You will have space for your ideas on Mars.' },
+  { src: 'photos/IMG_3121.jpg', caption: 'The Moon often poses for photographs on Mars.' },
+  { src: 'photos/IMG_3162.jpg', caption: 'In 2026, there was a bakery on Mars. A special one.' },
+  { src: 'photos/IMG_3175.jpg', caption: 'Friends are made on Mars.' },
+  { src: 'photos/IMG_3202.jpg', caption: 'Ideas are discussed on Mars.' },
+  { src: 'photos/IMG_3210.jpg', caption: 'Space is conceptually explored on Mars.' },
+  { src: 'photos/IMG_3272.JPG', caption: 'The Salton Sea is often honored on Mars.' },
+  { src: 'photos/IMG_3277.jpg', caption: 'The arts can get Dark on Mars. Also scorpions like late night parties.' },
+  { src: 'photos/IMG_3309.jpg', caption: 'Intimate conversations occur on Mars.' },
+  { src: 'photos/IMG_3314.jpg', caption: 'The shapes of the cosmos are explored on Mars.' },
+  { src: 'photos/IMG_3338.jpg', caption: 'The shapes of the mind are constructed in Bombay Beach.' },
+  { src: 'photos/IMG_3344.jpg', caption: 'The shadow runs hot and cool on Mars.' },
+  { src: 'photos/IMG_3355.jpg', caption: 'You can set atop a platonic solid on Mars.' },
+  { src: 'photos/IMG_3373.jpg', caption: 'Architecture is explored on Mars.' },
+  { src: 'photos/Eden_creation_chatsuboz69ae079d6a53346724f31dbe.png', caption: 'Lifestyle concepts are sketched on Mars.' },
+  { src: 'photos/cachedImage.PNG', caption: 'Public discourse is amplified on Mars.' },
+  { src: 'photos/image.JPG', caption: 'Ideas are shared open mic on Mars.' },
+  { src: 'photos/Eden_creation_geneA-Mars-desert-wildflower-made-entirely-from-monitors-and-screens69b239ecd700cf512998766a.jpg', caption: 'Content is grown out of dirt on Mars.' },
+  { src: 'photos/Eden_creation_thealienscoolMartian-propaganda-poster-for-Creative-Steeping-course-ZUBERI-m697064c4a1ff1b131a9d6fa7.jpg', caption: 'Posters communicate experiences on Mars.' },
+  { src: 'photos/IMG_2404.jpg', caption: 'An article in the 2026 Mars Journal on Mars about Incubator Camp Founder, Kamau Zuberi Akabueze\'s 2026 core project.' },
+  { src: 'photos/IMG_2403.jpg', caption: 'An article in the 2026 Mars Journal on Mars about Incubator Camp Founder, Kamau Zuberi Akabueze\'s 2026 core project.' },
+  { src: 'photos/IMG_2406.jpg', caption: 'An article in the 2026 Mars Journal on Mars about Incubator Camp Founder, Kamau Zuberi Akabueze\'s 2026 core project.' },
+  { src: 'photos/IMG_2405.jpg', caption: 'An article in the 2026 Mars Journal on Mars about Incubator Camp Founder, Kamau Zuberi Akabueze\'s 2026 core project.' },
+];
+
+const HOLD_MS = 5200;      // how long a frame is held before advancing
+const XFADE_MS = 1100;     // must match the CSS .frame transition duration
+
+(function(){
+  const wrap = document.getElementById('frameWrap');
+  const tray = document.getElementById('tray');
+  const meta = document.getElementById('meta');
+  const metaN = document.getElementById('metaN');
+  const metaCap = document.getElementById('metaCap');
+  const counter = document.getElementById('counter');
+  const bar = document.getElementById('bar');
+  const btnPrev = document.getElementById('prev');
+  const btnNext = document.getElementById('next');
+  const btnPlay = document.getElementById('playpause');
+  const empty = document.getElementById('emptyState');
+  const stage = document.getElementById('stage');
+
+  if (!PHOTOS.length){
+    empty.style.display = 'block';
+    [meta, counter, btnPrev, btnNext, tray, document.querySelector('.playbar'), btnPlay]
+      .forEach(function(el){ if (el) el.style.display = 'none'; });
+    stage.style.justifyContent = 'flex-start';
+    stage.style.paddingLeft = 'clamp(24px,6vw,80px)';
+    return;
+  }
+
+  let idx = 0, playing = true, timer = null, barTimer = null;
+  const frames = [];
+
+  PHOTOS.forEach(function(p, i){
+    const f = document.createElement('div');
+    f.className = 'frame';
+    const img = new Image();
+    img.alt = p.caption || ('Mars \'26, frame ' + (i+1));
+    img.onload = function(){
+      if (p.orientation === 'portrait' || (!p.orientation && img.naturalHeight > img.naturalWidth)){
+        f.classList.add('portrait');
+      }
+    };
+    img.src = p.src;
+    f.appendChild(img);
+    wrap.appendChild(f);
+    frames.push(f);
+
+    const th = document.createElement('button');
+    th.setAttribute('aria-label', 'Go to frame ' + (i+1));
+    const timg = document.createElement('img');
+    timg.src = p.src; timg.alt = '';
+    th.appendChild(timg);
+    th.addEventListener('click', function(){ show(i, true); });
+    tray.appendChild(th);
+  });
+
+  function show(n, userInitiated){
+    const prevIdx = idx;
+    idx = (n + PHOTOS.length) % PHOTOS.length;
+    frames[prevIdx].classList.remove('on');
+    frames[prevIdx].classList.add('exit');
+    setTimeout(function(){ frames[prevIdx].classList.remove('exit'); }, XFADE_MS);
+    frames[idx].classList.add('on');
+
+    Array.prototype.forEach.call(tray.children, function(el, i){
+      el.classList.toggle('on', i === idx);
+    });
+    const active = tray.children[idx];
+    if (active) active.scrollIntoView({ block:'nearest', inline:'center', behavior:'smooth' });
+
+    const p = PHOTOS[idx];
+    metaN.textContent = String(idx+1).padStart(2,'0') + ' / ' + String(PHOTOS.length).padStart(2,'0');
+    metaCap.textContent = p.caption || 'Untitled';
+    counter.innerHTML = '<b>' + String(idx+1).padStart(2,'0') + '</b> of ' + String(PHOTOS.length).padStart(2,'0');
+
+    if (userInitiated) restart();
+  }
+
+  function runBar(){
+    bar.style.transition = 'none';
+    bar.style.width = '0%';
+    requestAnimationFrame(function(){
+      bar.style.transition = 'width ' + HOLD_MS + 'ms linear';
+      bar.style.width = '100%';
+    });
+  }
+
+  function restart(){
+    clearTimeout(timer);
+    if (playing){
+      runBar();
+      timer = setTimeout(function(){ show(idx+1, true); }, HOLD_MS);
+    } else {
+      bar.style.transition = 'none';
+      bar.style.width = '0%';
+    }
+  }
+
+  btnNext.addEventListener('click', function(){ show(idx+1, true); });
+  btnPrev.addEventListener('click', function(){ show(idx-1, true); });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight') show(idx+1, true);
+    if (e.key === 'ArrowLeft')  show(idx-1, true);
+    if (e.key === ' '){ e.preventDefault(); btnPlay.click(); }
+  });
+
+  btnPlay.addEventListener('click', function(){
+    playing = !playing;
+    btnPlay.textContent = playing ? 'Pause' : 'Play';
+    restart();
+  });
+
+  // Basic swipe for touch
+  let sx = null;
+  stage.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+  stage.addEventListener('touchend', function(e){
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1), true);
+    sx = null;
+  }, {passive:true});
+
+  show(0);
+  restart();
+})();
+</script>
+
+</body>
+</html>

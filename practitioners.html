@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Panel — Incubator Camp, Mars College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0B0907;--bone:#EDE8DE;--quiet:#8A857B;--time:#E2622A;
+  --line:rgba(237,232,222,.09);--rule:rgba(237,232,222,.14);
+  --display:"Bodoni Moda",Georgia,serif;--mass:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Literata",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --rebate:52px;--gutter:clamp(20px,5vw,88px);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--ground);color:var(--bone);font-family:var(--body);font-size:19px;
+  line-height:1.68;font-optical-sizing:auto;overflow-x:hidden;
+  text-rendering:optimizeLegibility;-webkit-font-smoothing:subpixel-antialiased;}
+/* design-integrated scrollbar — a flat rule, not a system widget */
+html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--quiet);border:0;}
+::-webkit-scrollbar-thumb:hover{background:var(--time);}
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.26;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
+
+.rebate{position:fixed;top:0;left:0;bottom:0;width:var(--rebate);z-index:80;
+  border-right:1px solid var(--rule);background:var(--ground);display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between;padding:18px 0;}
+.rebate .stock{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);
+  font-size:9.5px;letter-spacing:.34em;color:var(--quiet);text-transform:uppercase;white-space:nowrap;}
+.rebate .page{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);
+  font-size:10px;letter-spacing:.3em;color:var(--time);text-transform:uppercase;white-space:nowrap;}
+.rebate .back{font-family:var(--mono);font-size:15px;color:var(--quiet);text-decoration:none;line-height:1;}
+.rebate .back:hover{color:var(--bone);}
+
+main{margin-left:var(--rebate);}
+section{position:relative;padding:clamp(70px,10vh,120px) var(--gutter);max-width:1180px;}
+.col{max-width:62ch;}
+h1,h2,h3{margin:0;font-weight:400;}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.28em;color:var(--quiet);
+  text-transform:uppercase;margin-bottom:26px;}
+h2{font-family:var(--mass);font-weight:700;font-size:clamp(24px,3vw,36px);line-height:1.14;
+  letter-spacing:-.015em;margin-bottom:24px;max-width:24ch;}
+h3{font-family:var(--mass);font-weight:700;font-size:15px;letter-spacing:.02em;margin:44px 0 12px;}
+p{margin:0 0 20px;}
+p.lead{font-size:21px;line-height:1.6;}
+a.inline{color:var(--bone);text-decoration:none;border-bottom:1px solid var(--time);}
+a.inline:hover{border-bottom-width:3px;}
+em{font-style:italic;}
+.quiet{color:var(--quiet);}
+.dd{color:var(--quiet);font-family:var(--mono);font-size:.82em;letter-spacing:.06em;padding:0 .18em;}
+:focus-visible{outline:2px solid var(--time);outline-offset:4px;}
+
+/* masthead */
+.masthead{max-width:none;padding-bottom:clamp(40px,6vh,70px);}
+.mh .a{font-family:var(--mass);font-weight:900;text-transform:uppercase;
+  font-size:clamp(26px,5vw,68px);line-height:.94;letter-spacing:-.035em;}
+.mh .b{font-family:var(--display);font-style:italic;font-weight:500;
+  font-optical-sizing:none;font-variation-settings:"opsz" 34,"wght" 520;
+  font-size:clamp(72px,15vw,214px);line-height:.8;letter-spacing:-.028em;margin:.05em 0 0 -.04em;
+  -webkit-text-stroke:.35px var(--bone);}
+.mh .c{font-family:var(--mono);font-weight:500;font-size:clamp(11px,1.3vw,16px);letter-spacing:.26em;
+  text-transform:uppercase;color:#C4BCAF;margin-top:2.2em;padding-top:1.1em;
+  border-top:1px solid var(--rule);display:inline-block;}
+
+/* seat counter */
+.counter{display:flex;gap:6px;align-items:center;margin-top:40px;flex-wrap:wrap;}
+.counter i{display:block;width:26px;height:16px;border:1px solid var(--rule);font-style:normal;}
+.counter i.filled{background:var(--bone);border-color:var(--bone);}
+.counter i.guest{background:var(--time);border-color:var(--time);}
+.counter span{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--quiet);
+  text-transform:uppercase;margin-left:14px;}
+
+/* seat listing — a film strip */
+.strip{margin-top:10px;border-top:1px solid var(--rule);}
+.seat{display:grid;grid-template-columns:56px 200px minmax(0,1fr);gap:clamp(18px,3vw,44px);
+  padding:34px 0;border-bottom:1px solid var(--line);align-items:start;}
+.seat .frame{font-family:var(--mono);font-size:11px;color:var(--quiet);letter-spacing:.1em;padding-top:4px;}
+.seat .frame b{display:block;color:var(--time);font-weight:400;font-size:13px;margin-bottom:6px;}
+.portrait{width:100%;aspect-ratio:4/5;border:1px solid var(--rule);position:relative;overflow:hidden;
+  background:rgba(237,232,222,.03);}
+.portrait img{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05);}
+.portrait .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--quiet);text-transform:uppercase;text-align:center;padding:0 12px;}
+.portrait::after{content:"";position:absolute;left:0;right:0;bottom:0;height:16px;z-index:2;
+  background:repeating-linear-gradient(90deg,rgba(237,232,222,.14) 0 6px,transparent 6px 14px);}
+.seat .who h3{font-family:var(--mass);font-weight:900;font-size:clamp(19px,2.4vw,28px);
+  letter-spacing:-.02em;margin:0 0 6px;line-height:1.1;}
+.seat .role{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--time);
+  text-transform:uppercase;margin-bottom:16px;}
+.seat .who p{font-size:17px;line-height:1.55;max-width:56ch;margin:0 0 14px;}
+.seat .meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--quiet);
+  text-transform:uppercase;line-height:2;border-top:1px solid var(--line);padding-top:12px;margin-top:18px;}
+.seat.open{opacity:.72;}
+.seat.open .who h3{font-family:var(--display);font-style:italic;font-weight:400;color:var(--quiet);
+  font-size:clamp(22px,2.6vw,32px);letter-spacing:0;}
+.seat.open .portrait{border-style:dashed;}
+
+/* consent note */
+.note{border-left:2px solid var(--time);padding:4px 0 4px 22px;margin:36px 0;max-width:60ch;}
+.cta{display:inline-block;font-family:var(--mass);font-weight:700;font-size:16px;text-decoration:none;
+  border-bottom:2px solid var(--time);padding-bottom:3px;margin-top:30px;margin-right:30px;
+  transition:border-bottom-width .15s;}
+.cta:hover,.cta:focus-visible{border-bottom-width:6px;}
+.cta.soft{border-bottom-color:var(--rule);}
+.cta.soft:hover{border-bottom-color:var(--bone);}
+
+footer{margin-left:var(--rebate);padding:64px var(--gutter) 88px;border-top:1px solid var(--rule);}
+footer p{font-family:var(--mono);font-size:11px;letter-spacing:.17em;color:var(--quiet);
+  text-transform:uppercase;margin:0 0 10px;}
+
+@media (max-width:820px){
+  :root{--rebate:30px;}
+  body{font-size:17.5px;}
+  .rebate .stock{font-size:8px;letter-spacing:.24em;}
+  .rebate .page{font-size:8.5px;letter-spacing:.2em;}
+  .seat{grid-template-columns:1fr;gap:16px;}
+  .seat .frame{display:flex;gap:12px;align-items:baseline;padding-top:0;}
+  .seat .frame b{margin:0;}
+  .portrait{max-width:220px;}
+  .mh .b{font-size:clamp(56px,17vw,120px);-webkit-text-stroke:.25px var(--bone);}
+  .mh .c{letter-spacing:.16em;font-size:11.5px;}
+}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} *{transition-duration:.01ms !important;} }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="rebate" aria-label="Site">
+  <div class="stock">Incubator Camp · Mars College</div>
+  <div class="page">The Panel</div>
+  <a class="back" href="./index.html" aria-label="Back to Incubator Camp">∴</a>
+</nav>
+
+<main>
+
+<section class="masthead" data-stage="early">
+  <div class="mh">
+    <div class="a">The panel is</div>
+    <div class="b">forming</div>
+    <div class="c">Winter 2027 <span class="dd">::</span> published as it fills</div>
+  </div>
+
+  <!-- MANUALLY MAINTAINED — share.html's card 09 (search that file for
+       "The panel is forming") duplicates this exact count. Update both
+       whenever a seat is confirmed: this aria-label and the "2 of 12" span
+       below, the i.filled/i.guest markers here, and the .f/.g markers on
+       share.html's matching <i> tags. There is no shared include for this
+       number. -->
+  <div class="counter" aria-label="Two of twelve seats filled">
+    <i class="filled"></i><i class="guest"></i>
+    <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    <span>2 of 12 · 10 seats open</span>
+  </div>
+</section>
+
+<section style="padding-top:0" data-stage="early">
+  <div class="col">
+    <p class="lead">A practitioner deciding in December wants to see who is already inside. So the panel is published as it fills, from the first acceptance.</p>
+    <p>When you are accepted you take a seat on the panel that selects the practitioners who come after you. You read the applications. You sit in the curation. You help decide what the cohort becomes. By January, every program in camp has been considered, questioned and chosen by everyone else in camp.</p>
+    <p>Which means this page is not a roster. This page is the room, filling up, in the order people arrive.</p>
+
+    <div class="note">
+      <p style="margin:0"><b>On being listed.</b> A listing goes up only with your explicit consent, and declining changes nothing about your seat. No photograph appears until you supply one. The unit is a name, a one-line project, and a city — enough for a stranger to feel the cohort forming, and nothing more than that.</p>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0" data-stage="late">
+  <div class="tag">The seats</div>
+
+  <div class="strip">
+
+    <!-- SEAT 01 -->
+    <div class="seat">
+      <div class="frame"><b>01</b>▲ seated</div>
+      <div class="portrait">
+        <!-- Auto-populates from photos/practitioners/ — see that folder's
+             README for the naming convention and the size that displays
+             sharpest. Nothing to edit here once the file exists. -->
+        <img src="./photos/practitioners/kza.jpg" alt="Kamau Zuberi Akabueze" loading="lazy" onerror="this.remove()">
+        <div class="ph">Portrait<br>4:5 · pending</div>
+      </div>
+      <div class="who">
+        <h3>Kamau Zuberi Akabueze</h3>
+        <div class="role">Camp lead <span class="dd">::</span> Mars '26 alum</div>
+        <p>Founder of THE ÅLïEN SCõÖL, a school for creative thinking. Built Creative Steeping, a journaling method for sitting with an idea long enough to hear what it wants, and a•i•Contemplation, a practice for moving an idea from thinking into action. Leads the <a class="inline" href="https://artizen.fund/index/mf/neuroarts-fund-for-innerversal-health-practitioners?season=7" target="_blank" rel="noopener">Neuroarts Fund for Innerversal Health Practitioners</a>.</p>
+        <p>Taught Creative Steeping as a nine-week course at Mars College in 2026, living in camp with his students the whole season while studying music theory, live coding, pottery and drawing.</p>
+        <div class="meta">
+          Project <span class="dd">::</span> Creative Steeping, returning as a 2027 course<br>
+          Based <span class="dd">::</span> New York City<br>
+          Seated <span class="dd">::</span> Founding
+        </div>
+      </div>
+    </div>
+
+    <!-- SEAT 02 -->
+    <div class="seat">
+      <div class="frame"><b>02</b>▲ guest</div>
+      <div class="portrait">
+        <div class="ph">No portrait<br>on record</div>
+      </div>
+      <div class="who">
+        <h3>El Niño</h3>
+        <div class="role">Guest panelist <span class="dd">::</span> on panel since 1525</div>
+        <p>Named by fishermen off Peru for the child who arrives at Christmas. Returns every two to seven years on no schedule anyone can hold. Currently forecast by NOAA at greater than ninety percent likelihood of becoming very strong through the 2026–27 winter, which places the peak inside our season.</p>
+        <p>Engaged like every other panelist, because the house rule does not make exceptions for weather.</p>
+        <div class="meta">
+          Project <span class="dd">::</span> Moving the Pacific's warm water east<br>
+          Based <span class="dd">::</span> Eastern tropical Pacific<br>
+          Seated <span class="dd">::</span> By arrival <span class="dd">::</span> <a class="inline" href="./el-nino.html">Read the briefing</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPEN SEATS -->
+    <!-- When seat 03 is confirmed: replace this .ph placeholder with the
+         same <img ... onerror="this.remove()"> pattern seat 01 uses above,
+         pointed at photos/practitioners/<their-slug>.jpg — see that
+         folder's README. The image only needs to exist; no other markup
+         changes. -->
+    <div class="seat open">
+      <div class="frame"><b>03</b>open</div>
+      <div class="portrait"><div class="ph">Your<br>portrait</div></div>
+      <div class="who">
+        <h3>Your name here</h3>
+        <div class="role" style="color:var(--quiet)">Practitioner <span class="dd">::</span> seat open</div>
+        <p>The third seat goes to whoever applies next and is chosen. Apply early and you help choose seats four through twelve.</p>
+        <div class="meta">
+          Project <span class="dd">::</span> The thing you keep returning to and setting down<br>
+          Seated <span class="dd">::</span> Rolling admissions
+        </div>
+      </div>
+    </div>
+
+    <div class="seat open">
+      <div class="frame"><b>04 – 12</b>open</div>
+      <div class="portrait"><div class="ph">Nine frames<br>unexposed</div></div>
+      <div class="who">
+        <h3>Nine more</h3>
+        <div class="role" style="color:var(--quiet)">Chosen by the practitioners already seated</div>
+        <p>Every seat after the third is filled by a panel that includes everyone before it. That is the whole mechanism, and it is why applying early is worth more than a place.</p>
+        <div class="meta">Cohort ceiling <span class="dd">::</span> 12 <span class="dd">::</span> held small on purpose</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section data-stage="late">
+  <h2>Take the third seat.</h2>
+  <div class="col">
+    <p>Applications are read by the standing panel, meaning the practitioners already listed above. Rolling admissions, small cohort, and the panel fills in the order people arrive.</p>
+    <a class="cta" href="./apply.html">Apply for a spot</a>
+    <a class="cta soft" href="./index.html">Back to the camp</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>The panel &nbsp;∴&nbsp; Published as it fills</p>
+  <p>Incubator Camp &nbsp;∴&nbsp; A camp of Mars College &nbsp;∴&nbsp; Bombay Beach, California</p>
+
+<!-- LEARN MORE -->
+<style>
+.learnmore{
+  border-top:1px solid var(--line); margin-top:30px; padding-top:18px;
+  font-family:var(--mono); font-size:12px; letter-spacing:.06em; color:var(--quiet);
+  max-width:60ch;
+}
+.learnmore a{
+  color:var(--quiet); text-decoration:none; border-bottom:1px dotted var(--quiet);
+}
+.learnmore a:hover{ color:var(--bone); border-bottom-color:var(--bone); }
+.learnmore .ext{ font-size:10px; vertical-align:1px; margin-left:2px; }
+</style>
+
+<div class="learnmore">
+  Incubator Camp is one camp inside Mars College, now entering its eighth season.
+  For the open call, the other camps, and the wider context <span class="dd">::</span>
+  <a href="https://marscollege.substack.com/p/open-call-for-mars-college-2027" target="_blank" rel="noopener">the 2027 open call<span class="ext">↗</span></a>
+  and <a href="https://marscollege.substack.com/" target="_blank" rel="noopener">the Mars College Substack<span class="ext">↗</span></a>.
+</div>
+<!-- /LEARN MORE -->
+</footer>
+
+
+<!-- APPLY COMPANION -->
+<style>
+#companion{
+  position:fixed; left:var(--rebate); bottom:0; z-index:75;
+  max-width:min(420px, calc(100vw - var(--rebate) - 24px));
+  transform:translateY(0); transition:transform .35s cubic-bezier(.16,.7,.2,1), opacity .35s;
+  opacity:1;
+}
+#companion.hide{ transform:translateY(100%); opacity:0; pointer-events:none; }
+#companion .pill{
+  display:flex; align-items:center; gap:14px;
+  background:var(--ground); border:1px solid var(--rule); border-bottom:0;
+  padding:14px 18px; margin:0 14px;
+}
+#companion .txt{ flex:1; min-width:0; }
+#companion .lbl{
+  display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--time); margin-bottom:4px;
+}
+#companion .msg{
+  font-family:var(--body); font-size:14.5px; line-height:1.4; color:var(--bone);
+  margin:0;
+}
+#companion a.go{
+  flex:0 0 auto; font-family:var(--mass); font-weight:700; font-size:13.5px;
+  color:var(--bone); text-decoration:none; white-space:nowrap;
+  border-bottom:2px solid var(--time); padding-bottom:2px;
+}
+#companion a.go:hover{ border-bottom-width:5px; }
+#companion button.x{
+  flex:0 0 auto; background:none; border:0; color:var(--quiet); font-family:var(--mono);
+  font-size:16px; line-height:1; cursor:pointer; padding:2px 0 0;
+}
+#companion button.x:hover{ color:var(--bone); }
+
+@media (max-width:820px){
+  #companion{ left:0; right:0; max-width:none; }
+  #companion .pill{ margin:0 10px; padding:12px 14px; }
+  #companion .msg{ font-size:13.5px; }
+}
+@media (prefers-reduced-motion:reduce){
+  #companion{ transition:opacity .01ms; }
+}
+</style>
+
+<div id="companion" role="complementary" aria-label="Application reminder">
+  <div class="pill">
+    <div class="txt">
+      <span class="lbl" id="cp-lbl">Incubator Camp</span>
+      <p class="msg" id="cp-msg">Eight to twelve seats. The panel fills in the order people arrive.</p>
+    </div>
+    <a class="go" id="cp-go" href="./apply.html">Apply →</a>
+    <button class="x" id="cp-x" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var STAGES = {
+    early: {
+      label: 'Just arrived',
+      msg:   'Half-formed is the ideal condition here. Read on, or see what the season actually asks of you.',
+      cta:   'See the nine phases', href: './index.html#p3'
+    },
+    mid: {
+      label: 'Reading through',
+      msg:   'The application previews every question before you answer one, so you can draft with real answers rather than first thoughts.',
+      cta:   'Preview the application', href: './apply.html'
+    },
+    late: {
+      label: 'Incubator Camp',
+      msg:   'Eight to twelve seats. The panel fills in the order people arrive.',
+      cta:   'Apply now', href: './apply.html'
+    }
+  };
+
+  var el = document.getElementById('companion');
+  if (!el) return;
+  var lbl = document.getElementById('cp-lbl');
+  var msg = document.getElementById('cp-msg');
+  var go  = document.getElementById('cp-go');
+  var xB  = document.getElementById('cp-x');
+
+  function paint(stage){
+    var s = STAGES[stage] || STAGES.late;
+    lbl.textContent = s.label;
+    msg.textContent = s.msg;
+    go.textContent  = s.cta + ' →';
+    go.href = s.href;
+  }
+
+  // Dismiss for this browsing session only — reappears on the next page,
+  // never silenced permanently, never using persistent storage.
+  var KEY = 'ic_companion_dismissed';
+  try {
+    if (sessionStorage.getItem(KEY) === '1') { el.classList.add('hide'); }
+  } catch (err) { /* storage unavailable — companion just stays visible */ }
+
+  xB.addEventListener('click', function(){
+    el.classList.add('hide');
+    try { sessionStorage.setItem(KEY, '1'); } catch (err) {}
+  });
+
+  var marked = Array.prototype.slice.call(document.querySelectorAll('[data-stage]'));
+  if (!marked.length){ paint('late'); return; }
+
+  paint(marked[0].getAttribute('data-stage')); // sensible first paint before scroll
+
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) paint(e.target.getAttribute('data-stage'));
+      });
+    }, { rootMargin:'-40% 0px -55% 0px', threshold:0 });
+    marked.forEach(function(s){ io.observe(s); });
+  }
+})();
+</script>
+<!-- /APPLY COMPANION -->
+</body>
+</html>

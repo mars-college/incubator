@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply — Incubator Camp, Mars College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0B0907;--bone:#EDE8DE;--quiet:#8A857B;--time:#E2622A;
+  --line:rgba(237,232,222,.09);--rule:rgba(237,232,222,.16);
+  --display:"Bodoni Moda",Georgia,serif;--mass:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Literata",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --rebate:52px;--gutter:clamp(20px,5vw,88px);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--ground);color:var(--bone);font-family:var(--body);font-size:18px;
+  line-height:1.62;overflow-x:hidden;text-rendering:optimizeLegibility;-webkit-font-smoothing:subpixel-antialiased;}
+/* design-integrated scrollbar — a flat rule, not a system widget */
+html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--quiet);border:0;}
+::-webkit-scrollbar-thumb:hover{background:var(--time);}
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.26;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
+
+.rebate{position:fixed;top:0;left:0;bottom:0;width:var(--rebate);z-index:80;border-right:1px solid var(--rule);
+  background:var(--ground);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 0;}
+.rebate .stock{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.34em;color:var(--quiet);text-transform:uppercase;white-space:nowrap;}
+.frames{display:flex;flex-direction:column;gap:9px;align-items:center;}
+.frames a{font-family:var(--mono);font-size:11px;color:var(--quiet);text-decoration:none;position:relative;
+  width:22px;text-align:center;}
+.frames a:hover,.frames a[aria-current="true"]{color:var(--bone);}
+.frames a[aria-current="true"]::before{content:"";position:absolute;left:-8px;top:50%;width:0;height:0;
+  margin-top:-3.5px;border-left:6px solid var(--time);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;}
+.rebate .back{font-family:var(--mono);font-size:15px;color:var(--quiet);text-decoration:none;line-height:1;}
+.rebate .back:hover{color:var(--bone);}
+
+main{margin-left:var(--rebate);}
+section{position:relative;padding:clamp(56px,8vh,96px) var(--gutter);max-width:1080px;}
+.col{max-width:60ch;}
+h1,h2,h3{margin:0;font-weight:400;}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.28em;color:var(--quiet);text-transform:uppercase;margin-bottom:22px;}
+h2{font-family:var(--mass);font-weight:700;font-size:clamp(23px,2.8vw,34px);line-height:1.14;
+  letter-spacing:-.015em;margin-bottom:20px;max-width:24ch;}
+h3{font-family:var(--mass);font-weight:700;font-size:14.5px;margin:38px 0 10px;}
+p{margin:0 0 18px;}
+.quiet{color:var(--quiet);}
+.dd{color:var(--quiet);font-family:var(--mono);font-size:.82em;letter-spacing:.06em;padding:0 .18em;}
+a.inline{color:var(--bone);text-decoration:none;border-bottom:1px solid var(--time);}
+a.inline:hover{border-bottom-width:3px;}
+:focus-visible{outline:2px solid var(--time);outline-offset:3px;}
+
+/* masthead */
+.mh .a{font-family:var(--mass);font-weight:900;text-transform:uppercase;font-size:clamp(24px,4.6vw,60px);
+  line-height:.95;letter-spacing:-.035em;}
+.mh .b{font-family:var(--display);font-style:italic;font-weight:500;font-optical-sizing:none;
+  font-variation-settings:"opsz" 34,"wght" 520;font-size:clamp(66px,14vw,190px);line-height:.8;
+  letter-spacing:-.028em;margin:.05em 0 0 -.04em;-webkit-text-stroke:.35px var(--bone);}
+.mh .c{font-family:var(--mono);font-weight:500;font-size:clamp(10.5px,1.2vw,15px);letter-spacing:.26em;
+  text-transform:uppercase;color:#C4BCAF;margin-top:2em;padding-top:1em;border-top:1px solid var(--rule);display:inline-block;}
+
+/* form furniture */
+.q{margin:0 0 34px;max-width:64ch;}
+.q label,.q legend{display:block;font-family:var(--mass);font-weight:700;font-size:16px;
+  margin-bottom:6px;padding:0;}
+.q .help{font-size:15px;color:var(--quiet);line-height:1.5;margin:0 0 12px;}
+.q .cnt{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--quiet);text-transform:uppercase;}
+input[type=text],input[type=email],textarea,select{
+  width:100%;background:rgba(237,232,222,.03);color:var(--bone);border:0;border-bottom:1px solid var(--rule);
+  font-family:var(--body);font-size:17px;line-height:1.5;padding:11px 12px;appearance:none;border-radius:0;}
+textarea{min-height:104px;resize:vertical;}
+input:focus,textarea:focus,select:focus{border-bottom-color:var(--time);background:rgba(237,232,222,.05);outline:none;}
+::placeholder{color:#5C584F;}
+fieldset{border:0;padding:0;margin:0 0 34px;max-width:64ch;}
+.opt{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:16px;}
+.opt input{margin-top:5px;accent-color:var(--time);width:15px;height:15px;flex:0 0 auto;}
+.opt label.rl{font-family:var(--body);font-weight:400;font-size:16px;margin:0;}
+.opt label.rl small{display:block;color:var(--quiet);font-size:14px;line-height:1.4;margin-top:2px;}
+
+.rlab{display:block;font-family:var(--mass);font-weight:700;font-size:16px;margin-bottom:6px;}
+
+/* ── required marker, wayfinding, draft ─────────────────────── */
+.req{font-family:var(--mono);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--time);margin-left:8px;font-weight:400;vertical-align:1px;}
+.q label .req, .rlab .req, legend .req{margin-left:8px;}
+
+.secstat{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--time);
+  margin:-10px 0 30px;min-height:1.2em;max-width:62ch;}
+.secstat:empty{display:none;}
+
+.frames a.done{color:var(--bone);}
+.frames a.done::after{content:"·";position:absolute;right:-9px;top:0;color:var(--time);}
+
+#allstat{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;color:var(--time);
+  margin:0 0 20px;min-height:1.3em;}
+#allstat.ok{color:var(--quiet);}
+
+.draftnote{border-left:2px solid var(--time);padding:14px 0 14px 22px;margin:0 0 30px;max-width:62ch;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;color:var(--quiet);line-height:1.7;}
+.draftnote button{background:none;border:0;color:var(--bone);font-family:var(--mono);font-size:12.5px;
+  text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:0;margin-left:4px;}
+.draftnote button:hover{color:var(--time);}
+
+.draftbar{position:fixed;left:var(--rebate);bottom:0;z-index:65;padding:8px 16px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--quiet);
+  background:var(--ground);border-top:1px solid var(--rule);border-right:1px solid var(--rule);}
+.draftbar button{background:none;border:0;color:var(--quiet);font-family:var(--mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;text-decoration:underline;text-underline-offset:2px;
+  cursor:pointer;padding:0;margin-left:10px;}
+.draftbar button:hover{color:var(--time);}
+
+.opt span small{display:block;color:var(--quiet);font-size:14px;line-height:1.4;}
+
+.sealed{border-left:2px solid var(--time);padding:18px 0 4px 22px;margin:34px 0;max-width:62ch;
+  background:linear-gradient(90deg,rgba(226,98,42,.05),transparent 70%);}
+.sealed .badge{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--time);margin-bottom:10px;}
+.note{border-left:2px solid var(--rule);padding:2px 0 2px 20px;margin:30px 0;max-width:60ch;color:var(--quiet);font-size:16px;}
+
+.rows{margin:20px 0 0;border-top:1px solid var(--rule);max-width:600px;}
+.rows div{display:flex;justify-content:space-between;gap:20px;padding:11px 0;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:12px;letter-spacing:.07em;}
+.rows .k{color:var(--quiet);text-transform:uppercase;letter-spacing:.16em;font-size:10.5px;align-self:center;}
+
+.cta{display:inline-block;font-family:var(--mass);font-weight:700;font-size:16px;text-decoration:none;
+  background:none;border:0;border-bottom:2px solid var(--time);padding:0 0 3px;margin:28px 28px 0 0;
+  color:var(--bone);cursor:pointer;transition:border-bottom-width .15s;}
+.cta:hover,.cta:focus-visible{border-bottom-width:6px;}
+.cta.soft{border-bottom-color:var(--rule);}
+.cta.soft:hover{border-bottom-color:var(--bone);}
+
+#status{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
+  margin-top:24px;color:var(--quiet);min-height:1.4em;}
+#status.ok{color:var(--time);}
+#status.warn{color:#C4BCAF;}
+#out{width:100%;max-width:64ch;min-height:220px;margin-top:22px;font-family:var(--mono);font-size:12.5px;line-height:1.7;display:none;}
+#out.on{display:block;}
+.said{font-family:var(--display);font-size:clamp(20px,2.6vw,32px);line-height:1.26;max-width:22ch;margin:8px 0 0;}
+
+footer{margin-left:var(--rebate);padding:56px var(--gutter) 84px;border-top:1px solid var(--rule);}
+footer p{font-family:var(--mono);font-size:11px;letter-spacing:.17em;color:var(--quiet);text-transform:uppercase;margin:0 0 9px;}
+
+@media (max-width:820px){
+  :root{--rebate:30px;}
+  body{font-size:17px;}
+  .rebate .stock{font-size:8px;letter-spacing:.24em;}
+  .frames a{font-size:10px;width:18px;}
+  .mh .b{font-size:clamp(52px,16vw,112px);-webkit-text-stroke:.25px var(--bone);}
+  .mh .c{letter-spacing:.16em;font-size:11px;}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition-duration:.01ms !important;}}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="rebate" aria-label="Application sections">
+  <div class="stock">Incubator Camp · Application</div>
+  <div class="frames">
+    <a href="#s0">0</a><a href="#s1">1</a><a href="#s2">2</a><a href="#s3">3</a>
+    <a href="#s4">4</a><a href="#s5">5</a><a href="#s6">6</a><a href="#s7">7</a><a href="#s8">8</a>
+  </div>
+  <a class="back" href="./index.html" aria-label="Back to Incubator Camp">∴</a>
+</nav>
+
+<main>
+
+<!-- 0 -->
+<section id="s0">
+  <div class="mh">
+    <div class="a">Take a seat on</div>
+    <div class="b">the panel</div>
+    <div class="c">Incubator Camp <span class="dd">::</span> Mars College <span class="dd">::</span> Winter 2027</div>
+  </div>
+
+  <div class="col" style="margin-top:46px">
+    <p>This application is read by the practitioners already accepted. When you are accepted, you read the ones that follow. That is the mechanism, and it is why the questions below are the questions they are.</p>
+    <p>The application panel reads for transparent specificity. A plain sentence about a real difficulty and the true state of your project carry your values to us more than a polished boilerplate.</p>
+    <p>Describe your project as it actually stands today. Half-formed is the ideal condition here, and the application panel reads for work thriving to be seen and heard across twelve weeks.</p>
+  </div>
+
+  <div class="rows">
+    <div><span class="k">Time to complete</span><span>About 25 minutes</span></div>
+    <div><span class="k">Read by</span><span>The standing panel</span></div>
+    <div><span class="k">Response</span><span>Within 10 days, from a person</span></div>
+    <div><span class="k">Seats</span><span>8 – 12 · filling in order</span></div>
+  </div>
+
+  <div class="note">
+    <p style="margin:0"><b>What this application asks for.</b> Your writing, and about twenty-five minutes. Everything else stays optional. Two sections are sealed from the panel, and each one says so where it sits.</p>
+  </div>
+
+  <div class="col">
+    <h3>Before you begin</h3>
+    <p>Read <a class="inline" href="./el-nino.html">the El Niño briefing</a>. The 2027 season is forecast to land inside a very strong event, and the conditions are part of what you are deciding about.</p>
+  </div>
+</section>
+
+<!-- 1 -->
+<section id="s1">
+  <div class="tag">01 &nbsp;You</div>
+  <h2>Who is applying.</h2>
+
+  <div class="q"><label for="f-name">Name<span class="req">Required</span></label>
+    <input type="text" id="f-name" placeholder="As you would like it written on the panel page"></div>
+
+  <div class="q"><label for="f-email">Email<span class="req">Required</span></label>
+    <input type="email" id="f-email" placeholder="Where a real person will write back"></div>
+
+  <div class="q"><label for="f-city">Where you live<span class="req">Required</span></label>
+    <p class="help">City and country. We use this to understand travel.</p>
+    <input type="text" id="f-city" placeholder="Eugene, Oregon"></div>
+
+  <div class="q"><label for="f-found">How you found Incubator Camp<span class="req">Required</span></label>
+    <input type="text" id="f-found" placeholder="A person, a post, a search, a forwarded screenshot"></div>
+
+  <div class="q"><label for="f-links">Where can your work be appreciated?<span class="req">Required</span></label>
+    <p class="help">A site, a newsletter, a class listing, an instagram, a recording, a document. One link is plenty. The panel wants somewhere to meet what you make.</p>
+    <input type="text" id="f-links" placeholder="A link the panel can open"></div>
+
+  <p class="secstat" id="stat-s1" aria-live="polite"></p>
+</section>
+
+<!-- 2 -->
+<section id="s2">
+  <div class="tag">02 &nbsp;The project</div>
+  <h2>What are you bringing to incubate on Mars?</h2>
+  <div class="col"><p>Write for the project and for the steward we will meet. The project and the personhood. The panel reads for clarity of intention, and for a plain description of what matters to the practitioner.</p></div>
+
+  <div class="q"><label for="f-what">What are you building?<span class="req">Required</span></label>
+    <p class="help">A course, a practice, a protocol, a platform, a method, an instrument. In your own words.</p>
+    <textarea id="f-what" placeholder="Two or three sentences."></textarea></div>
+
+  <div class="q"><label for="f-who">Who is it for, and what changes for them?<span class="req">Required</span></label>
+    <p class="help">Name a real person you have in mind if that is easier than naming a category.</p>
+    <textarea id="f-who"></textarea></div>
+
+  <div class="q"><label for="f-unfinished">What is the state of the project?<span class="req">Required</span></label>
+    <p class="help">The most important question on this page. Name what is missing, stuck, untested, or circled around. And name what makes the project great for an invested incubator residency in the desert.</p>
+    <textarea id="f-unfinished"></textarea></div>
+
+  <fieldset>
+    <legend>Where it stands today<span class="req">Required</span></legend>
+    <div class="opt"><input type="radio" name="stage" id="stage1" value="An idea I have been carrying, still unwritten"><label for="stage1" class="rl">An idea I have been carrying, still unwritten</label></div>
+    <div class="opt"><input type="radio" name="stage" id="stage2" value="Notes and fragments, awaiting a sequence"><label for="stage2" class="rl">Notes and fragments, awaiting a sequence</label></div>
+    <div class="opt"><input type="radio" name="stage" id="stage3" value="A draft structure, ready for its first teaching"><label for="stage3" class="rl">A draft structure, ready for its first teaching</label></div>
+    <div class="opt"><input type="radio" name="stage" id="stage4" value="Taught once or twice, informally"><label for="stage4" class="rl">Taught once or twice, informally</label></div>
+    <div class="opt"><input type="radio" name="stage" id="stage5" value="Running, and ready for a rebuild"><label for="stage5" class="rl">Running, and ready for a rebuild</label></div>
+  </fieldset>
+
+  <div class="q"><label for="f-teach">What will you teach or offer at Mars?<span class="req">Required</span></label>
+    <p class="help">Every practitioner offers an aspect of their work in progress to the wider college — a workshop, a full class, or a regular community practice. What will yours be?</p>
+    <textarea id="f-teach"></textarea></div>
+
+  <div class="q"><label for="f-march">At the end of the semester, what have you earned, learned, and grown?<span class="req">Required</span></label>
+    <textarea id="f-march"></textarea></div>
+
+  <p class="secstat" id="stat-s2" aria-live="polite"></p>
+</section>
+
+<!-- 3 -->
+<section id="s3">
+  <div class="tag">03 &nbsp;The cohort</div>
+  <h2>We are here to evolve our ideas together.</h2>
+  <div class="col">
+    <p class="lead">The application panel is surveying two priorities. What you want for your own work, and what you bring to eleven other people's work across nine months.</p>
+    <p>Every practitioner engages every practitioner's central project, and the essentials of the Incubator Camp residency lifestyle.</p>
+  </div>
+
+  <div class="q"><label for="f-offer">What will you bring to another practitioner's program growth and development?<span class="req">Required</span></label>
+    <p class="help">A skill, a discipline, a lens, a hard question you ask well. Modest and true lands well here.</p>
+    <textarea id="f-offer"></textarea></div>
+
+  <div class="q"><label for="f-challenge">What do you want challenged?<span class="req">Required</span></label>
+    <p class="help">Name the part of your work you suspect you protect. The camp is built to press exactly there.</p>
+    <textarea id="f-challenge"></textarea></div>
+
+  <div class="q"><label for="f-feedback">Describe a time when constructive and collaborative feedback shifted the dynamics of your work.<span class="req">Required</span></label>
+    <p class="help">What was said, and what you did about it. Of everything in this form, this answer shows the panel the most about how you work in a room.</p>
+    <textarea id="f-feedback"></textarea></div>
+
+  <fieldset>
+    <legend>Open integrity observation<span class="req">Required</span></legend>
+    <p class="help">Every week, after one practitioner leads an immersion, we tell that person where we got bored, where we leaned in, and where our minds wandered off — and we leave our opinion of the work out of it. Then we eat dinner together.</p>
+    <div class="opt"><input type="checkbox" id="f-oio"><label for="f-oio" class="rl">I know how to accept a compliment, I look forward to open integrity observation as a participatory and receptive practice, and I want to be in a room that works this way.</label></div>
+  </fieldset>
+
+  <p class="secstat" id="stat-s3" aria-live="polite"></p>
+</section>
+
+<!-- 4 -->
+<section id="s4">
+  <div class="tag">04 &nbsp;Your weeks</div>
+  <h2>What your life can actually give.</h2>
+  <div class="col"><p>Both build seasons are optional. Come for the parts your life can give, and tell us plainly which those are, so the camp gets planned around real people.</p></div>
+
+  <fieldset>
+    <legend>Which windows can you commit to?<span class="req">Required</span><span class="req" style="margin-left:6px">at least one</span></legend>
+    <div class="opt"><input type="checkbox" id="w1"><label for="w1" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Build season, in <span class="dd">::</span> December 1 to January 11 <small>Optional. The best way to know the room you will teach in.</small></label></div>
+    <div class="opt"><input type="checkbox" id="w2"><label for="w2" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Full semester <span class="dd">::</span> January 11 to March 29 <small>The one window the camp is built around.</small></label></div>
+    <div class="opt"><input type="checkbox" id="w3"><label for="w3" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Part of the semester <small>One month, two months. Dues stay equal either way.</small></label></div>
+    <div class="opt"><input type="checkbox" id="w4"><label for="w4" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Build season, out <span class="dd">::</span> April 1 to May 12 <small>Optional. How the desert goes back to desert.</small></label></div>
+  </fieldset>
+
+  <div class="q"><label for="f-weeks">If part of the semester, which weeks?</label>
+    <input type="text" id="f-weeks" placeholder="Approximate dates are fine"></div>
+
+  <div class="q"><label for="f-work">Remote work or study hours you need to protect</label>
+    <p class="help">People keep their jobs at Mars every year. Tell us the hours and we build the rhythm around them.</p>
+    <input type="text" id="f-work" placeholder="e.g. weekday mornings, 9 to 1 Pacific"></div>
+
+  <div class="q"><span class="rlab">The nine months start when you are accepted.<span class="req">Required</span></span>
+    <p class="help">Cohort calls run every two weeks from September. Every project goes on the table for a full hour, three times before anyone packs. Can you hold that?</p>
+    <div class="opt"><input type="radio" name="pre" id="pre1" value="Yes, every two weeks from acceptance"><label for="pre1" class="rl">Yes, every two weeks from acceptance</label></div>
+    <div class="opt"><input type="radio" name="pre" id="pre2" value="Mostly, with some misses"><label for="pre2" class="rl">Mostly, with some misses</label></div>
+    <div class="opt"><input type="radio" name="pre" id="pre3" value="A different cadence would suit me better - let us talk"><label for="pre3" class="rl">A different cadence would suit me better <span class="dd">::</span> let us talk</label></div>
+  </div>
+
+  <p class="secstat" id="stat-s4" aria-live="polite"></p>
+</section>
+
+<!-- 5 -->
+<section id="s5">
+  <div class="tag">05 &nbsp;The desert</div>
+  <h2>What you bring to a camp that has to build itself.</h2>
+  <div class="col"><p>Skills count as a qualification here. A camp of eight to twelve in an off-grid winter runs on what walks in.</p></div>
+
+  <fieldset>
+    <legend>What you can bring</legend>
+    <div class="opt"><input type="checkbox" id="k1"><label for="k1" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">A working vehicle or RV <small>A real contribution to the group, and especially so in a wet year.</small></label></div>
+    <div class="opt"><input type="checkbox" id="k2"><label for="k2" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Solar, batteries, power</label></div>
+    <div class="opt"><input type="checkbox" id="k3"><label for="k3" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Building, carpentry, plumbing</label></div>
+    <div class="opt"><input type="checkbox" id="k4"><label for="k4" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Cooking for groups</label></div>
+    <div class="opt"><input type="checkbox" id="k5"><label for="k5" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Documentation, photo, audio, video</label></div>
+    <div class="opt"><input type="checkbox" id="k6"><label for="k6" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Facilitation, conflict, group care</label></div>
+    <div class="opt"><input type="checkbox" id="k7"><label for="k7" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">Previous off-grid or communal living</label></div>
+    <div class="opt"><input type="checkbox" id="k8"><label for="k8" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">First aid or wilderness medicine</label></div>
+  </fieldset>
+
+  <div class="q"><label for="f-skills">Anything else worth knowing about what you bring</label>
+    <textarea id="f-skills" placeholder="Tools, a trailer, a generator, a stubborn willingness to dig drainage."></textarea></div>
+
+  <fieldset>
+    <legend>Shelter preference<span class="req">Required</span></legend>
+    <div class="opt"><input type="radio" name="shelter" id="sh1" value="I will bring my own vehicle or RV"><label for="sh1" class="rl">I will bring my own vehicle or RV</label></div>
+    <div class="opt"><input type="radio" name="shelter" id="sh2" value="I would like a pod"><label for="sh2" class="rl">I would like a pod</label></div>
+    <div class="opt"><input type="radio" name="shelter" id="sh3" value="I would like a pod, and I would help build it"><label for="sh3" class="rl">I would like a pod, and I would help build it</label></div>
+    <div class="opt"><input type="radio" name="shelter" id="sh4" value="I would like a trailer if one is available"><label for="sh4" class="rl">I would like a trailer if one is available</label></div>
+    <div class="opt"><input type="radio" name="shelter" id="sh5" value="Still deciding, happy to talk it through"><label for="sh5" class="rl">Still deciding, happy to talk it through</label></div>
+  </fieldset>
+
+  <div class="q"><label for="f-food">Anything the kitchen should know</label>
+    <p class="help">The kitchen is communal, plant-forward, and cooks dinner five nights so that lunch is leftovers. Tell us how you eat.</p>
+    <input type="text" id="f-food" placeholder="Optional"></div>
+
+  <fieldset>
+    <legend>Conditions</legend>
+    <div class="opt"><input type="checkbox" id="f-nino"><label for="f-nino" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">I have read the El Niño briefing and I understand the 2027 season may be wet, cold and disrupted.<span class="req">Required</span> <small>Mud, wind, unusable ground for days at a time, and a superbloom.</small></label></div>
+    <div class="opt"><input type="checkbox" id="f-chores"><label for="f-chores" style="font-family:var(--body);font-weight:400;font-size:16px;margin:0">I understand the camp cooks, cleans and maintains itself on a rotation.<span class="req">Required</span></label></div>
+  </fieldset>
+
+  <p class="secstat" id="stat-s5" aria-live="polite"></p>
+</section>
+
+<!-- 6 -->
+<section id="s6">
+  <div class="tag">06 &nbsp;Support</div>
+  <h2>Sealed from the panel.</h2>
+
+  <div class="sealed">
+    <div class="badge">∴ Sealed :: camp lead only</div>
+    <p style="margin:0 0 14px">Money and access sit with the camp lead alone. Your answers below stay with him, and acceptance is decided on your project.</p>
+  </div>
+
+  <div class="q"><span class="rlab">Would Neuroarts Fund support change whether you can come?<span class="req">Required</span></span>
+    <p class="help">Incubator Camp is the annual convening of the <a class="inline" href="https://artizen.fund/index/mf/neuroarts-fund-for-innerversal-health-practitioners?season=7" target="_blank" rel="noopener">Neuroarts Fund for Innerversal Health Practitioners</a>. The Fund intends to cover travel and participation costs for practitioners who need the support, so that every geography and every financial position stays welcome here. Answer freely.</p>
+    <div class="opt"><input type="radio" name="fund" id="fu1" value="I can cover the full cost"><label for="fu1" class="rl">I can cover the full cost</label></div>
+    <div class="opt"><input type="radio" name="fund" id="fu2" value="Partial support would help"><label for="fu2" class="rl">Partial support would help</label></div>
+    <div class="opt"><input type="radio" name="fund" id="fu3" value="Substantial support would be needed"><label for="fu3" class="rl">Substantial support would be needed</label></div>
+    <div class="opt"><input type="radio" name="fund" id="fu4" value="Full support would be needed"><label for="fu4" class="rl">Full support would be needed</label></div>
+  </div>
+
+  <div class="q"><label for="f-fundnote">Anything you want the camp lead to understand about that</label>
+    <textarea id="f-fundnote" placeholder="Optional. As much or as little as you want to say."></textarea></div>
+
+  <div class="q"><label for="f-access">Access, health or safety needs we should plan for</label>
+    <p class="help">Off-grid desert, hauled water, cold nights, uneven ground, and the nearest clinic a drive away. Tell us what you need so we can plan the room, the pod placement and the vehicle rota around it. This is a planning question, and the camp lead is the only reader.</p>
+    <textarea id="f-access" placeholder="Optional"></textarea></div>
+
+  <div class="q"><label for="f-emerg">Emergency contact</label>
+    <input type="text" id="f-emerg" placeholder="Name and phone. Held by the camp lead only."></div>
+
+  <p class="secstat" id="stat-s6" aria-live="polite"></p>
+</section>
+
+<!-- 7 -->
+<section id="s7">
+  <div class="tag">07 &nbsp;Listing and nomination</div>
+  <h2>Two last things.</h2>
+
+  <fieldset>
+    <legend>The practitioners page<span class="req">Required</span></legend>
+    <p class="help">The panel is published as it fills, so a practitioner deciding in December can see who is already inside. A listing is a name, a one-line project, and a city. A photograph appears once you supply one.</p>
+    <div class="opt"><input type="radio" name="listing" id="f-consent" value="List on panel page"><label for="f-consent" class="rl">Yes, list me once I accept a seat.</label></div>
+    <div class="opt"><input type="radio" name="listing" id="f-noconsent" value="Keep off page"><label for="f-noconsent" class="rl">No, keep me off the page. <small>Your seat and your place on the panel stay exactly the same either way.</small></label></div>
+  </fieldset>
+
+  <div class="q"><label for="f-oneline">Your one-line project description, if you consent</label>
+    <input type="text" id="f-oneline" placeholder="One sentence, the way you would want a stranger to read it"></div>
+
+  <div class="q"><label for="f-nominate">Know a practitioner who should have a seat?</label>
+    <p class="help">Nominations go to the panel. A nomination works as an introduction, and we reach out gently.</p>
+    <textarea id="f-nominate" placeholder="Name, and a line about what they are building. Optional."></textarea></div>
+
+  <div class="q"><label for="f-anything">Anything the panel should know that these questions missed</label>
+    <textarea id="f-anything"></textarea></div>
+
+  <p class="secstat" id="stat-s7" aria-live="polite"></p>
+</section>
+
+<!-- 8 -->
+<section id="s8">
+  <div class="tag">08 &nbsp;Send it</div>
+  <h2>Assemble and send.</h2>
+  <div class="col">
+    <p>Press send and your application travels straight to the camp. A confirmation arrives in your inbox within a minute, carrying your reference number.</p>
+    <p>On a slow connection, or if the send meets any trouble, the other two buttons assemble your answers as plain text so you can copy them into an email to <a class="inline" href="mailto:connect@thealienschool.com">connect@thealienschool.com</a>. Either route arrives in the same place.</p>
+    <p class="quiet" style="font-size:16px">Your answers save automatically in this browser as you write, including section 06, so closing the tab keeps your draft. Nothing leaves this device until you press send, and you can clear your saved draft at any time.</p>
+  </div>
+
+  <p id="allstat" aria-live="polite"></p>
+
+  <button class="cta" id="send" type="button">Send my application</button>
+  <button class="cta soft" id="assemble" type="button">Assemble as text</button>
+  <button class="cta soft" id="mailit" type="button">Open in mail instead</button>
+
+  <div id="status" role="status" aria-live="polite"></div>
+
+  <textarea id="out" readonly aria-label="Your assembled application"></textarea>
+
+  <div class="note" style="margin-top:36px">
+    <p style="margin:0"><b>What happens next.</b> A person reads it within ten days and writes back. If the panel wants to go further you will have a conversation with the camp lead, and then with a practitioner already seated. Payment begins once a seat is offered and accepted.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Applications close when the twelfth seat fills</p>
+  <p>Incubator Camp &nbsp;∴&nbsp; A camp of Mars College &nbsp;∴&nbsp; Bombay Beach, California</p>
+</footer>
+
+<script>
+(function(){
+  /* Paste the Apps Script Web App URL here. See apps-script/SETUP.md */
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxjQLemFkM6Qa8aLvigBAOKGAos-CfqmJCXTW2ERBs_dh3F9--v9z-OL_IYzZQeT-X0Rg/exec';
+
+  var links = [].slice.call(document.querySelectorAll('.frames a'));
+  var secs  = [].slice.call(document.querySelectorAll('main section'));
+  function active(id){ links.forEach(function(a){ a.setAttribute('aria-current', a.getAttribute('href')==='#'+id?'true':'false'); }); }
+  active('s0');
+  if ('IntersectionObserver' in window){
+    var spy = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) active(e.target.id); }); },
+      {rootMargin:'-45% 0px -50% 0px', threshold:0});
+    secs.forEach(function(s){ spy.observe(s); });
+  }
+
+  function v(id){ var el=document.getElementById(id); if(!el) return '';
+    if(el.type==='checkbox') return el.checked ? 'yes' : 'no';
+    return (el.value||'').trim(); }
+  function r(name){ var el=document.querySelector('input[name="'+name+'"]:checked'); return el ? el.value : ''; }
+  function checks(map){ var out=[]; for(var id in map){ if(document.getElementById(id) && document.getElementById(id).checked) out.push(map[id]); } return out.join(', ') || '—'; }
+
+  function build(){
+    var L = [];
+    function S(t){ L.push('', '── ' + t.toUpperCase() + ' ' + '─'.repeat(Math.max(0, 46-t.length)), ''); }
+    function F(k, val){ L.push(k + ': ' + (val || '—')); }
+    function B(k, val){ L.push(k + ':', (val || '—'), ''); }
+
+    L.push('INCUBATOR CAMP :: APPLICATION');
+    L.push('Mars College :: Winter 2027');
+    L.push('Submitted ' + new Date().toISOString().slice(0,10));
+
+    S('01 You');
+    F('Name', v('f-name')); F('Email', v('f-email')); F('Lives in', v('f-city'));
+    F('Found us via', v('f-found')); F('Work can be appreciated at', v('f-links'));
+
+    S('02 The project');
+    B('What are you building', v('f-what'));
+    B('Who is it for, what changes', v('f-who'));
+    B('State of the project', v('f-unfinished'));
+    F('Stage', r('stage'));
+    B('Will teach at Mars', v('f-teach'));
+    B('Earned, learned, grown by season end', v('f-march'));
+
+    S('03 The cohort');
+    B('Brings to another practitioner', v('f-offer'));
+    B('Wants challenged', v('f-challenge'));
+    B('When feedback shifted the work', v('f-feedback'));
+    F('Accepts open integrity observation', v('f-oio'));
+
+    S('04 Your weeks');
+    F('Windows', checks({w1:'Build in (Dec 1 – Jan 11)', w2:'Full semester', w3:'Part of semester', w4:'Build out (Apr 1 – May 12)'}));
+    F('Which weeks', v('f-weeks'));
+    F('Hours to protect', v('f-work'));
+    F('Pre-season cadence', r('pre'));
+
+    S('05 The desert');
+    F('Brings', checks({k1:'Vehicle or RV', k2:'Solar and power', k3:'Building trades', k4:'Cooking for groups',
+      k5:'Documentation', k6:'Facilitation and group care', k7:'Off-grid or communal living', k8:'First aid'}));
+    B('Also brings', v('f-skills'));
+    F('Shelter preference', r('shelter'));
+    F('Kitchen notes', v('f-food'));
+    F('Read the El Nino briefing', v('f-nino'));
+    F('Accepts the chore rotation', v('f-chores'));
+
+    S('06 Sealed — camp lead only');
+    F('Fund support', r('fund'));
+    B('Note on support', v('f-fundnote'));
+    B('Access, health or safety planning', v('f-access'));
+    F('Emergency contact', v('f-emerg'));
+
+    S('07 Listing and nomination');
+    F('Listing choice', r('listing'));
+    F('One-line description', v('f-oneline'));
+    B('Nominating', v('f-nominate'));
+    B('Anything else', v('f-anything'));
+
+    L.push('', '∴ Growth is a process. Time is only the sparring partner. ∴');
+    return L.join('\n');
+  }
+
+  function payload(){
+    return {
+      name:v('f-name'), email:v('f-email'), city:v('f-city'), found:v('f-found'), links:v('f-links'),
+      what:v('f-what'), who:v('f-who'), unfinished:v('f-unfinished'), stage:r('stage'),
+      teach:v('f-teach'), march:v('f-march'),
+      offer:v('f-offer'), challenge:v('f-challenge'), feedback:v('f-feedback'), oio:v('f-oio'),
+      windows:checks({w1:'Build in (Dec 1 - Jan 11)', w2:'Full semester', w3:'Part of semester', w4:'Build out (Apr 1 - May 12)'}),
+      weeks:v('f-weeks'), work:v('f-work'), pre:r('pre'),
+      brings:checks({k1:'Vehicle or RV', k2:'Solar and power', k3:'Building trades', k4:'Cooking for groups',
+        k5:'Documentation', k6:'Facilitation and group care', k7:'Off-grid or communal living', k8:'First aid'}),
+      skills:v('f-skills'), shelter:r('shelter'), food:v('f-food'),
+      nino:v('f-nino'), chores:v('f-chores'),
+      fund:r('fund'), fundnote:v('f-fundnote'), access:v('f-access'), emerg:v('f-emerg'),
+      listing:r('listing'), oneline:v('f-oneline'),
+      nominate:v('f-nominate'), anything:v('f-anything')
+    };
+  }
+
+  var out = document.getElementById('out');
+  var st  = document.getElementById('status');
+  function say(msg, cls){ st.textContent = msg; st.className = cls || ''; }
+
+  /* ═══════════════════════════════════════════════════════════
+     REQUIRED FIELDS — one declarative list drives validation,
+     the per-section status lines, the rebate wayfinding, and the
+     overall summary. Add a field here and every surface updates.
+     ═══════════════════════════════════════════════════════════ */
+  var REQUIRED = [
+    {sec:'s1', id:'f-name'}, {sec:'s1', id:'f-email'}, {sec:'s1', id:'f-city'},
+    {sec:'s1', id:'f-found'}, {sec:'s1', id:'f-links'},
+
+    {sec:'s2', id:'f-what'}, {sec:'s2', id:'f-who'}, {sec:'s2', id:'f-unfinished'},
+    {sec:'s2', radio:'stage', label:'a stage'}, {sec:'s2', id:'f-teach'}, {sec:'s2', id:'f-march'},
+
+    {sec:'s3', id:'f-offer'}, {sec:'s3', id:'f-challenge'}, {sec:'s3', id:'f-feedback'},
+    {sec:'s3', check:'f-oio', label:'open integrity observation'},
+
+    {sec:'s4', group:['w1','w2','w3','w4'], label:'at least one window'},
+    {sec:'s4', radio:'pre', label:'a pre-season answer'},
+
+    {sec:'s5', radio:'shelter', label:'a shelter preference'},
+    {sec:'s5', check:'f-nino', label:'the El Nino acknowledgment'},
+    {sec:'s5', check:'f-chores', label:'the chore rotation acknowledgment'},
+
+    {sec:'s6', radio:'fund', label:'a fund-support answer'},
+
+    {sec:'s7', radio:'listing', label:'a listing choice'}
+  ];
+  var SECTIONS = ['s1','s2','s3','s4','s5','s6','s7'];
+
+  function fieldOk(f){
+    if (f.id)    return v(f.id).length > 0;
+    if (f.radio) return !!r(f.radio);
+    if (f.check) { var el = document.getElementById(f.check); return !!(el && el.checked); }
+    if (f.group) return f.group.some(function(id){ var el = document.getElementById(id); return el && el.checked; });
+    return true;
+  }
+
+  function firstEmptyEl(f){
+    if (f.id) return document.getElementById(f.id);
+    if (f.radio) return document.querySelector('input[name="'+f.radio+'"]');
+    if (f.check) return document.getElementById(f.check);
+    if (f.group) return document.getElementById(f.group[0]);
+  }
+
+  function refresh(){
+    var incompleteSections = [];
+    SECTIONS.forEach(function(sec){
+      var fields = REQUIRED.filter(function(f){ return f.sec === sec; });
+      var done = fields.filter(fieldOk).length;
+      var total = fields.length;
+      var stat = document.getElementById('stat-' + sec);
+      var frame = document.querySelector('.frames a[href="#' + sec + '"]');
+      if (done === total){
+        if (stat) stat.textContent = '';
+        if (frame) frame.classList.add('done');
+      } else {
+        if (stat) stat.textContent = done + ' of ' + total + ' answered here';
+        if (frame) frame.classList.remove('done');
+        incompleteSections.push(sec.replace('s',''));
+      }
+    });
+
+    var allEl = document.getElementById('allstat');
+    if (allEl){
+      if (!incompleteSections.length){
+        allEl.textContent = 'All sections complete. Ready to send.';
+        allEl.className = 'ok';
+      } else {
+        allEl.textContent = 'Section' + (incompleteSections.length > 1 ? 's ' : ' ') +
+          incompleteSections.join(', ') + (incompleteSections.length > 1 ? ' still need' : ' still needs') +
+          ' an answer. Marked in the margin.';
+        allEl.className = '';
+      }
+    }
+    return incompleteSections;
+  }
+
+  document.addEventListener('input', refresh);
+  document.addEventListener('change', refresh);
+
+  /* ── local draft ─────────────────────────────────────────── */
+  var DRAFT_KEY = 'ic_apply_draft_v1';
+
+  function collectDraft(){
+    var data = {};
+    document.querySelectorAll('main input, main textarea').forEach(function(el){
+      if (el.type === 'checkbox'){ if (el.id) data[el.id] = el.checked; }
+      else if (el.type === 'radio'){ if (el.checked && el.name) data['r:' + el.name] = el.id; }
+      else if (el.id) { data[el.id] = el.value; }
+    });
+    return data;
+  }
+
+  function restoreDraft(data){
+    Object.keys(data).forEach(function(key){
+      if (key.indexOf('r:') === 0){
+        var el = document.getElementById(data[key]);
+        if (el) el.checked = true;
+      } else {
+        var el2 = document.getElementById(key);
+        if (!el2) return;
+        if (el2.type === 'checkbox') el2.checked = !!data[key];
+        else el2.value = data[key];
+      }
+    });
+  }
+
+  var draftTimer = null;
+  function scheduleSave(){
+    clearTimeout(draftTimer);
+    draftTimer = setTimeout(function(){
+      try {
+        localStorage.setItem(DRAFT_KEY, JSON.stringify({ savedAt: Date.now(), data: collectDraft() }));
+        paintDraftBar();
+      } catch (err) { /* storage unavailable — drafting silently does not persist */ }
+    }, 500);
+  }
+  document.addEventListener('input', scheduleSave);
+  document.addEventListener('change', scheduleSave);
+
+  function clearDraft(){
+    try { localStorage.removeItem(DRAFT_KEY); } catch (err) {}
+    var bar = document.getElementById('draftbar'); if (bar) bar.remove();
+    var note = document.getElementById('draftnote'); if (note) note.remove();
+  }
+
+  function relTime(ms){
+    var s = Math.round((Date.now() - ms) / 1000);
+    if (s < 60) return 'moments ago';
+    var m = Math.round(s / 60);
+    if (m < 60) return m + ' minute' + (m===1?'':'s') + ' ago';
+    var h = Math.round(m / 60);
+    return h + ' hour' + (h===1?'':'s') + ' ago';
+  }
+
+  function paintDraftBar(){
+    var raw = null;
+    try { raw = localStorage.getItem(DRAFT_KEY); } catch (err) {}
+    if (!raw) return;
+    var saved;
+    try { saved = JSON.parse(raw); } catch (err) { return; }
+    var bar = document.getElementById('draftbar');
+    if (!bar){
+      bar = document.createElement('div');
+      bar.className = 'draftbar'; bar.id = 'draftbar';
+      document.body.appendChild(bar);
+    }
+    bar.innerHTML = 'Draft saved ' + relTime(saved.savedAt) + '<button type="button" id="clearDraftBtn">Clear draft</button>';
+    var btn = document.getElementById('clearDraftBtn');
+    if (btn) btn.addEventListener('click', function(){
+      if (confirm('Clear your saved draft? This cannot be undone.')) { clearDraft(); location.reload(); }
+    });
+  }
+
+  (function initDraft(){
+    var raw = null;
+    try { raw = localStorage.getItem(DRAFT_KEY); } catch (err) {}
+    if (!raw) return;
+    var saved;
+    try { saved = JSON.parse(raw); } catch (err) { return; }
+    restoreDraft(saved.data || {});
+
+    var s0 = document.getElementById('s0');
+    if (s0){
+      var note = document.createElement('div');
+      note.className = 'draftnote'; note.id = 'draftnote';
+      note.innerHTML = 'A saved draft from ' + relTime(saved.savedAt) + ' was restored below.' +
+        '<button type="button" id="clearDraftBtn2">Clear it and start fresh</button>';
+      s0.appendChild(note);
+      document.getElementById('clearDraftBtn2').addEventListener('click', function(){
+        if (confirm('Clear your saved draft? This cannot be undone.')) { clearDraft(); location.reload(); }
+      });
+    }
+    paintDraftBar();
+    refresh();
+  })();
+
+  refresh();
+
+  document.getElementById('send').addEventListener('click', function(){
+    var incomplete = refresh();
+    if (incomplete.length){
+      var firstSec = 's' + incomplete[0];
+      var firstField = REQUIRED.filter(function(f){ return f.sec === firstSec && !fieldOk(f); })[0];
+      say('Section' + (incomplete.length > 1 ? 's ' : ' ') + incomplete.join(', ') +
+          (incomplete.length > 1 ? ' still need' : ' still needs') +
+          ' an answer before this can travel. Taking you there now.', 'warn');
+      var target = document.getElementById(firstSec);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (firstField) { var el = firstEmptyEl(firstField); if (el) setTimeout(function(){ el.focus(); }, 450); }
+      return;
+    }
+    var name = v('f-name'), mail = v('f-email'), what = v('f-what');
+    if (!name || !mail || !what){
+      say('A name, an email and a description of what you are building are needed before sending.', 'warn');
+      return;
+    }
+    if (!ENDPOINT){
+      say('Sending is being wired up. Use assemble as text for now.', 'warn');
+      out.value = build(); out.classList.add('on');
+      return;
+    }
+    say('Sending your application…');
+    fetch(ENDPOINT, {
+      method: 'POST',
+      /* text/plain keeps this a simple request, so no CORS preflight is needed */
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload())
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (res && res.ok){
+        say('Arrived. Your reference is ' + res.id + '. A confirmation is on its way, and a person reads it within ten days.', 'ok');
+        document.getElementById('send').disabled = true;
+        clearDraft();
+      } else {
+        throw new Error('rejected');
+      }
+    })
+    .catch(function(){
+      say('The send met trouble. Your answers are assembled below — copy them into an email and they arrive in the same place.', 'warn');
+      out.value = build(); out.classList.add('on'); out.focus(); out.setSelectionRange(0,0);
+    });
+  });
+
+  document.getElementById('assemble').addEventListener('click', function(){
+    out.value = build(); out.classList.add('on'); out.focus(); out.setSelectionRange(0,0);
+  });
+  document.getElementById('mailit').addEventListener('click', function(){
+    var body = build();
+    var subj = 'Incubator Camp application — ' + (v('f-name') || 'no name given');
+    window.location.href = 'mailto:connect@thealienschool.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+  });
+})();
+</script>
+</body>
+</html>

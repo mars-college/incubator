@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mars-incubator",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8000",
+        "-d",
+        "/Users/genekogan/b2-restore/Users/gene/Mars/web/incubator.mars.college"
+      ],
+      "port": 8000
+    }
+  ]
+}

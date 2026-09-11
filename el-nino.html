@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meet El Niño — Incubator Camp, Mars College</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0B0907;--bone:#EDE8DE;--quiet:#8A857B;--time:#E2622A;
+  --line:rgba(237,232,222,.09);--rule:rgba(237,232,222,.14);
+  --display:"Bodoni Moda",Georgia,serif;--mass:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Literata",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --rebate:52px;--gutter:clamp(20px,5vw,88px);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--ground);color:var(--bone);font-family:var(--body);font-size:19px;
+  line-height:1.68;font-optical-sizing:auto;overflow-x:hidden;
+  text-rendering:optimizeLegibility;-webkit-font-smoothing:subpixel-antialiased;}
+/* design-integrated scrollbar — a flat rule, not a system widget */
+html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--quiet);border:0;}
+::-webkit-scrollbar-thumb:hover{background:var(--time);}
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.26;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
+
+.rebate{position:fixed;top:0;left:0;bottom:0;width:var(--rebate);z-index:80;
+  border-right:1px solid var(--rule);background:var(--ground);display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between;padding:18px 0;}
+.rebate .stock{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);
+  font-size:9.5px;letter-spacing:.34em;color:var(--quiet);text-transform:uppercase;white-space:nowrap;}
+.rebate .page{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--mono);
+  font-size:10px;letter-spacing:.3em;color:var(--time);text-transform:uppercase;white-space:nowrap;}
+.rebate .back{font-family:var(--mono);font-size:15px;color:var(--quiet);text-decoration:none;line-height:1;}
+.rebate .back:hover{color:var(--bone);}
+
+main{margin-left:var(--rebate);}
+section{position:relative;padding:clamp(70px,10vh,120px) var(--gutter);max-width:1180px;}
+.col{max-width:62ch;}
+h1,h2,h3{margin:0;font-weight:400;}
+.tag{font-family:var(--mono);font-size:11px;letter-spacing:.28em;color:var(--quiet);
+  text-transform:uppercase;margin-bottom:26px;}
+h2{font-family:var(--mass);font-weight:700;font-size:clamp(24px,3vw,36px);line-height:1.14;
+  letter-spacing:-.015em;margin-bottom:24px;max-width:24ch;}
+h3{font-family:var(--mass);font-weight:700;font-size:15px;letter-spacing:.02em;margin:46px 0 12px;}
+p{margin:0 0 20px;}
+p.lead{font-size:21px;line-height:1.6;}
+a.inline{color:var(--bone);text-decoration:none;border-bottom:1px solid var(--time);}
+a.inline:hover{border-bottom-width:3px;}
+em{font-style:italic;}
+.quiet{color:var(--quiet);}
+.dd{color:var(--quiet);font-family:var(--mono);font-size:.82em;letter-spacing:.06em;padding:0 .18em;}
+:focus-visible{outline:2px solid var(--time);outline-offset:4px;}
+
+/* masthead */
+.masthead{min-height:74svh;display:flex;flex-direction:column;justify-content:center;max-width:none;overflow:hidden;}
+.sunfield{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.storm{position:absolute;left:46%;bottom:8%;width:min(86vw,1020px);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(226,98,42,.28) 0%,rgba(226,98,42,.10) 42%,rgba(226,98,42,0) 68%);}
+.mh{position:relative;z-index:2;}
+.mh .a{font-family:var(--mass);font-weight:900;text-transform:uppercase;
+  font-size:clamp(26px,5vw,68px);line-height:.94;letter-spacing:-.035em;}
+.mh .b{font-family:var(--display);font-style:italic;font-weight:500;
+  font-optical-sizing:none;font-variation-settings:"opsz" 34,"wght" 520;
+  font-size:clamp(72px,16vw,228px);line-height:.8;letter-spacing:-.028em;margin:.05em 0 0 -.04em;
+  -webkit-text-stroke:.35px var(--bone);white-space:nowrap;}
+.mh .c{font-family:var(--mono);font-weight:500;font-size:clamp(11px,1.3vw,16px);letter-spacing:.26em;
+  text-transform:uppercase;color:#C4BCAF;margin-top:2.2em;padding-top:1.1em;
+  border-top:1px solid var(--rule);display:inline-block;}
+
+/* panelist card */
+.panelist{border-top:2px solid var(--time);padding-top:18px;margin:44px 0 0;
+  font-family:var(--mono);font-size:12.5px;line-height:2;letter-spacing:.05em;max-width:56ch;}
+.panelist b{color:var(--time);font-weight:500;letter-spacing:.24em;font-size:14px;}
+.panelist span{color:var(--quiet);text-transform:uppercase;font-size:10.5px;letter-spacing:.18em;}
+
+/* months */
+.months{margin-top:26px;border-top:1px solid var(--rule);max-width:720px;}
+.months > div{display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;padding:15px 0;
+  border-bottom:1px solid var(--line);font-size:16.5px;line-height:1.46;}
+.months .m{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--quiet);
+  text-transform:uppercase;align-self:start;padding-top:4px;}
+.months .hot{color:var(--time);}
+
+/* prep ledger */
+.ledger{margin-top:34px;max-width:760px;}
+.ledger .cap{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;
+  border-bottom:2px solid var(--time);}
+.ledger .cap .n{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--quiet);}
+.ledger .cap .t{font-family:var(--mass);font-weight:900;text-transform:uppercase;
+  font-size:clamp(15px,1.9vw,22px);letter-spacing:-.01em;line-height:1;}
+.ledger ol{list-style:none;margin:0;padding:0;counter-reset:row;}
+.ledger li{counter-increment:row;display:grid;grid-template-columns:32px minmax(0,1fr);gap:14px;
+  align-items:baseline;padding:13px 0;border-bottom:1px solid var(--line);font-size:16.5px;line-height:1.45;}
+.ledger li::before{content:counter(row,decimal-leading-zero);font-family:var(--mono);
+  font-size:10.5px;color:var(--quiet);letter-spacing:.08em;}
+.ledger li b{font-weight:400;font-family:var(--mass);font-size:15px;}
+
+/* chart */
+.chart{margin:44px 0 0;max-width:860px;}
+.chart svg{width:100%;height:auto;}
+.chart .bar{fill:rgba(237,232,222,.34);}
+.chart .bar.vs{fill:rgba(237,232,222,.62);}
+.chart .bar.fc{fill:none;stroke:var(--time);stroke-width:1.2;stroke-dasharray:3 3;}
+.chart .ax{stroke:var(--rule);stroke-width:1;}
+.chart .gl{stroke:var(--line);stroke-width:1;}
+.chart text{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;fill:var(--quiet);text-transform:uppercase;}
+.chart text.val{fill:#C4BCAF;}
+.chart text.now{fill:var(--time);}
+.caption{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--quiet);
+  line-height:1.9;margin-top:16px;max-width:74ch;}
+
+/* codex */
+.codex{width:100%;max-width:260px;height:auto;}
+.codex .ln{stroke:var(--bone);fill:none;opacity:.32;}
+.codex .fx{stroke:var(--time);fill:none;opacity:.75;}
+.codex .dot{fill:var(--bone);opacity:.5;}
+.codex text{font-family:var(--mono);font-size:7px;letter-spacing:.16em;fill:var(--quiet);text-transform:uppercase;}
+.quote{margin:clamp(52px,8vh,96px) 0 0;display:grid;grid-template-columns:minmax(0,1fr) 240px;
+  gap:clamp(24px,5vw,64px);align-items:center;border-top:1px solid var(--rule);padding-top:40px;}
+.quote blockquote{margin:0;font-family:var(--display);font-size:clamp(23px,3vw,40px);
+  line-height:1.24;max-width:20ch;}
+.quote figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--quiet);
+  text-transform:uppercase;margin-top:24px;line-height:2;}
+
+.note{border-left:2px solid var(--time);padding:4px 0 4px 22px;margin:36px 0;max-width:60ch;}
+.cta{display:inline-block;font-family:var(--mass);font-weight:700;font-size:16px;text-decoration:none;
+  border-bottom:2px solid var(--time);padding-bottom:3px;margin-top:30px;margin-right:30px;
+  transition:border-bottom-width .15s;}
+.cta:hover,.cta:focus-visible{border-bottom-width:6px;}
+.cta.soft{border-bottom-color:var(--rule);}
+.cta.soft:hover{border-bottom-color:var(--bone);}
+
+footer{margin-left:var(--rebate);padding:64px var(--gutter) 88px;border-top:1px solid var(--rule);}
+footer p{font-family:var(--mono);font-size:11px;letter-spacing:.17em;color:var(--quiet);
+  text-transform:uppercase;margin:0 0 10px;}
+
+@media (max-width:900px){ .quote{grid-template-columns:1fr;} }
+@media (max-width:820px){
+  :root{--rebate:30px;}
+  body{font-size:17.5px;}
+  .rebate .stock{font-size:8px;letter-spacing:.24em;}
+  .rebate .page{font-size:8.5px;letter-spacing:.2em;}
+  .months > div{grid-template-columns:1fr;gap:4px;}
+  .mh .b{font-size:clamp(58px,18vw,130px);-webkit-text-stroke:.25px var(--bone);}
+  .mh .c{letter-spacing:.16em;font-size:11.5px;}
+}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} *{transition-duration:.01ms !important;} }
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="rebate" aria-label="Site">
+  <div class="stock">Incubator Camp · Mars College</div>
+  <div class="page">Meet El Niño</div>
+  <a class="back" href="./index.html" aria-label="Back to Incubator Camp">∴</a>
+</nav>
+
+<main>
+
+<section class="masthead" data-stage="early">
+  <div class="sunfield" aria-hidden="true"><div class="storm"></div></div>
+  <div class="mh">
+    <div class="a">Meet</div>
+    <div class="b">El Niño</div>
+    <div class="c">A notable 2026 guest on Mars</div>
+  </div>
+
+  <div class="panelist">
+    <b>EL NIÑO</b><br>
+    <span>On panel since</span> 1525, when fishermen off Peru named the warm current for the child who arrives at Christmas.<br>
+    <span>Central project</span> Moving the Pacific's warm water east, and the jet stream south with it.<br>
+    <span>Status</span> Already here. Forecast to peak during our season.<br>
+    <span>Engagement</span> Required, like everyone else's.
+  </div>
+</section>
+
+<section data-stage="early">
+  <div class="tag">Why this page exists</div>
+  <h2>You are deciding whether to spend three months in a desert basin during a very strong El Niño.</h2>
+  <div class="col">
+    <p class="lead">Here is what is actually known, so you can decide with real information rather than with a mood.</p>
+    <p>Incubator Camp runs one house rule: every practitioner engages every practitioner's central project. El Niño arrives with a central project, so El Niño gets a listing on the panel and a page of its own. The listing is a joke. The page is not.</p>
+  </div>
+</section>
+
+<section data-stage="late">
+  <div class="tag">01 &nbsp;As a being</div>
+  <h2>A recurring warm current that changes the odds, not the days.</h2>
+  <div class="col">
+    <p>El Niño is a warming of the eastern tropical Pacific that returns every two to seven years on no schedule anyone can hold. It has a sibling of the opposite temperament, La Niña, and the pair together are the largest year-to-year climate signal on the planet. Fishermen off Peru named it long before anyone measured it, because the warm water showed up around Christmas.</p>
+    <p><b>What it does to a season:</b> it shifts probabilities. A very strong El Niño makes a wet, stormy, periodically cool winter much more likely in Southern California. It does not guarantee one, it does not schedule individual storms, and it does not rule out warm dry stretches or an occasional hot spell in the desert.</p>
+
+    <div class="note">
+      <p style="margin:0"><b>One correction worth making early.</b> A very strong El Niño does <em>not</em> mean another hot winter at Bombay Beach. March 2026 was extraordinary, with Southern California's worst March heat wave on record and Woodland Hills reaching 102°F. Do not use March 2026 as a template for March 2027. The historical signal points the other way.</p>
+    </div>
+  </div>
+</section>
+
+<section data-stage="late">
+  <div class="tag">02 &nbsp;As an operation</div>
+  <h2>Trade winds slacken, the warm pool slides east, the storm track drops south.</h2>
+  <div class="col">
+    <p>In an ordinary year, trade winds pile the Pacific's warm surface water against Indonesia while cold water upwells off South America. In an El Niño year the winds slacken, the warm pool slides east, and the cold upwelling shuts down. Heat enters the atmosphere over the eastern Pacific. Convection follows the heat. The subtropical jet stream dives south and carries the storm track straight across the southern tier of North America.</p>
+    <p>Bombay Beach sits in that tier. That single fact is why this page exists.</p>
+
+    <h3>Where the forecast stands</h3>
+    <p>As of the August 2026 assessment, NOAA puts the chance of the 2026–27 El Niño becoming <b>very strong</b> during fall and winter at greater than ninety percent. The eastern tropical Pacific is already exceptionally warm.</p>
+    <p>Strong events push the storm track further south and aim moisture at Southern California, which raises the risk of heavy rainfall, flash flooding and debris flows. In a NOAA-hosted study covering 1901 to 2010, eight of ten moderate-to-strong El Niño events placed Southern California in the wettest third of winters during late winter. The relationship strengthens as the winter goes on, which is why March is the month to watch rather than December.</p>
+    <p>NOAA is also tracking unusually warm ocean water off Southern California alongside the developing El Niño. That adds a second, independent source of variability, so anomalous warmth is not off the table either.</p>
+  </div>
+
+  <div class="chart">
+    <svg viewBox="0 0 860 300" role="img" aria-label="Bar chart of peak Oceanic Niño Index values for strong El Niño events since 1950, with the 2026 to 2027 forecast shown as an outline.">
+      <g class="gl">
+        <line x1="60" y1="40" x2="840" y2="40"/><line x1="60" y1="90" x2="840" y2="90"/>
+        <line x1="60" y1="140" x2="840" y2="140"/><line x1="60" y1="190" x2="840" y2="190"/>
+      </g>
+      <line class="ax" x1="60" y1="240" x2="840" y2="240"/>
+      <text x="52" y="43" text-anchor="end">2.5</text>
+      <text x="52" y="93" text-anchor="end">2.0</text>
+      <text x="52" y="143" text-anchor="end">1.5</text>
+      <text x="52" y="193" text-anchor="end">1.0</text>
+      <text x="60" y="272">peak oceanic niño index · °c</text>
+
+      <!-- bars: x, w=44 ; y = 240 - (val-0.5)*100 -->
+      <rect class="bar"    x="80"  y="110" width="44" height="130"/><text x="102" y="256" text-anchor="middle">57–58</text><text class="val" x="102" y="102" text-anchor="middle">1.8</text>
+      <rect class="bar"    x="164" y="90"  width="44" height="150"/><text x="186" y="256" text-anchor="middle">65–66</text><text class="val" x="186" y="82"  text-anchor="middle">2.0</text>
+      <rect class="bar"    x="248" y="80"  width="44" height="160"/><text x="270" y="256" text-anchor="middle">72–73</text><text class="val" x="270" y="72"  text-anchor="middle">2.1</text>
+      <rect class="bar vs" x="332" y="70"  width="44" height="170"/><text x="354" y="256" text-anchor="middle">82–83</text><text class="val" x="354" y="62"  text-anchor="middle">2.2</text>
+      <rect class="bar"    x="416" y="120" width="44" height="120"/><text x="438" y="256" text-anchor="middle">87–88</text><text class="val" x="438" y="112" text-anchor="middle">1.7</text>
+      <rect class="bar"    x="500" y="120" width="44" height="120"/><text x="522" y="256" text-anchor="middle">91–92</text><text class="val" x="522" y="112" text-anchor="middle">1.7</text>
+      <rect class="bar vs" x="584" y="50"  width="44" height="190"/><text x="606" y="256" text-anchor="middle">97–98</text><text class="val" x="606" y="42"  text-anchor="middle">2.4</text>
+      <rect class="bar vs" x="668" y="30"  width="44" height="210"/><text x="690" y="256" text-anchor="middle">15–16</text><text class="val" x="690" y="22"  text-anchor="middle">2.6</text>
+      <rect class="bar fc" x="752" y="80"  width="44" height="160"/><text class="now" x="774" y="256" text-anchor="middle">26–27</text><text class="now" x="774" y="72"  text-anchor="middle">?</text>
+      <text class="now" x="840" y="272" text-anchor="end">dashed = forecast, not observation</text>
+    </svg>
+    <p class="caption">Peak ONI values for strong and very strong events in NOAA's record since 1950. The 2026–27 bar is drawn from the current forecast range and is not a measurement. Values move monthly. Verify against the NOAA Climate Prediction Center before you rely on any of this.</p>
+  </div>
+
+  <div class="note" style="margin-top:44px">
+    <p style="margin:0"><b>The forecast sharpens between now and December.</b> By late November there will be a substantially better picture of what January through March 2027 is setting up to be. Check it before you commit. We will publish what we learn as it arrives.</p>
+  </div>
+</section>
+
+<section data-stage="late">
+  <div class="tag">03 &nbsp;As an elemental system</div>
+  <h2>Heat becomes water. Water becomes wind. Wind becomes ground.</h2>
+  <div class="col">
+    <p>On a dry lake bed, ground is the last term in the chain, and ground is what we live on. Here is the chain translated into a calendar.</p>
+  </div>
+
+  <div class="months">
+    <div><span class="m">December</span><span>Plenty of pleasant desert weather, with storm episodes possible. The best window for building, which is exactly why the build season opens December 1.</span></div>
+    <div><span class="m">January</span><span>El Niño influence becoming consequential. Expect the first real storm sequences. The semester opens January 11.</span></div>
+    <div><span class="m">February</span><span>Potentially quite active. Stronger chance of Pacific storms and cool spells. Plan indoor alternatives for anything that must happen on schedule.</span></div>
+    <div><span class="m hot">March</span><span>The month to be most cautious about. The Southern California precipitation signal is historically strongest in late winter. Do not plan on desert heat. Mars Electronica lands March 27 to 29.</span></div>
+  </div>
+</section>
+
+<section data-stage="late">
+  <div class="tag">04 &nbsp;Preparation</div>
+  <h2>What to actually bring, build and expect.</h2>
+  <div class="col">
+    <p>The Salton Sea basin reacts dramatically when significant rain hits normally dry terrain. None of the following is dramatic. All of it is ordinary desert competence, applied earlier than usual.</p>
+  </div>
+
+  <div class="ledger">
+    <div class="cap"><span class="n">A</span><span class="t">Structure</span></div>
+    <ol>
+      <li><b>Elevate everything.</b> Sleeping platforms, storage, and anything electrical sits off the ground. Water finds the lowest thing you own.</li>
+      <li><b>Plan drainage in December.</b> Grade away from every structure while the ground is dry and workable. February is too late to dig.</li>
+      <li><b>Tie down for wind, not for weather.</b> Shade structures and light panels are the first things to leave. Rate every anchor higher than you think you need.</li>
+      <li><b>Assume the playa becomes clay.</b> Wet lake bed turns slick, then sticky, then takes days to firm. Park on hard ground and stay off soft ground entirely.</li>
+    </ol>
+  </div>
+
+  <div class="ledger">
+    <div class="cap"><span class="n">B</span><span class="t">What you bring</span></div>
+    <ol>
+      <li><b>More warm layers than a desert suggests.</b> Wet cold at night is a different problem than dry cold, and it is the one people underpack for.</li>
+      <li><b>Genuine rain gear and a second pair of boots.</b> One pair will be drying at all times.</li>
+      <li><b>Waterproof storage for anything that matters.</b> Instruments, notebooks, drives, cameras.</li>
+      <li><b>A vehicle, if you have one.</b> A working vehicle in camp is a real contribution to the group, and never more so than in a wet year.</li>
+      <li><b>Patience with the schedule.</b> Some weeks will move indoors. The program still gets taught.</li>
+    </ol>
+  </div>
+
+  <div class="col" style="margin-top:44px">
+    <h3>And the other half, equally true</h3>
+    <p>A wet Colorado Desert winter is the condition that produces a superbloom. The same storms that make the mud make a flowering that most people who live in California never get to see. If the forecast holds, the 2027 season may end inside one.</p>
+  </div>
+
+  <figure class="quote">
+    <div>
+      <blockquote>The same system makes the mud and the flowers.</blockquote>
+      <figcaption>Winter 2027 <span class="dd">::</span> Bombay Beach, California</figcaption>
+    </div>
+    <svg class="codex" viewBox="0 0 240 240" role="img" aria-label="Codex of the El Niño chain: heat becoming water, water becoming wind, wind becoming ground.">
+      <g class="ln" stroke-width=".6">
+        <line x1="20" y1="60" x2="220" y2="60"/><line x1="20" y1="112" x2="220" y2="112"/>
+        <line x1="20" y1="164" x2="220" y2="164"/><line x1="20" y1="204" x2="220" y2="204"/>
+      </g>
+      <path class="fx" d="M20 60 C 70 60, 90 96, 120 112 S 180 150, 220 164" stroke-width="1.3"/>
+      <circle class="dot" cx="20" cy="60" r="2.6"/><circle class="dot" cx="120" cy="112" r="2.6"/>
+      <circle class="dot" cx="220" cy="164" r="2.6"/>
+      <text x="24" y="52">heat</text><text x="124" y="104">water · wind</text>
+      <text x="216" y="180" text-anchor="end">ground</text>
+      <text x="120" y="228" text-anchor="middle">∴ the chain we live on ∴</text>
+    </svg>
+  </figure>
+</section>
+
+<section data-stage="late">
+  <div class="tag">05 &nbsp;Where to check</div>
+  <h2>Do not take our word for the weather.</h2>
+  <div class="col">
+    <p>The NOAA Climate Prediction Center publishes an ENSO diagnostic discussion on the second Thursday of every month, along with the current Niño 3.4 anomaly and the seasonal outlook. That discussion is the source everything on this page traces back to.</p>
+    <p>Read it before you commit, read it again in November, and read it once more in December. The picture will be considerably clearer each time.</p>
+    <a class="cta" href="./apply.html">Apply for a spot</a>
+    <a class="cta soft" href="./practitioners.html">See the panel</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>El Niño &nbsp;∴&nbsp; On panel since 1525</p>
+  <p>Incubator Camp &nbsp;∴&nbsp; A camp of Mars College &nbsp;∴&nbsp; Bombay Beach, California</p>
+
+<!-- LEARN MORE -->
+<style>
+.learnmore{
+  border-top:1px solid var(--line); margin-top:30px; padding-top:18px;
+  font-family:var(--mono); font-size:12px; letter-spacing:.06em; color:var(--quiet);
+  max-width:60ch;
+}
+.learnmore a{
+  color:var(--quiet); text-decoration:none; border-bottom:1px dotted var(--quiet);
+}
+.learnmore a:hover{ color:var(--bone); border-bottom-color:var(--bone); }
+.learnmore .ext{ font-size:10px; vertical-align:1px; margin-left:2px; }
+</style>
+
+<div class="learnmore">
+  Incubator Camp is one camp inside Mars College, now entering its eighth season.
+  For the open call, the other camps, and the wider context <span class="dd">::</span>
+  <a href="https://marscollege.substack.com/p/open-call-for-mars-college-2027" target="_blank" rel="noopener">the 2027 open call<span class="ext">↗</span></a>
+  and <a href="https://marscollege.substack.com/" target="_blank" rel="noopener">the Mars College Substack<span class="ext">↗</span></a>.
+</div>
+<!-- /LEARN MORE -->
+</footer>
+
+
+<!-- APPLY COMPANION -->
+<style>
+#companion{
+  position:fixed; left:var(--rebate); bottom:0; z-index:75;
+  max-width:min(420px, calc(100vw - var(--rebate) - 24px));
+  transform:translateY(0); transition:transform .35s cubic-bezier(.16,.7,.2,1), opacity .35s;
+  opacity:1;
+}
+#companion.hide{ transform:translateY(100%); opacity:0; pointer-events:none; }
+#companion .pill{
+  display:flex; align-items:center; gap:14px;
+  background:var(--ground); border:1px solid var(--rule); border-bottom:0;
+  padding:14px 18px; margin:0 14px;
+}
+#companion .txt{ flex:1; min-width:0; }
+#companion .lbl{
+  display:block; font-family:var(--mono); font-size:9.5px; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--time); margin-bottom:4px;
+}
+#companion .msg{
+  font-family:var(--body); font-size:14.5px; line-height:1.4; color:var(--bone);
+  margin:0;
+}
+#companion a.go{
+  flex:0 0 auto; font-family:var(--mass); font-weight:700; font-size:13.5px;
+  color:var(--bone); text-decoration:none; white-space:nowrap;
+  border-bottom:2px solid var(--time); padding-bottom:2px;
+}
+#companion a.go:hover{ border-bottom-width:5px; }
+#companion button.x{
+  flex:0 0 auto; background:none; border:0; color:var(--quiet); font-family:var(--mono);
+  font-size:16px; line-height:1; cursor:pointer; padding:2px 0 0;
+}
+#companion button.x:hover{ color:var(--bone); }
+
+@media (max-width:820px){
+  #companion{ left:0; right:0; max-width:none; }
+  #companion .pill{ margin:0 10px; padding:12px 14px; }
+  #companion .msg{ font-size:13.5px; }
+}
+@media (prefers-reduced-motion:reduce){
+  #companion{ transition:opacity .01ms; }
+}
+</style>
+
+<div id="companion" role="complementary" aria-label="Application reminder">
+  <div class="pill">
+    <div class="txt">
+      <span class="lbl" id="cp-lbl">Incubator Camp</span>
+      <p class="msg" id="cp-msg">Eight to twelve seats. The panel fills in the order people arrive.</p>
+    </div>
+    <a class="go" id="cp-go" href="./apply.html">Apply →</a>
+    <button class="x" id="cp-x" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var STAGES = {
+    early: {
+      label: 'Just arrived',
+      msg:   'Half-formed is the ideal condition here. Read on, or see what the season actually asks of you.',
+      cta:   'See the nine phases', href: './index.html#p3'
+    },
+    mid: {
+      label: 'Reading through',
+      msg:   'The application previews every question before you answer one, so you can draft with real answers rather than first thoughts.',
+      cta:   'Preview the application', href: './apply.html'
+    },
+    late: {
+      label: 'Incubator Camp',
+      msg:   'Eight to twelve seats. The panel fills in the order people arrive.',
+      cta:   'Apply now', href: './apply.html'
+    }
+  };
+
+  var el = document.getElementById('companion');
+  if (!el) return;
+  var lbl = document.getElementById('cp-lbl');
+  var msg = document.getElementById('cp-msg');
+  var go  = document.getElementById('cp-go');
+  var xB  = document.getElementById('cp-x');
+
+  function paint(stage){
+    var s = STAGES[stage] || STAGES.late;
+    lbl.textContent = s.label;
+    msg.textContent = s.msg;
+    go.textContent  = s.cta + ' →';
+    go.href = s.href;
+  }
+
+  // Dismiss for this browsing session only — reappears on the next page,
+  // never silenced permanently, never using persistent storage.
+  var KEY = 'ic_companion_dismissed';
+  try {
+    if (sessionStorage.getItem(KEY) === '1') { el.classList.add('hide'); }
+  } catch (err) { /* storage unavailable — companion just stays visible */ }
+
+  xB.addEventListener('click', function(){
+    el.classList.add('hide');
+    try { sessionStorage.setItem(KEY, '1'); } catch (err) {}
+  });
+
+  var marked = Array.prototype.slice.call(document.querySelectorAll('[data-stage]'));
+  if (!marked.length){ paint('late'); return; }
+
+  paint(marked[0].getAttribute('data-stage')); // sensible first paint before scroll
+
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) paint(e.target.getAttribute('data-stage'));
+      });
+    }, { rootMargin:'-40% 0px -55% 0px', threshold:0 });
+    marked.forEach(function(s){ io.observe(s); });
+  }
+})();
+</script>
+<!-- /APPLY COMPANION -->
+</body>
+</html>

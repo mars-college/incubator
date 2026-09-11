@@ -1,0 +1,7 @@
+# Private — never publish. Contacts, pipeline config (sheet IDs, notify email,
+# Apps Script deployment URL), the budget model, and every project doc.
+.claude/
+apps-script/
+budget/
+*.md
+.DS_Store

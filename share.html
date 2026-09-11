@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Share Deck — Incubator Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0B0907;--bone:#EDE8DE;--quiet:#8A857B;--time:#E2622A;
+  --line:rgba(237,232,222,.09);--rule:rgba(237,232,222,.16);
+  --display:"Bodoni Moda",Georgia,serif;--mass:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Literata",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --ratio:4/5;          /* switched by the toggle */
+  --pad:clamp(26px,7vw,54px);
+  --safe:0px;           /* story safe inset, applied in 9:16 */
+}
+*{box-sizing:border-box;}
+html,body{margin:0;background:#000;color:var(--bone);
+  font-family:var(--body);-webkit-font-smoothing:subpixel-antialiased;text-rendering:optimizeLegibility;}
+body{scroll-snap-type:y mandatory;overflow-y:scroll;height:100svh;}
+/* design-integrated scrollbar — a flat rule, not a system widget */
+html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--quiet);border:0;}
+::-webkit-scrollbar-thumb:hover{background:var(--time);}
+
+/* ---------- controls (never captured) ---------- */
+.controls{position:fixed;top:calc(env(safe-area-inset-top) + 10px);left:50%;transform:translateX(-50%);
+  z-index:200;display:flex;gap:6px;background:rgba(0,0,0,.72);border:1px solid var(--rule);
+  padding:5px;backdrop-filter:blur(8px);}
+.controls button{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  background:none;border:0;color:var(--quiet);padding:7px 11px;cursor:pointer;}
+.controls button[aria-pressed="true"]{color:var(--ground);background:var(--bone);}
+.controls button:focus-visible{outline:2px solid var(--time);outline-offset:2px;}
+body.hidechrome .controls{opacity:.12;}
+body.hidechrome .controls:hover{opacity:1;}
+
+/* ---------- the card ---------- */
+.slide{height:100svh;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;
+  padding:14px;}
+.card{position:relative;width:min(100%,calc((100svh - 28px) * (var(--ratio))));
+  aspect-ratio:var(--ratio);background:var(--ground);overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:var(--pad);padding-top:calc(var(--pad) + var(--safe));padding-bottom:calc(var(--pad) + var(--safe));}
+.card .grain{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.26;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
+.card > *{position:relative;z-index:2;}
+
+/* crop marks — hairline corners at the exact ratio edge */
+.card::before,.card::after{content:"";position:absolute;z-index:4;pointer-events:none;
+  width:22px;height:22px;border:1px solid rgba(237,232,222,.34);opacity:var(--marks,1);}
+.card::before{top:9px;left:9px;border-right:0;border-bottom:0;}
+.card::after{bottom:9px;right:9px;border-left:0;border-top:0;}
+body.nomarks{--marks:0;}
+
+/* story safe-zone guides */
+.guides{position:absolute;inset:0;z-index:5;pointer-events:none;display:none;}
+body.guides .guides{display:block;}
+.guides i{position:absolute;left:0;right:0;height:1px;background:rgba(226,98,42,.5);}
+.guides i.t{top:14%;}
+.guides i.b{bottom:14%;}
+.guides span{position:absolute;left:10px;font-family:var(--mono);font-size:8px;letter-spacing:.2em;
+  color:rgba(226,98,42,.75);text-transform:uppercase;}
+.guides span.t{top:calc(14% + 5px);} .guides span.b{bottom:calc(14% + 5px);}
+
+/* ---------- card furniture ---------- */
+.mark{position:absolute;left:var(--pad);right:var(--pad);
+  bottom:calc(var(--pad) * .62 + var(--safe));display:flex;justify-content:space-between;
+  align-items:baseline;font-family:var(--mono);font-size:clamp(7.5px,1.35vw,10px);
+  letter-spacing:.22em;text-transform:uppercase;color:var(--quiet);z-index:6;}
+.mark .dots{color:var(--time);letter-spacing:.3em;}
+.eyebrow{font-family:var(--mono);font-size:clamp(8px,1.5vw,11px);letter-spacing:.3em;
+  text-transform:uppercase;color:var(--quiet);margin-bottom:auto;}
+
+/* type roles inside cards */
+.big{font-family:var(--mass);font-weight:900;text-transform:uppercase;letter-spacing:-.035em;
+  line-height:.92;font-size:clamp(30px,7.6vw,74px);}
+.script{font-family:var(--display);font-style:italic;font-weight:500;
+  font-optical-sizing:none;font-variation-settings:"opsz" 34,"wght" 520;
+  -webkit-text-stroke:.3px var(--bone);line-height:.82;letter-spacing:-.028em;
+  font-size:clamp(58px,15vw,150px);}
+.said{font-family:var(--display);font-size:clamp(22px,4.6vw,44px);line-height:1.24;font-weight:400;}
+.plain{font-family:var(--body);font-size:clamp(16px,3.1vw,27px);line-height:1.44;}
+.small{font-family:var(--mono);font-size:clamp(9px,1.7vw,13px);letter-spacing:.22em;
+  text-transform:uppercase;color:#C4BCAF;}
+.attrib{font-family:var(--mono);font-size:clamp(8.5px,1.5vw,11px);letter-spacing:.2em;
+  text-transform:uppercase;color:var(--quiet);line-height:2;margin-top:1.6em;}
+.rule{height:1px;background:var(--rule);margin:1.2em 0;}
+.orange{color:var(--time);}
+.stack > div + div{margin-top:.08em;}
+
+/* fact card rows */
+.rows{width:100%;}
+.rows div{display:flex;justify-content:space-between;gap:14px;padding:clamp(7px,1.5vw,13px) 0;
+  border-bottom:1px solid var(--line);font-family:var(--mono);
+  font-size:clamp(9px,1.85vw,14px);letter-spacing:.08em;}
+.rows .k{color:var(--quiet);text-transform:uppercase;letter-spacing:.16em;}
+.rows .v{font-variant-numeric:tabular-nums;text-align:right;}
+
+/* seat counter card */
+.frames{display:flex;gap:5px;flex-wrap:wrap;margin-top:1.4em;}
+.frames i{width:clamp(18px,4.4vw,34px);height:clamp(12px,2.9vw,22px);
+  border:1px solid var(--rule);display:block;}
+.frames i.f{background:var(--bone);border-color:var(--bone);}
+.frames i.g{background:var(--time);border-color:var(--time);}
+
+/* sun */
+.sunwrap{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.sunwrap .s{position:absolute;left:38%;bottom:6%;width:120%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(226,98,42,.34) 0%,rgba(226,98,42,.12) 42%,rgba(226,98,42,0) 68%);}
+</style>
+</head>
+<body class="nomarks">
+
+<div class="controls" role="group" aria-label="Card format">
+  <button id="b45"   aria-pressed="true">4 : 5 post</button>
+  <button id="b916"  aria-pressed="false">9 : 16 story</button>
+  <button id="bg"    aria-pressed="false">Safe zones</button>
+  <button id="bm"    aria-pressed="false">Crop marks</button>
+</div>
+
+<!-- 01 -->
+<div class="slide"><div class="card">
+  <div class="sunwrap" aria-hidden="true"><div class="s"></div></div>
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Winter 2027 · Bombay Beach</div>
+  <div class="stack">
+    <div class="big">Wake up to</div>
+    <div class="script">Infinity</div>
+    <div class="small" style="margin-top:1.6em">with wifi</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 02 -->
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">On the desert</div>
+  <div>
+    <div class="said">It is like standing on a new earth and learning that the new earth also has sunsets.</div>
+    <div class="attrib">Kamau Zuberi Akabueze<br>Mars '26 alum · Incubator Camp lead</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 03 -->
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">The law of incubation</div>
+  <div class="stack">
+    <div class="big">Growth is</div>
+    <div class="script" style="font-size:clamp(46px,11.5vw,116px)">a process</div>
+    <div class="rule"></div>
+    <div class="small">Time is only the sparring partner</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 04 -->
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Why the camp exists</div>
+  <div class="plain">The scholar who sat through your workshop on Tuesday is washing dishes beside you on Wednesday, presenting their thesis on Thursday, and repairing a leak in your roof on Saturday.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 05 -->
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Open integrity observation</div>
+  <div class="plain">You tell the person where you got bored, where you leaned in, and where your mind wandered off <span class="orange">::</span> and you leave your opinion of their work out of it.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 06 -->
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">The house rule</div>
+  <div class="stack">
+    <div class="big">Every practitioner</div>
+    <div class="script" style="font-size:clamp(38px,9.2vw,92px)">engages every</div>
+    <div class="big">practitioner's project</div>
+    <div class="attrib">Including mine · KzA</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 07 -->
+<div class="slide"><div class="card">
+  <div class="sunwrap" aria-hidden="true"><div class="s" style="left:20%;bottom:-6%"></div></div>
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">El Niño · on panel since 1525</div>
+  <div>
+    <div class="said">The same system makes the mud and the flowers.</div>
+    <div class="attrib">Winter 2027 · a very strong El Niño<br>Read the briefing · incubatorcamp</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 08 -->
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">The windows</div>
+  <div class="rows">
+    <div><span class="k">Semester</span><span class="v">Jan 11 – Mar 29, 2027</span></div>
+    <div><span class="k">Build in</span><span class="v">Dec 1 – Jan 11</span></div>
+    <div><span class="k">Build out</span><span class="v">Apr 1 – May 12</span></div>
+    <div><span class="k">Camp size</span><span class="v">8 – 12</span></div>
+    <div><span class="k">Where</span><span class="v">Bombay Beach, CA</span></div>
+  </div>
+  <div class="small" style="margin-top:1.6em">Incubation begins the month you are accepted</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 09 -->
+<!-- MANUALLY MAINTAINED — this count duplicates practitioners.html's .counter
+     (search that file for "seats filled"). Every time a seat is confirmed,
+     update both: the "2 of 12" text below, the .f/.g markers on the two
+     filled <i> tags here, and the matching <i class="filled">/<i class="guest">
+     pair in practitioners.html. There is no shared include for this number. -->
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">The panel is forming</div>
+  <div>
+    <div class="big" style="font-size:clamp(38px,9.5vw,92px)">2 of 12</div>
+    <div class="frames">
+      <i class="f"></i><i class="g"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+    </div>
+    <div class="plain" style="margin-top:1.2em;font-size:clamp(14px,2.6vw,22px)">Applying early earns more than a spot. Applying early earns a hand in who your cohort becomes.</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 10 -->
+<div class="slide"><div class="card">
+  <div class="sunwrap" aria-hidden="true"><div class="s" style="left:30%;bottom:-14%"></div></div>
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Applications open</div>
+  <div class="stack">
+    <div class="big">Nine months.</div>
+    <div class="big">One idea.</div>
+    <div class="script" style="font-size:clamp(50px,12.5vw,124px)">Finished.</div>
+    <div class="small" style="margin-top:1.5em">Rolling · 8 to 12 seats · Mars College</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<script>
+(function(){
+  var b45=document.getElementById('b45'), b916=document.getElementById('b916'),
+      bg=document.getElementById('bg'), bm=document.getElementById('bm'), root=document.documentElement;
+
+  function ratio(is45){
+    root.style.setProperty('--ratio', is45 ? '4/5' : '9/16');
+    root.style.setProperty('--safe',  is45 ? '0px' : '9%');
+    b45.setAttribute('aria-pressed', is45 ? 'true':'false');
+    b916.setAttribute('aria-pressed', is45 ? 'false':'true');
+  }
+  b45.onclick  = function(){ ratio(true);  };
+  b916.onclick = function(){ ratio(false); };
+  bg.onclick = function(){
+    var on = document.body.classList.toggle('guides');
+    bg.setAttribute('aria-pressed', on?'true':'false');
+  };
+  bm.onclick = function(){
+    var on = !document.body.classList.toggle('nomarks');
+    bm.setAttribute('aria-pressed', on?'true':'false');
+  };
+
+  /* deep link: ?r=916 */
+  if (/[?&]r=916/.test(location.search)) ratio(false);
+
+  /* dim the controls once the deck is in use so a screengrab stays clean */
+  var t; window.addEventListener('scroll', function(){
+    document.body.classList.add('hidechrome');
+    clearTimeout(t); t = setTimeout(function(){ document.body.classList.remove('hidechrome'); }, 2200);
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>

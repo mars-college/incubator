@@ -1,0 +1,10 @@
+# Vercel link (project + org ids)
+.vercel
+
+# Never commit — carries the Apps Script deployment URL, both Google Sheet IDs,
+# the camp lead's notify email, applicant-facing contacts, and the budget model.
+apps-script/
+budget/
+CONTACT-SHEET.md
+
+.DS_Store
