@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Land on Mars — Incubator Camp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0B0907;--bone:#EDE8DE;--quiet:#8A857B;--time:#E2622A;
+  --line:rgba(237,232,222,.09);--rule:rgba(237,232,222,.16);
+  --display:"Bodoni Moda",Georgia,serif;--mass:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Literata",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--ground);color:var(--bone);font-family:var(--body);font-size:17px;
+  line-height:1.6;overflow-x:hidden;text-rendering:optimizeLegibility;-webkit-font-smoothing:subpixel-antialiased;}
+html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
+::-webkit-scrollbar{width:7px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--quiet);border:0;}
+::-webkit-scrollbar-thumb:hover{background:var(--time);}
+:focus-visible{outline:2px solid var(--time);outline-offset:3px;}
+
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.26;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
+
+nav.top{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;
+  justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--rule);
+  background:rgba(11,9,7,.9);backdrop-filter:blur(3px);}
+nav.top .stock{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--quiet);
+  text-transform:uppercase;}
+nav.top .back{font-family:var(--mono);font-size:15px;color:var(--quiet);text-decoration:none;}
+nav.top .back:hover{color:var(--bone);}
+nav.top .count{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--quiet);
+  background:none;border:0;cursor:pointer;padding:4px 0;}
+nav.top .count:hover{color:var(--bone);}
+nav.top .count[hidden]{display:none;}
+
+main{padding:64px 20px 140px;max-width:640px;margin:0 auto;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;}
+
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;color:var(--quiet);
+  text-transform:uppercase;margin-bottom:14px;}
+h1{font-family:var(--mass);font-weight:900;font-size:clamp(28px,8vw,44px);line-height:.98;
+  letter-spacing:-.02em;margin:0 0 10px;}
+h2{font-family:var(--mass);font-weight:700;font-size:clamp(20px,5.6vw,26px);line-height:1.16;
+  letter-spacing:-.015em;margin:0 0 16px;max-width:22ch;}
+
+.illo{width:100%;max-width:340px;margin:0 auto 22px;display:block;}
+.illo .ln{stroke:var(--bone);fill:none;opacity:.5;}
+.illo .fx{stroke:var(--time);fill:none;opacity:.9;}
+.illo .dot{fill:var(--time);opacity:.9;}
+.illo text{font-family:var(--mono);font-size:7.5px;letter-spacing:.16em;fill:var(--quiet);
+  text-transform:uppercase;}
+
+.body p{margin:0 0 16px;max-width:60ch;}
+.body p:last-child{margin-bottom:0;}
+
+fieldset{border:0;padding:0;margin:20px 0 8px;max-width:60ch;}
+fieldset legend{font-family:var(--mass);font-weight:700;font-size:15px;margin-bottom:8px;padding:0;}
+.opt{display:flex;gap:11px;align-items:flex-start;padding:11px 2px;border-bottom:1px solid var(--line);}
+.opt input{margin-top:5px;accent-color:var(--time);width:17px;height:17px;flex:0 0 auto;}
+.opt label.rl{font-family:var(--body);font-size:16px;line-height:1.4;}
+.opt label.rl small{display:block;color:var(--quiet);font-size:13px;margin-top:2px;}
+
+.panelfoot{position:fixed;left:0;right:0;bottom:0;z-index:75;padding:14px 20px calc(14px + env(safe-area-inset-bottom));
+  background:linear-gradient(180deg,rgba(11,9,7,0),rgba(11,9,7,.96) 34%);
+  display:flex;flex-direction:column;gap:8px;align-items:stretch;}
+.cta{display:inline-block;font-family:var(--mass);font-weight:700;font-size:16px;text-align:center;
+  text-decoration:none;background:none;border:0;border-bottom:2px solid var(--time);padding:12px 0 9px;
+  color:var(--bone);cursor:pointer;transition:border-bottom-width .15s;width:100%;min-height:44px;}
+.cta:hover,.cta:focus-visible{border-bottom-width:6px;}
+.cta.soft{border-bottom-color:var(--rule);}
+.cta.soft:hover{border-bottom-color:var(--bone);}
+.cta:disabled{color:var(--quiet);border-bottom-color:var(--line);cursor:not-allowed;}
+.cta:disabled:hover{border-bottom-width:2px;}
+.smallbtn{background:none;border:0;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  color:var(--quiet);text-decoration:underline;text-underline-offset:3px;cursor:pointer;
+  padding:6px 0;text-align:center;min-height:32px;}
+.smallbtn:hover{color:var(--time);}
+
+.proglist{display:none;flex-direction:column;gap:6px;position:fixed;top:50px;right:14px;z-index:81;
+  padding:10px 12px;background:var(--ground);border:1px solid var(--rule);max-width:220px;
+  max-height:60vh;overflow-y:auto;}
+.proglist.on{display:flex;}
+.proglist a{font-family:var(--mono);font-size:11px;color:var(--quiet);text-decoration:none;}
+.proglist a:hover,.proglist a.here{color:var(--time);}
+
+.biblio ul{list-style:none;margin:0;padding:0;max-width:60ch;}
+.biblio li{border-bottom:1px solid var(--line);padding:12px 0;}
+.biblio a{color:var(--bone);text-decoration:none;font-family:var(--mass);font-weight:700;
+  font-size:16px;border-bottom:1px solid var(--time);}
+.biblio a:hover{border-bottom-width:3px;}
+.biblio p{margin:4px 0 0;color:var(--quiet);font-size:14px;max-width:56ch;}
+
+.panel{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease;}
+.panel.in{opacity:1;transform:translateY(0);}
+@media (prefers-reduced-motion:reduce){
+  .panel{transition:opacity .15s linear;transform:none !important;}
+  *{transition-duration:.01ms !important;}
+}
+@media (min-width:640px){
+  main{padding:88px 32px 160px;}
+  .panelfoot{padding:18px 32px calc(18px + env(safe-area-inset-bottom));max-width:640px;margin:0 auto;
+    left:0;right:0;}
+  .cta{width:auto;min-width:220px;padding:12px 0;}
+}
+</style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="top" aria-label="Land on Mars">
+  <a class="back" href="./index.html" aria-label="Back to Incubator Camp">∴</a>
+  <div class="stock">Land on Mars</div>
+  <button class="count" id="progToggle" aria-expanded="false" aria-label="Where you have been" hidden></button>
+</nav>
+
+<main>
+  <div class="panel" id="panel"></div>
+</main>
+
+<div class="proglist" id="progList"></div>
+
+<div class="panelfoot" id="panelfoot"></div>
+
+<script>
+/* Voice constraint for every beat authored below: ambiguity is the enemy of ethical
+   transaction with this reader, and abstract negation reads as retrograde harm to a mind
+   built this way. Say the specific true thing. */
+
+var ILLUSTRATIONS = {
+  select: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="Three concentric arcs, one for each length of stay."><path class="ln" d="M80 150 A40 40 0 0 1 160 150" stroke-width=".6"/><path class="ln" d="M50 150 A70 70 0 0 1 190 150" stroke-width=".6"/><path class="fx" d="M20 150 A100 100 0 0 1 220 150" stroke-width=".7"/><circle class="dot" cx="220" cy="150" r="2.4"/><text x="120" y="142" text-anchor="middle">∴ three lengths, one arrival ∴</text></svg>',
+  arrival: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="A sun arcing over a horizon line, with a single signal mark."><line class="ln" x1="10" y1="110" x2="230" y2="110" stroke-width=".6"/><path class="fx" d="M90 110 A30 30 0 0 1 150 110" stroke-width=".7"/><line class="ln" x1="26" y1="70" x2="26" y2="86" stroke-width="1.2"/><text x="120" y="142" text-anchor="middle">∴ one bar, no bars past it ∴</text></svg>',
+  vereen: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="Two ledger columns, one solid, one dashed."><rect class="ln" x="38" y="26" width="72" height="92" stroke-width=".6"/><rect class="fx" x="130" y="26" width="72" height="92" stroke-width=".6" stroke-dasharray="4 4"/><text x="120" y="142" text-anchor="middle">∴ settled ∴ still forming ∴</text></svg>',
+  fork: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="One line dividing into two and meeting again."><path class="ln" d="M30 75 C 80 75, 90 40, 140 40 C 180 40, 190 75, 220 75" stroke-width=".6"/><path class="fx" d="M30 75 C 80 75, 90 110, 140 110 C 180 110, 190 75, 220 75" stroke-width=".6"/><circle class="dot" cx="30" cy="75" r="2.4"/><text x="120" y="142" text-anchor="middle">∴ one choice, one table ∴</text></svg>',
+  denae: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="A long string with a bridge at its midpoint, and a shorter string above at half the length."><line class="ln" x1="30" y1="90" x2="210" y2="90" stroke-width=".7"/><path class="ln" d="M118 90 L120 78 L122 90" stroke-width=".6"/><line class="fx" x1="75" y1="55" x2="165" y2="55" stroke-width=".8"/><text x="120" y="142" text-anchor="middle">∴ half the string, twice the pitch ∴</text></svg>',
+  matreese: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="Two overlapping circles, marked at their intersection."><circle class="ln" cx="95" cy="75" r="45" stroke-width=".6"/><circle class="fx" cx="145" cy="75" r="45" stroke-width=".6"/><circle class="dot" cx="120" cy="75" r="2.4"/><text x="120" y="142" text-anchor="middle">∴ hers to ask, ours to answer ∴</text></svg>',
+  edwin: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="A zigzag waveform with one struck peak marked."><path class="ln" d="M20 95 L55 60 L90 105 L125 45 L160 105 L195 60 L220 95" stroke-width=".6"/><circle class="dot" cx="125" cy="45" r="2.8"/><text x="120" y="142" text-anchor="middle">∴ a keystroke, a struck tone ∴</text></svg>',
+  elnino: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="A path curving downward like water finding a route, ending in an arrow."><path class="ln" d="M30 30 C 80 30, 60 80, 110 80 C 160 80, 140 122, 186 122" stroke-width=".6"/><path class="fx" d="M186 122 L178 112 M186 122 L172 124" stroke-width="1.1"/><text x="120" y="142" text-anchor="middle">∴ where the water goes first ∴</text></svg>',
+  wind: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="Three horizontal wavy lines at different heights."><path class="ln" d="M20 50 Q 60 35, 100 50 T 180 50 T 220 50" stroke-width=".55"/><path class="fx" d="M20 78 Q 60 58, 100 78 T 180 78 T 220 78" stroke-width=".7"/><path class="ln" d="M20 106 Q 60 91, 100 106 T 180 106 T 220 106" stroke-width=".55"/><text x="120" y="142" text-anchor="middle">∴ the pitch changes at your ear ∴</text></svg>',
+  finity: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="A five-sided shape with a marked center."><polygon class="fx" points="120,20 168,55 150,112 90,112 72,55" stroke-width=".7"/><circle class="dot" cx="120" cy="66" r="2.6"/><text x="120" y="142" text-anchor="middle">∴ the shape that lets it be heard ∴</text></svg>',
+  biblio: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="Five points connected like a small constellation."><path class="ln" d="M40 100 L90 40 L150 60 L200 30 M90 40 L120 110 M150 60 L200 30" stroke-width=".55"/><circle class="dot" cx="90" cy="40" r="2.6"/><text x="120" y="142" text-anchor="middle">∴ the sources, plainly ∴</text></svg>',
+  stub: '<svg class="illo" viewBox="0 0 240 150" role="img" aria-label="A line stopping, followed by three dots."><line class="ln" x1="30" y1="75" x2="140" y2="75" stroke-width=".6"/><circle class="fx" cx="165" cy="75" r="2.2"/><circle class="fx" cx="180" cy="75" r="2.2"/><circle class="fx" cx="195" cy="75" r="2.2"/><text x="120" y="142" text-anchor="middle">∴ written next ∴</text></svg>'
+};
+
+var NODES = {
+  'n-select': {
+    id:'n-select', illustration:'select',
+    eyebrow:'Land on Mars',
+    title:'Pick how long you stay.',
+    body:['The desert changes very little about its shape depending on the answer. You will change more than it does.'],
+    choices:[
+      {label:'One month', small:'Finished. Ready now.', value:1},
+      {label:'Two months', small:'Being written, the same as the real season.', value:2},
+      {label:'Three months', small:'Being written, the same as the real season.', value:3}
+    ],
+    onChoose:function(value, state){ state.chosenPath = value; return value===1 ? 'n-arrival' : 'n-stub'; }
+  },
+  'n-arrival': {
+    id:'n-arrival', illustration:'arrival', eyebrow:'Day one',
+    body:['Forty-one percent battery, one bar of signal, and a photograph of a horizon that will not finish loading.',
+      'The drive in smells like creosote after a rain that never actually fell here — a plant that perfumes itself on the promise of water rather than its arrival.',
+      'Somewhere behind you, wifi exists. Somewhere ahead, a person named Vereen is already awake.'],
+    next:'n-vereen'
+  },
+  'n-vereen': {
+    id:'n-vereen', illustration:'vereen', eyebrow:'Meeting Vereen',
+    body:['Vereen does not shake your hand so much as hand you a list.',
+      'Five items on it are already decided: the platform, the house rule, the weekly immersion, the safety plan, the dates. Five more are not decided yet, and Vereen says so before you can ask: the culture, what each week actually holds, the rituals, the Steeping Space still being built, and what this camp ends up offering the rest of Mars.',
+      '"Circle the five that worry you," Vereen says. "Those are the five you get a vote on."'],
+    next:'n-fork'
+  },
+  'n-fork': {
+    id:'n-fork', illustration:'fork', eyebrow:'Four in the afternoon',
+    body:['The frame for the Steeping Space is half up, propped by two people who could use a third pair of hands.'],
+    choices:[
+      {label:'Pick up a hammer', value:'build'},
+      {label:'Sit in the shade and take notes', value:'observe'}
+    ],
+    onChoose:function(value, state){ state.forkChoice = value; return 'n-denae'; }
+  },
+  'n-denae': {
+    id:'n-denae', illustration:'denae', eyebrow:"Denae's course",
+    body:function(state){
+      var pre = state.forkChoice === 'build'
+        ? 'Your hands smell like cut lumber through dinner. Someone hands you a second plate before you ask for one, which is either hospitality or an assessment of how much you just worked.'
+        : 'You fill four pages before the frame is fully up, and nobody asks what you were writing, which feels like exactly the right amount of privacy.';
+      return [pre,
+        'After the plates are cleared, a woman named Denae unrolls a single length of string across the table and pins it flat with a knife at either end.',
+        '"This is the whole lecture," she says, and marks the exact midpoint with a grease pencil. She presses a knuckle to the mark and plucks one half. The pitch jumps an octave, clean, no argument possible about it.',
+        '"Pythagoras did this on a piece of wood around 570 BCE and called it proof the universe runs on ratios," she says. "I do it on a dinner table and call it Tuesday."'];
+    },
+    next:'n-matreese'
+  },
+  'n-matreese': {
+    id:'n-matreese', illustration:'matreese', eyebrow:'By the water tank',
+    body:['Matreese finds you later that night holding a clipboard that already has a name on it for the camp she is rebuilding: Fireside.',
+      '"I want Denae\'s course," she says, "but I live in Fireside, not this camp. Does that work?"',
+      'Nobody answers her right away, including you. The honest answer tonight is that the season is still deciding this, out loud, in front of everyone, including the person whose course it is. Matreese writes something on the clipboard anyway and does not look unhappy about it.'],
+    next:'n-edwin'
+  },
+  'n-edwin': {
+    id:'n-edwin', illustration:'edwin', eyebrow:'The Steeping Space',
+    body:['Edwin — full billing DJ Edsel Adams, no exceptions on the flyer — runs the Steeping Space out of a tent with better acoustics than it has any right to.',
+      'He sits you at a keyboard wired to nothing you can see. "Type," he says. Your first letter comes back as a single struck tone, clean and short. You stop to ask a question, and the pause itself answers with a held chord that outlasts the question.',
+      '"The five seconds of nothing," Edwin says, "is not nothing. It is the one note you did not have to choose."'],
+    next:'n-elnino'
+  },
+  'n-elnino': {
+    id:'n-elnino', illustration:'elnino', eyebrow:'The forecast',
+    body:['The person everyone calls El Nino — "it is a nickname, I did not choose it, I have made my peace with it" — walks you to the wash behind camp and points at a line of bleached gravel a full three feet above where you are standing.',
+      '"Water gets there in about the time it takes to read this sentence twice," they say, "once the sky actually commits." They show you exactly which two totes get carried uphill first, and it is neither of the two you guessed.'],
+    next:'n-wind'
+  },
+  'n-wind': {
+    id:'n-wind', illustration:'wind', eyebrow:'Alone, at the edge of camp',
+    body:['You run the one experiment El Nino\'s forecast left you curious enough to try: you stand still until the wind changes pitch at your own ear, not the tent\'s, not the flag\'s. Yours.',
+      'It takes about ninety seconds. Somewhere in a document you will never see, someone has written that air holds the shape of every sound that has passed through it. Standing here, ninety seconds in, that stops being a claim and becomes a fact you personally collected.'],
+    next:'n-finity'
+  },
+  'n-finity': {
+    id:'n-finity', illustration:'finity', eyebrow:'Last morning',
+    body:['Vereen hands you the same list from day one. Three more items have moved from "still forming" to "settled," in your own handwriting.',
+      'Twelve weeks was never long enough to make something infinite. That was never the job. Twelve weeks was exactly long enough to build a container small enough for something to finally be heard inside it.',
+      'You leave with a phone at forty-one percent, again, and a photograph of the horizon that this time actually loads.'],
+    next:'n-biblio'
+  },
+  'n-stub': {
+    id:'n-stub', illustration:'stub', eyebrow:'Two months, three months',
+    body:['Both of these are still being written, the same way this camp\'s own season is still being written in the open.',
+      'Vereen would call that the format, not a delay. The one-month path is finished — read it, or read the sources below either way.'],
+    choices:[
+      {label:'Read the one-month path instead', value:'switch'},
+      {label:'Go straight to the sources', value:'biblio'}
+    ],
+    onChoose:function(value, state){
+      if (value === 'switch'){ state.chosenPath = 1; return 'n-arrival'; }
+      return 'n-biblio';
+    }
+  },
+  'n-biblio': {
+    id:'n-biblio', illustration:'biblio', eyebrow:'Biblioglossary', terminal:true,
+    body:['None of the above was invented from nothing. Here is where it actually comes from — real pages, built on Mars, open to anyone who wants to keep going.'],
+    links:[
+      {label:'Euclidiating in Finity', href:'https://hdmathematics.vercel.app/explorers/euclidiating-in-finity.html', note:'The mythopoetic source for this story\'s closing claim: a bounded shape is what finally lets a voice inside it be heard.'},
+      {label:'Creative Steeping', href:'https://creativesteeping.com/about', note:'A journey to the essence of your flavor.'},
+      {label:'The Steeping Space', href:'https://steep.vercel.app', note:'Where the Sonnet Engine actually runs.'},
+      {label:'Algorave Portal 01', href:'https://steep.vercel.app/sage', note:'The engine, performed live.'},
+      {label:'THE ÅLïEN SCõÖL', href:'https://thealienschool.com', note:'Where all of this is built.'}
+    ]
+  }
+};
+
+var state = { chosenPath:null, currentNode:'n-select', visited:[], forkChoice:null };
+var DRAFT_KEY = 'ic_mars_progress_v1';
+
+function saveState(){
+  try{ localStorage.setItem(DRAFT_KEY, JSON.stringify(state)); }catch(e){}
+}
+function loadState(){
+  try{
+    var raw = localStorage.getItem(DRAFT_KEY);
+    if (!raw) return false;
+    var parsed = JSON.parse(raw);
+    if (parsed && parsed.currentNode && NODES[parsed.currentNode]){
+      state = parsed;
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
+function clearState(){
+  try{ localStorage.removeItem(DRAFT_KEY); }catch(e){}
+  state = { chosenPath:null, currentNode:'n-select', visited:[], forkChoice:null };
+  renderNode('n-select');
+}
+
+function renderProgress(){
+  var toggle = document.getElementById('progToggle');
+  var list = document.getElementById('progList');
+  list.classList.remove('on');
+  toggle.setAttribute('aria-expanded', 'false');
+  list.innerHTML = '';
+  state.visited.forEach(function(id){
+    var n = NODES[id];
+    var a = document.createElement('a');
+    a.href = '#';
+    a.textContent = n.eyebrow || id;
+    if (id === state.currentNode) a.className = 'here';
+    a.addEventListener('click', function(e){ e.preventDefault(); renderNode(id); });
+    list.appendChild(a);
+  });
+  var storyIds = ['n-arrival','n-vereen','n-fork','n-denae','n-matreese','n-edwin','n-elnino','n-wind','n-finity','n-biblio'];
+  var seen = state.visited.filter(function(id){ return storyIds.indexOf(id) !== -1; }).length;
+  if (state.visited.length < 2){
+    toggle.hidden = true;
+  } else {
+    toggle.hidden = false;
+    toggle.textContent = state.chosenPath === 1 && seen ? (seen + ' of ' + storyIds.length) : 'Where you have been';
+  }
+}
+
+function buildBody(node){
+  var raw = typeof node.body === 'function' ? node.body(state) : (node.body || []);
+  return raw.map(function(p){ var el = document.createElement('p'); el.textContent = p; return el; });
+}
+
+function renderNode(id){
+  var node = NODES[id];
+  if (!node) return;
+  state.currentNode = id;
+  if (state.visited.indexOf(id) === -1) state.visited.push(id);
+  saveState();
+
+  var panel = document.getElementById('panel');
+  var foot = document.getElementById('panelfoot');
+  panel.classList.remove('in');
+  panel.innerHTML = '';
+  foot.innerHTML = '';
+
+  if (node.illustration) panel.insertAdjacentHTML('beforeend', ILLUSTRATIONS[node.illustration]);
+  if (node.eyebrow){ var eb = document.createElement('div'); eb.className='eyebrow'; eb.textContent=node.eyebrow; panel.appendChild(eb); }
+  if (node.title){ var h = document.createElement('h2'); h.textContent = node.title; panel.appendChild(h); }
+
+  var bodyWrap = document.createElement('div');
+  bodyWrap.className = 'body';
+  buildBody(node).forEach(function(p){ bodyWrap.appendChild(p); });
+  panel.appendChild(bodyWrap);
+
+  if (node.terminal){
+    var bib = document.createElement('div');
+    bib.className = 'biblio';
+    var ul = document.createElement('ul');
+    node.links.forEach(function(l){
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = l.href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = l.label;
+      var p = document.createElement('p'); p.textContent = l.note;
+      li.appendChild(a); li.appendChild(p); ul.appendChild(li);
+    });
+    bib.appendChild(ul);
+    panel.appendChild(bib);
+
+    var again = document.createElement('button');
+    again.className = 'cta soft'; again.textContent = 'Start over';
+    var confirmingReset = false;
+    var resetTimer = null;
+    again.addEventListener('click', function(){
+      if (!confirmingReset){
+        confirmingReset = true;
+        again.textContent = 'Click again to start over';
+        resetTimer = setTimeout(function(){
+          confirmingReset = false;
+          again.textContent = 'Start over';
+        }, 6000);
+        return;
+      }
+      clearTimeout(resetTimer);
+      clearState();
+    });
+    var back = document.createElement('a');
+    back.className = 'cta soft'; back.href = './index.html'; back.textContent = 'Back to Incubator Camp';
+    foot.appendChild(back);
+    foot.appendChild(again);
+  } else if (node.choices){
+    var fs = document.createElement('fieldset');
+    node.choices.forEach(function(c, i){
+      var optId = 'opt-' + node.id + '-' + i;
+      var wrap = document.createElement('div'); wrap.className = 'opt';
+      var input = document.createElement('input');
+      input.type = 'radio'; input.name = 'choice-' + node.id; input.id = optId; input.value = c.value;
+      var label = document.createElement('label'); label.className = 'rl'; label.htmlFor = optId;
+      label.textContent = c.label;
+      if (c.small){ var small = document.createElement('small'); small.textContent = c.small; label.appendChild(small); }
+      wrap.appendChild(input); wrap.appendChild(label);
+      fs.appendChild(wrap);
+    });
+    panel.appendChild(fs);
+
+    var cont = document.createElement('button');
+    cont.className = 'cta'; cont.textContent = 'Continue'; cont.disabled = true;
+    fs.addEventListener('change', function(){ cont.disabled = false; });
+    cont.addEventListener('click', function(){
+      var checked = fs.querySelector('input:checked');
+      if (!checked) return;
+      var raw = checked.value;
+      var chosen = node.choices.find(function(c){ return String(c.value) === String(raw); });
+      var value = chosen ? chosen.value : raw;
+      var nextId = node.onChoose ? node.onChoose(value, state) : (chosen && chosen.next);
+      renderNode(nextId);
+    });
+    foot.appendChild(cont);
+  } else if (node.next){
+    var go = document.createElement('button');
+    go.className = 'cta'; go.textContent = id === 'n-arrival' ? 'Begin' : 'Continue →';
+    go.addEventListener('click', function(){ renderNode(node.next); });
+    foot.appendChild(go);
+  }
+
+  renderProgress();
+  requestAnimationFrame(function(){ panel.classList.add('in'); });
+  window.scrollTo(0,0);
+}
+
+document.getElementById('progToggle').addEventListener('click', function(){
+  var list = document.getElementById('progList');
+  var on = list.classList.toggle('on');
+  this.setAttribute('aria-expanded', on ? 'true' : 'false');
+});
+
+(function init(){
+  if (loadState()){
+    renderNode(state.currentNode);
+  } else {
+    renderNode('n-select');
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,258 +1,107 @@
-# QA Speed Run - Motion Suite & Homepage Updates
-## December 7, 2025
+# QA Speed Run — Incubator Camp
 
-### Status: IN PROGRESS
-
----
-
-## Phase 1: Critical Functionality Tests
-
-### ✅ Motion Animations (All 6 Pages)
-
-#### /glossary
-- [ ] Hero header fades in with pause animation (1.2s)
-- [ ] Introduction section blends with gradient (merge, 1.4s)
-- [ ] Terms container reveals on scroll
-- [ ] Scroll through 3+ terms to verify staggered reveals
-- [ ] Disable motion accessibility (prefers-reduced-motion) → all elements instantly visible
-
-#### /practices
-- [ ] Header pauses on entry (1.2s fade-in)
-- [ ] Introduction pivots inward (1s, subtle 3D rotation)
-- [ ] Scroll down to practice cards → verify no animation delay issues
-- [ ] Responsive test: mobile view shows same motion timing
-
-#### /concepts
-- [ ] Header pauses with contemplate feeling (1.2s)
-- [ ] Concept sections merge together as you scroll
-- [ ] All 4 sections (Trellis/Vine, Trust, Shield, Active Patience) visible with merge effect
-- [ ] Gradient blend effect visible during reveal
-
-#### /journey
-- [ ] Header pauses (1.2s)
-- [ ] Journey phases pivot inward as you scroll
-- [ ] Expand 2+ phases to verify pivot doesn't re-trigger
-- [ ] Mobile: verify phases expand cleanly without motion conflicts
-
-#### /archetypes
-- [ ] Header pauses on entry
-- [ ] All 4 archetype cards pivot with perspective rotation
-- [ ] Cards should subtly rotate into view (perspective(1000px) rotateX effect)
-- [ ] No animation interference with card content
-
-#### /research-forge.html
-- [ ] Research category sections reveal with gradient blend (mergeBend)
-- [ ] 1.4s timing feels aligned with other merge effects
-- [ ] Standalone HTML file doesn't conflict with React app
-
-### ✅ Homepage Enhancements
-
-#### Priming Section (NEW)
-- [ ] "How This Experience Unfolds" section visible between hero and benefits
-- [ ] 3 columns (Pause, Pivot, Merge) explain the motion philosophy
-- [ ] Section is visually distinct (stone-50 background)
-- [ ] Mobile: 3 columns stack to 1 column responsively
-
-#### Hero Animation
-- [ ] Hero section has pause animation applied
-- [ ] Text/image reveal together with fade-in
-- [ ] 1.2s duration feels contemplative (not rushed)
-
-#### Visual Hierarchy
-- [ ] Priming section prepares visitor for motion experience
-- [ ] Hero doesn't feel disconnected from what comes next
-- [ ] Scroll feels guided (pause → pivot → merge journey)
+Static site, no build step. Serve locally with `python3 -m http.server 8000` and run through the
+phases below against `index.html`, `apply.html`, `el-nino.html`, `practitioners.html`,
+`share.html`, `gallery.html`. Each phase should take a couple of minutes; the whole run is meant
+to be fast, not exhaustive — for a deeper look, read the file itself.
 
 ---
 
-## Phase 2: Accessibility Validation
+## Phase 1: Every page loads clean
 
-### Motion Preferences
-- [ ] Desktop with `prefers-reduced-motion: reduce` enabled
-  - Open DevTools → Rendering → Emulate CSS media feature prefers-reduced-motion: reduce
-  - Navigate /glossary, /practices, /concepts, /journey, /archetypes
-  - Verify: All animations disabled, content immediately visible
-  - Verify: No flashing or animation artifacts
+- [ ] Each of the 6 pages loads with no console errors
+- [ ] No 404s in the network log for any image, font, or script
+- [ ] The Google Fonts `<link>` resolves on every page
 
-- [ ] iOS: Settings → Accessibility → Motion → Reduce Motion enabled
-  - Test on iOS device (if available)
-  - Verify: animations don't play
+## Phase 2: Rebate & navigation
 
-- [ ] Android: Settings → Developer Options → Animation scale: Off
-  - Test on Android device (if available)
-  - Verify: animations don't play
+- [ ] The rebate nav is present and fixed full-height on every page that has one (all six —
+      `gallery.html` has its own variant with a back-to-index link instead of numbers)
+- [ ] On `index.html`, the numbered links 0–9 scroll to the correct sections
+- [ ] The orange triangle indicator tracks the active section correctly while scrolling
+- [ ] The bold vertical "Apply" link at the bottom of the rebate (`index.html`) links to
+      `apply.html`
+- [ ] At 375px width, the rebate never overlaps any other fixed element (companion, El Niño tag)
 
-### Screen Reader Compatibility
-- [ ] NVDA (Windows) or JAWS test
-  - Navigate to /glossary
-  - Verify: Screen reader reads title, subtitle, search field
-  - Verify: Animation classes don't interfere with reading order
-  
-- [ ] VoiceOver (Mac/iOS)
-  - Open /practices on Mac
-  - Verify: All content readable without animation blocking
+## Phase 3: Apply companion widget
 
-### Keyboard Navigation
-- [ ] Tab through /archetypes
-  - Verify: Can tab through all buttons without animation blocking focus
-  - Verify: Visible focus indicator works through animations
+- [ ] Appears on `index.html`, `el-nino.html`, `practitioners.html` — absent from `apply.html`
+- [ ] Its label/message/CTA change correctly as you scroll through early/mid/late `data-stage`
+      sections
+- [ ] The dismiss (✕) hides it for the rest of that browser session (`sessionStorage`), and it
+      reappears on a fresh page load
+- [ ] At 375px width, the longest CTA ("Preview the application →") wraps to its own line inside
+      the pill instead of running past the edge
+- [ ] The companion never sits underneath the rebate strip at any width
 
----
+## Phase 4: El Niño bug (`index.html` only)
 
-## Phase 3: Performance Testing
+- [ ] Visible bottom-right on desktop with full stats (Niño 3.4, Playa, Season)
+- [ ] Collapses to a compact, label-only tag in the top-right below 820px width
+- [ ] Links to `#p5`
 
-### Bundle Size Impact
-- [ ] Build the project
-  - [ ] Check main.js bundle size
-  - [ ] CSS animations add ~2KB (acceptable)
-  - [ ] useScrollReveal hook is tree-shaken if not used
+## Phase 5: Motion budget — exhaustive, 6 entries
 
-### Rendering Performance
-- [ ] Scroll through /concepts (most animations)
-  - [ ] Monitor performance in DevTools (Frames/sec)
-  - [ ] Target: 60fps on scroll (smooth motion)
-  - [ ] No jank or stuttering observed
+1. Hero sunrise, on load, once
+2. Sunrise parallax, 4 layers at different rates, on scroll
+3. Rebate triangle tracking scroll
+4. Threshold lines resolving from blur (max twice per page)
+5. CTA underline thickening on hover
+6. The five codex diagrams (co-incubation, macrocosm/setting, in every direction, the chain we
+   live on, one job for twelve weeks) settling ±24px as their section crosses the viewport center
 
-- [ ] Mobile scroll performance
-  - [ ] Same 60fps target on slower devices
-  - [ ] Animations should feel smooth, not jerky
+- [ ] All six behave exactly as above, and nothing else on the site moves
+- [ ] `prefers-reduced-motion: reduce` disables 1, 2, 4, and 6, and makes 3 instant
+- [ ] `.art` (the faint decorative watermark behind sections 3/5/9) stays static at `opacity:.07`
+      — this is deliberate. Do not amplify its opacity/weight and do not give it motion.
 
-### Network/Loading
-- [ ] Slow 3G simulation (DevTools → Network → Slow 3G)
-  - [ ] Navigate to /glossary
-  - [ ] Animations should start once content loads
-  - [ ] No blocking of page render
+## Phase 6: Photography & attribution
 
----
+- [ ] Hero CTA "Life on Mars gallery" and the photo strip between sections 2–3 (`index.html`)
+      both link to `gallery.html` and show real photos, not placeholders
+- [ ] `gallery.html`'s slideshow itself still plays/advances correctly
+- [ ] The Kamau Zuberi Akabueze mini-gallery above section 6 (`index.html`) shows all 3 photos at
+      full size — a 3-column grid on desktop, stacked full-width on mobile
+- [ ] Kamau's inline portrait appears between "He is a father and a photographer." and "Why he is
+      running this camp" in section 6
+- [ ] `practitioners.html` seat 01 (Kamau) shows his real portrait, not the "pending" placeholder
+- [ ] `practitioners.html` seat 02 (El Niño) shows the BBC graphic, with "Image :: BBC Online"
+      credited in its metadata block
+- [ ] **Licensing check (flagged, not yet resolved):** confirm rights to publish the BBC-branded
+      El Niño graphic before this goes live publicly
 
-## Phase 4: Cross-Browser Testing
+## Phase 7: Section 08 — dues
 
-### Desktop Browsers
-- [ ] Chrome 121+ (latest)
-  - [ ] /glossary: Pause reveals working
-  - [ ] /journey: Pivot reveals working
-  - [ ] CSS animations smooth
-  
-- [ ] Firefox 121+ (latest)
-  - [ ] All animations render identically
-  - [ ] Intersection Observer works
+- [ ] Facts table shows $300 (Mars College treasury) / $500 (shelter, if no RV) / $1,150
+      (Incubator Camp dues), with "Pooled · equal · 3 installments" as the qualifier
+- [ ] No stale "figure pending" language remains anywhere in that section
 
-- [ ] Safari 17+ (latest)
-  - [ ] Perspective 3D transforms work (pivot)
-  - [ ] Merge gradient animations work
-  - [ ] No performance degradation
+## Phase 8: Copy standing rules (spot check, not exhaustive)
 
-### Mobile Browsers
-- [ ] Chrome Mobile (Android)
-  - [ ] Tap archetype quiz link from /home
-  - [ ] Motion should still work after navigation
-  
-- [ ] Safari Mobile (iOS)
-  - [ ] Scroll /practices smoothly
-  - [ ] Animations don't stutter
+- [ ] No contractions anywhere in shipped copy
+- [ ] No forbidden register words leak anywhere: `HARRIS`, `HBA`, `VAPOR`, `STEAM`, `PING`,
+      "thought event", "thought score", "temporal fossil", "afterimage", `BÏN`, `TÏME`,
+      "typographical thought print"
+- [ ] `apply.html` has no defensive negation ("not," "none," "nothing," "never," "no [x]") in
+      applicant-facing copy
 
----
+## Phase 9: Responsive pass
 
-## Phase 5: Content & UX Flow
+- [ ] Full scroll-through of `index.html` at 375px and at a desktop width, checking for
+      horizontal overflow or any element collision
+- [ ] Same pass on `el-nino.html` and `practitioners.html`
 
-### Navigation Path: Home → Quiz → Archetype Page
-- [ ] Click "Discover Your Archetype" from hero
-- [ ] Quiz loads and displays correctly
-- [ ] Complete quiz → navigate to results
-- [ ] Results page shows personalized practices
-- [ ] Click "Learn These Practices" → /practices page with motion
+## Phase 10: Links
 
-### Navigation Path: Home → Glossary
-- [ ] Click "Learn more about The Field" (glossary tooltip)
-- [ ] /glossary loads with pause animation
-- [ ] Search field works with motion applied
-- [ ] Clicking term expands definition
-- [ ] Motion doesn't interfere with expand/collapse
-
-### Social Cards Download
-- [ ] Go to /social
-- [ ] Click "Download" on quote card (check that previous fixes still work)
-- [ ] PNG downloads with correct dimensions
-- [ ] Mobile long-press gesture works (500ms detection)
+- [ ] Every internal cross-link between the six pages resolves (spot-check `apply.html`,
+      `el-nino.html`, `practitioners.html`, `gallery.html` links from `index.html` and back)
+- [ ] All four instances of the Neuroarts Fund link point to the same correct URL
+- [ ] The Mars College Substack "learn more" links in `index.html`, `el-nino.html`, and
+      `practitioners.html` resolve
 
 ---
 
-## Phase 6: Contemplative Physics Validation
+## Sign-off
 
-### Pause Animation Quality
-- [ ] Feel: Does 1.2s duration feel contemplative (not rushed)?
-- [ ] Visual: Does fade-in + translateY feel like gentle revealing?
-- [ ] Emotion: Does it make you want to pause before reading?
-
-### Pivot Animation Quality
-- [ ] Feel: Does 3D rotation feel like inward turning?
-- [ ] Visual: Is the perspective transform subtle (not disorienting)?
-- [ ] Emotion: Does it create moment of recognition/perspective shift?
-
-### Merge Animation Quality
-- [ ] Feel: Does 1.4s duration feel integrative?
-- [ ] Visual: Does gradient blend suggest unity/connection?
-- [ ] Emotion: Does it feel like things coming together vs. sliding apart?
-
-### Overall Coherence
-- [ ] Does motion feel like part of the contemplative philosophy (not gratuitous)?
-- [ ] Does it feel like the site is "breathing" with the visitor's scroll?
-- [ ] Does motion prime visitor for the message (pause, pivot, merge)?
-
----
-
-## Phase 7: Build & Deployment Verification
-
-### Build Status
-- [ ] `npm run build` completes without errors
-- [ ] dist/public folder created with all assets
-- [ ] CSS animations included in final CSS bundle
-- [ ] TypeScript compilation successful
-
-### Dev Server
-- [ ] `npm run dev` starts without warnings
-- [ ] All 6 motion pages load correctly
-- [ ] Homepage priming section visible
-- [ ] Hot module reload works (edit CSS, see instant update)
-
-### Pre-Deployment Checklist
-- [ ] All motion pages tested locally
-- [ ] Accessibility tests passed
-- [ ] Performance acceptable (60fps target)
-- [ ] Cross-browser compatibility verified
-- [ ] Build process clean (no warnings)
-
----
-
-## Issues Found & Fixes
-
-### Issue #1: [None yet - First pass testing]
-- Status: 
-- Resolution:
-- Testing: 
-
----
-
-## Sign-Off Checklist
-
-- [ ] All 6 motion pages tested (/glossary, /practices, /concepts, /journey, /archetypes, /research-forge)
-- [ ] Homepage priming section validated
-- [ ] Motion animations feel contemplative (not game-like)
-- [ ] Accessibility: prefers-reduced-motion tested
-- [ ] Performance: 60fps target achieved
-- [ ] Cross-browser: At least 2 browsers verified
-- [ ] Build: `npm run build` successful
-- [ ] Ready for staging/preview deployment
-
----
-
-## Notes for Session
-
-- Motion suite uses CSS @keyframes (no JavaScript overhead)
-- Intersection Observer for efficient scroll detection
-- All animations respect accessibility preferences
-- Total ~2KB additional CSS
-- No build errors; TypeScript validation clean
-- Homepage priming section context-sets motion experience
-
-**Next:** Begin Phase 1 testing with /glossary page
+- [ ] All phases above pass
+- [ ] Ready to hand to the Mars College Change Agent for deployment

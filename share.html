@@ -20,6 +20,7 @@
 *{box-sizing:border-box;}
 html,body{margin:0;background:#000;color:var(--bone);
   font-family:var(--body);-webkit-font-smoothing:subpixel-antialiased;text-rendering:optimizeLegibility;}
+html{scroll-behavior:smooth;}
 body{scroll-snap-type:y mandatory;overflow-y:scroll;height:100svh;}
 /* design-integrated scrollbar — a flat rule, not a system widget */
 html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
@@ -38,6 +39,23 @@ html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
 .controls button:focus-visible{outline:2px solid var(--time);outline-offset:2px;}
 body.hidechrome .controls{opacity:.12;}
 body.hidechrome .controls:hover{opacity:1;}
+
+/* ---------- jump nav (never captured) ---------- */
+.jumpnav{position:fixed;left:calc(env(safe-area-inset-left) + 10px);
+  bottom:calc(env(safe-area-inset-bottom) + 10px);z-index:200;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;}
+.jumpnav button{background:rgba(0,0,0,.72);border:1px solid var(--rule);color:var(--quiet);
+  padding:7px 11px;cursor:pointer;backdrop-filter:blur(8px);}
+.jumpnav button:focus-visible{outline:2px solid var(--time);outline-offset:2px;}
+.jumplist{position:absolute;left:0;bottom:calc(100% + 6px);background:rgba(0,0,0,.9);
+  border:1px solid var(--rule);backdrop-filter:blur(8px);flex-direction:column;
+  min-width:176px;}
+.jumplist:not([hidden]){display:flex;}
+.jumplist a{padding:9px 13px;color:var(--quiet);text-decoration:none;border-bottom:1px solid var(--line);}
+.jumplist a:last-child{border-bottom:0;}
+.jumplist a:hover{color:var(--bone);}
+body.hidechrome .jumpnav{opacity:.12;}
+body.hidechrome .jumpnav:hover{opacity:1;}
 
 /* ---------- the card ---------- */
 .slide{height:100svh;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;
@@ -79,9 +97,9 @@ body.guides .guides{display:block;}
 /* type roles inside cards */
 .big{font-family:var(--mass);font-weight:900;text-transform:uppercase;letter-spacing:-.035em;
   line-height:.92;font-size:clamp(30px,7.6vw,74px);}
-.script{font-family:var(--display);font-style:italic;font-weight:500;
+.script{font-family:var(--display);font-weight:500;
   font-optical-sizing:none;font-variation-settings:"opsz" 34,"wght" 520;
-  -webkit-text-stroke:.3px var(--bone);line-height:.82;letter-spacing:-.028em;
+  -webkit-text-stroke:.3px var(--bone);line-height:.82;letter-spacing:-.018em;
   font-size:clamp(58px,15vw,150px);}
 .said{font-family:var(--display);font-size:clamp(22px,4.6vw,44px);line-height:1.24;font-weight:400;}
 .plain{font-family:var(--body);font-size:clamp(16px,3.1vw,27px);line-height:1.44;}
@@ -100,6 +118,20 @@ body.guides .guides{display:block;}
   font-size:clamp(9px,1.85vw,14px);letter-spacing:.08em;}
 .rows .k{color:var(--quiet);text-transform:uppercase;letter-spacing:.16em;}
 .rows .v{font-variant-numeric:tabular-nums;text-align:right;}
+.rows .v .opt{color:var(--quiet);}
+
+/* prose-tip rows — bold lead-in list, e.g. the El Niño prep card */
+.tips{width:100%;}
+.tips div{padding:clamp(6px,1.4vw,12px) 0;border-bottom:1px solid var(--line);
+  font-family:var(--body);font-size:clamp(13px,2.4vw,19px);line-height:1.42;}
+.tips div:last-child{border-bottom:0;}
+.tips b{font-family:var(--mass);font-weight:700;}
+
+/* self-selection ledger card */
+.led ol{list-style:none;margin:.9em 0 0;padding:0;}
+.led li{font-family:var(--body);font-size:clamp(13px,2.4vw,19px);line-height:1.5;
+  padding:.32em 0;display:flex;gap:.5em;}
+.led li em{font-style:normal;color:var(--time);}
 
 /* seat counter card */
 .frames{display:flex;gap:5px;flex-wrap:wrap;margin-top:1.4em;}
@@ -112,6 +144,29 @@ body.guides .guides{display:block;}
 .sunwrap{position:absolute;inset:0;z-index:0;overflow:hidden;}
 .sunwrap .s{position:absolute;left:38%;bottom:6%;width:120%;aspect-ratio:1;border-radius:50%;
   background:radial-gradient(circle,rgba(226,98,42,.34) 0%,rgba(226,98,42,.12) 42%,rgba(226,98,42,0) 68%);}
+
+/* ---------- photo card (founder card, cinematic cards) ---------- */
+.card.photo{justify-content:flex-end;}
+.card.photo > img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  z-index:0;filter:saturate(1.05);}
+.card.photo > .scrim{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(11,9,7,.9) 0%,rgba(11,9,7,.42) 48%,rgba(11,9,7,0) 78%);}
+
+/* ---------- cinematic card — fixed 5:4, independent of the page toggle ---------- */
+.card.cine{aspect-ratio:5/4 !important;
+  width:min(100%, calc((100svh - 28px) * (5/4))) !important;}
+
+/* ---------- QR slot — same placeholder idiom as practitioner portraits ---------- */
+.qr-slot{width:112px;height:112px;border:1px solid var(--rule);background:rgba(237,232,222,.03);
+  display:flex;align-items:center;justify-content:center;margin-top:1.3em;flex:0 0 auto;}
+.qr-slot img{width:100%;height:100%;object-fit:contain;display:block;}
+.qr-slot .ph{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--quiet);text-align:center;line-height:1.7;}
+.follow-row{display:flex;align-items:flex-end;gap:18px;margin-top:1.4em;}
+.follow-row .u{font-family:var(--mono);font-size:clamp(10px,2vw,13px);letter-spacing:.06em;
+  color:var(--bone);word-break:break-all;}
+
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
 </style>
 </head>
 <body class="nomarks">
@@ -123,8 +178,24 @@ body.guides .guides{display:block;}
   <button id="bm"    aria-pressed="false">Crop marks</button>
 </div>
 
+<div class="jumpnav">
+  <button id="jn-toggle" aria-expanded="false" aria-controls="jn-list">Index</button>
+  <div class="jumplist" id="jn-list" hidden>
+    <a href="#s-arrive">Arrive</a>
+    <a href="#s-isthisyou">Is this you?</a>
+    <a href="#s-phases">The nine phases</a>
+    <a href="#s-elnino">El Niño</a>
+    <a href="#s-founder">Who's building this</a>
+    <a href="#s-numbers">The numbers</a>
+    <a href="#s-follow">Follow the season</a>
+    <a href="#s-cine">Cinematic</a>
+  </div>
+</div>
+
+<!-- ===================== ARRIVE ===================== -->
+
 <!-- 01 -->
-<div class="slide"><div class="card">
+<div class="slide" id="s-arrive"><div class="card">
   <div class="sunwrap" aria-hidden="true"><div class="s"></div></div>
   <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
   <div class="eyebrow">Winter 2027 · Bombay Beach</div>
@@ -132,17 +203,6 @@ body.guides .guides{display:block;}
     <div class="big">Wake up to</div>
     <div class="script">Infinity</div>
     <div class="small" style="margin-top:1.6em">with wifi</div>
-  </div>
-  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
-</div></div>
-
-<!-- 02 -->
-<div class="slide"><div class="card">
-  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
-  <div class="eyebrow">On the desert</div>
-  <div>
-    <div class="said">It is like standing on a new earth and learning that the new earth also has sunsets.</div>
-    <div class="attrib">Kamau Zuberi Akabueze<br>Mars '26 alum · Incubator Camp lead</div>
   </div>
   <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
 </div></div>
@@ -189,6 +249,142 @@ body.guides .guides{display:block;}
   <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
 </div></div>
 
+<!-- ===================== IS THIS YOU? ===================== -->
+
+<div class="slide" id="s-isthisyou"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Is this you?</div>
+  <div class="stack">
+    <div class="big">Half-formed is</div>
+    <div class="script" style="font-size:clamp(40px,10vw,100px)">the ideal condition</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card led">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Apply if you are building</div>
+  <ol>
+    <li><em>▸</em> a course, a curriculum, or a cohort program</li>
+    <li><em>▸</em> a facilitation practice, protocol, or ritual structure</li>
+    <li><em>▸</em> a somatic, contemplative, or breath-based methodology</li>
+    <li><em>▸</em> a coaching or mentorship architecture</li>
+    <li><em>▸</em> a platform or learning environment for inner work</li>
+  </ol>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card led">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Wait a season if</div>
+  <ol>
+    <li><em>▸</em> your program is finished and needs an audience</li>
+    <li><em>▸</em> you would rather develop your work privately</li>
+    <li><em>▸</em> three months away is out of reach this year</li>
+    <li><em>▸</em> luxuriously hot showers and full signal are required</li>
+  </ol>
+  <div class="small" style="margin-top:1.3em">Both lists are honest. Read them twice.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- ===================== THE NINE PHASES ===================== -->
+
+<div class="slide" id="s-phases"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">One continuous build</div>
+  <div class="stack">
+    <div class="big">The nine</div>
+    <div class="script" style="font-size:clamp(46px,11.5vw,116px)">phases</div>
+    <div class="small" style="margin-top:1.6em">Setting to Exploring</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Phase 1 of 9 · from acceptance</div>
+  <div class="stack"><div class="big">Setting</div></div>
+  <div class="plain" style="margin-top:.7em">The clutch is gathered. You join the panel. You meet the practitioners who become your first real readers.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Phase 2 of 9 · Sep – Nov 2026</div>
+  <div class="stack"><div class="big">Turning</div></div>
+  <div class="plain" style="margin-top:.7em">Cohort calls every two weeks. Every project gets rotated so no side sets. Turning is where we learn each other's work well enough to be useful to it.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Phase 3 of 9 · Dec 2026</div>
+  <div class="stack"><div class="big">Candling</div></div>
+  <div class="plain" style="margin-top:.7em">Each program held up to the light. What is developing, what is clear, what needs more warmth. Candling braids with the start of the build, because the first hands are already in the desert.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Phase 4 of 9 · Dec 1 – Jan 17</div>
+  <div class="stack"><div class="big">Grounding</div></div>
+  <div class="plain" style="margin-top:.7em">We build. Living pods, the communal kitchen, and the Steeping Space itself. A practitioner who lifted the room teaches differently inside it.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Phase 5 of 9 · Jan 18 – 24</div>
+  <div class="stack"><div class="big">Presenting</div></div>
+  <div class="plain" style="margin-top:.7em">Ideas Week. All of Mars presents in seven-minute talks. You meet your wider audience, your collaborators, and about four people who will change your program without meaning to.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Phase 6 of 9 · Jan 25 – Mar 15</div>
+  <div class="stack"><div class="big">Steeping</div></div>
+  <div class="plain" style="margin-top:.7em">The heart of the season. Weekly immersions, one conscious pause held daily, your program taught and tested and rebuilt in front of the people it is for.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Phase 7 of 9 · Mar 16 – 25</div>
+  <div class="stack"><div class="big">Settling</div></div>
+  <div class="plain" style="margin-top:.7em">We stop turning. Final form. Rehearsal.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Phase 8 of 9 · Mar 27 – 29</div>
+  <div class="stack"><div class="big">Hatching</div></div>
+  <div class="plain" style="margin-top:.7em">Mars Electronica. The whole college presents. Your program meets the world with a room behind it.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Phase 9 of 9 · April onward</div>
+  <div class="stack"><div class="big">Exploring</div></div>
+  <div class="plain" style="margin-top:.7em">The archive stays open. The panel keeps going. The out-build runs April 1 to May 12 for whoever stays.</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- ===================== EL NIÑO ===================== -->
+
+<div class="slide" id="s-elnino"><div class="card">
+  <div class="sunwrap" aria-hidden="true"><div class="s" style="left:20%;bottom:-6%"></div></div>
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">A very strong season, taught through</div>
+  <div class="stack">
+    <div class="big">El Niño</div>
+    <div class="small" style="margin-top:1.6em">On panel since 1525</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
 <!-- 07 -->
 <div class="slide"><div class="card">
   <div class="sunwrap" aria-hidden="true"><div class="s" style="left:20%;bottom:-6%"></div></div>
@@ -198,6 +394,96 @@ body.guides .guides{display:block;}
     <div class="said">The same system makes the mud and the flowers.</div>
     <div class="attrib">Winter 2027 · a very strong El Niño<br>Read the briefing · incubatorcamp</div>
   </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">NOAA · Climate Prediction Center</div>
+  <div class="stack">
+    <div class="big" style="font-size:clamp(38px,9.5vw,92px)">&gt; 90%</div>
+    <div class="plain" style="margin-top:.6em">Likelihood of a very strong El Niño through the 2026–27 winter. The peak lands inside our season.</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Prepare for a wet desert</div>
+  <div class="tips">
+    <div><b>Elevate everything.</b> Sleeping platforms, storage, and anything electrical sits off the ground.</div>
+    <div><b>Plan drainage in December.</b> Grade away from every structure while the ground is dry and workable.</div>
+    <div><b>Assume the playa becomes clay.</b> Wet lake bed turns slick, then sticky. Park on hard ground.</div>
+    <div><b>Waterproof storage for anything that matters.</b> Instruments, notebooks, drives, cameras.</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- ===================== WHO'S BUILDING THIS ===================== -->
+
+<div class="slide" id="s-founder"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Who's building this</div>
+  <div class="stack">
+    <div class="big">One founder.</div>
+    <div class="big">Eighty more</div>
+    <div class="script" style="font-size:clamp(38px,9.2vw,92px)">Martians beside him</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card photo">
+  <img class="bg" src="./photos/IMG_1751.JPG" alt="Kamau Zuberi Akabueze.">
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Camp lead</div>
+  <div style="margin-top:auto">
+    <div class="said" style="font-size:clamp(24px,4vw,36px)">Kamau Zuberi Akabueze</div>
+    <div class="attrib">Founder, THE ÅLïEN SCõÖL · Mars '26 alum</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- 02 -->
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">On the desert</div>
+  <div>
+    <div class="said">It is like standing on a new earth and learning that the new earth also has sunsets.</div>
+    <div class="attrib">Kamau Zuberi Akabueze<br>Mars '26 alum · Incubator Camp lead</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Martians are ::</div>
+  <div class="plain">Open. Communal. Engaged. Mentorical. Educational. Heutagogical. Proactive. Immersive. Instructive. Committed. Dynamical. Mathemagical. Alchemical. Witchtastic. Interwoven. Interspecies. Interactive. <span class="orange">AND.</span> Compassionately empathetic.</div>
+  <div class="small" style="margin-top:1.2em">The AND is essential here</div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- ===================== THE NUMBERS ===================== -->
+
+<div class="slide" id="s-numbers"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Nothing paid to a person</div>
+  <div class="stack">
+    <div class="big">Two payments.</div>
+    <div class="plain" style="margin-top:.6em">One goes to Mars College. One goes to Incubator Camp. Nothing is paid to an individual.</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">What it costs</div>
+  <div class="rows">
+    <div><span class="k">Mars College treasury</span><span class="v">$300</span></div>
+    <div><span class="k">Shelter, if no RV</span><span class="v">$500</span></div>
+    <div><span class="k">Incubator Camp dues</span><span class="v">$1,150</span></div>
+  </div>
+  <div class="small" style="margin-top:1.6em">Pooled · equal · three installments</div>
   <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
 </div></div>
 
@@ -234,6 +520,96 @@ body.guides .guides{display:block;}
   </div>
   <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
 </div></div>
+
+<!-- ===================== FOLLOW THE SEASON ===================== -->
+
+<div class="slide" id="s-follow"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">For those not coming to the desert</div>
+  <div class="stack">
+    <div class="big">Follow the</div>
+    <div class="script" style="font-size:clamp(46px,11.5vw,116px)">season</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Mars College Substack</div>
+  <div class="stack">
+    <div class="said" style="font-size:clamp(24px,4.2vw,38px)">The season, live.</div>
+    <div class="plain" style="margin-top:.6em">Audio, photography, documentary, and liveblogging — Incubator Camp as it happens, for every Martian who is not on the ground.</div>
+  </div>
+  <div class="follow-row">
+    <div class="qr-slot"><img src="./photos/qr/substack.png" alt="Scan to follow the Mars College Substack" loading="lazy" onerror="this.remove()"><div class="ph">QR<br>pending</div></div>
+    <div class="u">marscollege.substack.com</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">The Listener's Path</div>
+  <div class="stack">
+    <div class="said" style="font-size:clamp(24px,4.2vw,38px)">Kamau's own dispatch.</div>
+    <div class="plain" style="margin-top:.6em">Stories from the 2027 season, in his own hand.</div>
+  </div>
+  <div class="follow-row">
+    <div class="qr-slot"><img src="./photos/qr/tlp.png" alt="Scan to subscribe to The Listener's Path" loading="lazy" onerror="this.remove()"><div class="ph">QR<br>pending</div></div>
+    <div class="u">tlp.beehiiv.com/subscribe</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- ===================== CINEMATIC — 5:4 FOR LINKEDIN ===================== -->
+
+<div class="slide" id="s-cine"><div class="card">
+  <div class="grain" aria-hidden="true"></div><div class="guides" aria-hidden="true"><i class="t"></i><i class="b"></i><span class="t">safe</span><span class="b">safe</span></div>
+  <div class="eyebrow">Built for LinkedIn</div>
+  <div class="stack">
+    <div class="big">Cinematic</div>
+    <div class="small" style="margin-top:1.6em">5 : 4</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card cine photo">
+  <img class="bg" src="./photos/Kamau%20Zuberi%20Akabueze/KzA%2002.JPG" alt="Kamau Zuberi Akabueze in conversation on Mars.">
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="eyebrow">Incubator Camp · Winter 2027</div>
+  <div style="margin-top:auto">
+    <div class="said" style="font-size:clamp(22px,3.4vw,32px)">Nine months. One idea.</div>
+    <div class="attrib">Mars College · Bombay Beach, California</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card cine photo">
+  <img class="bg" src="./photos/IMG_1754.jpg" alt="Sunsets on Mars.">
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="eyebrow">On the desert</div>
+  <div style="margin-top:auto">
+    <div class="said" style="font-size:clamp(22px,3.4vw,32px)">The same system makes the mud and the flowers.</div>
+    <div class="attrib">Winter 2027 · a very strong El Niño</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<div class="slide"><div class="card cine photo">
+  <img class="bg" src="./photos/2026-02-MARS-0024.JPG" alt="Ceremonial walk on the Mars campus honoring the ancestors.">
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="eyebrow">Communal cooking. Communal creating.</div>
+  <div style="margin-top:auto">
+    <div class="said" style="font-size:clamp(22px,3.4vw,32px)">Community care.</div>
+    <div class="attrib">Mars College · Winter season</div>
+  </div>
+  <div class="mark"><span>Incubator Camp</span><span class="dots">∴</span><span>Mars College</span></div>
+</div></div>
+
+<!-- ===================== CLOSE ===================== -->
 
 <!-- 10 -->
 <div class="slide"><div class="card">
@@ -273,6 +649,22 @@ body.guides .guides{display:block;}
 
   /* deep link: ?r=916 */
   if (/[?&]r=916/.test(location.search)) ratio(false);
+
+  /* jump nav */
+  var jt = document.getElementById('jn-toggle'), jl = document.getElementById('jn-list');
+  jt.onclick = function(){
+    var open = jl.hasAttribute('hidden');
+    if (open){ jl.removeAttribute('hidden'); jt.setAttribute('aria-expanded','true'); }
+    else { jl.setAttribute('hidden',''); jt.setAttribute('aria-expanded','false'); }
+  };
+  jl.addEventListener('click', function(e){
+    if (e.target.tagName === 'A'){ jl.setAttribute('hidden',''); jt.setAttribute('aria-expanded','false'); }
+  });
+  document.addEventListener('click', function(e){
+    if (!jl.hasAttribute('hidden') && !e.target.closest('.jumpnav')){
+      jl.setAttribute('hidden',''); jt.setAttribute('aria-expanded','false');
+    }
+  });
 
   /* dim the controls once the deck is in use so a screengrab stays clean */
   var t; window.addEventListener('scroll', function(){

@@ -4,21 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Apply — Incubator Camp, Mars College</title>
+<script>(function(){try{if(localStorage.getItem('ic_theme')==='sunrise'){document.documentElement.setAttribute('data-theme','sunrise');}}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=IBM+Plex+Mono:wght@400;500&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ground:#0B0907;--bone:#EDE8DE;--quiet:#8A857B;--time:#E2622A;
+  --ground:#0B0907;--ground-rgb:11,9,7;--bone:#EDE8DE;--bone-rgb:237,232,222;
+  --quiet:#8A857B;--time:#E2622A;--time-rgb:226,98,42;
+  --surface:#1A1510;--shadow:rgba(0,0,0,.7);--mist:#C4BCAF;--fade:#5C584F;
   --line:rgba(237,232,222,.09);--rule:rgba(237,232,222,.16);
   --display:"Bodoni Moda",Georgia,serif;--mass:"Archivo","Helvetica Neue",Arial,sans-serif;
   --body:"Literata",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --rebate:52px;--gutter:clamp(20px,5vw,88px);
 }
+:root[data-theme="sunrise"]{
+  --ground:#F2ECE0;--ground-rgb:242,236,224;--bone:#211C15;--bone-rgb:33,28,21;
+  --quiet:#6B6459;--time:#A8431A;--time-rgb:168,67,26;
+  --surface:#FBF7ED;--shadow:rgba(33,28,21,.18);--mist:var(--quiet);--fade:#A69C8C;
+  --line:rgba(33,28,21,.07);--rule:rgba(33,28,21,.14);
+}
 *{box-sizing:border-box;}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 body{margin:0;background:var(--ground);color:var(--bone);font-family:var(--body);font-size:18px;
-  line-height:1.62;overflow-x:hidden;text-rendering:optimizeLegibility;-webkit-font-smoothing:subpixel-antialiased;}
+  line-height:1.62;letter-spacing:.012em;word-spacing:.05em;overflow-x:hidden;
+  text-rendering:optimizeLegibility;-webkit-font-smoothing:subpixel-antialiased;
+  transition:background-color .25s,color .25s;}
 /* design-integrated scrollbar — a flat rule, not a system widget */
 html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
 ::-webkit-scrollbar{width:7px;}
@@ -27,6 +38,7 @@ html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
 ::-webkit-scrollbar-thumb:hover{background:var(--time);}
 .grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.26;mix-blend-mode:soft-light;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
+:root[data-theme="sunrise"] .grain{opacity:.1;mix-blend-mode:multiply;}
 
 .rebate{position:fixed;top:0;left:0;bottom:0;width:var(--rebate);z-index:80;border-right:1px solid var(--rule);
   background:var(--ground);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 0;}
@@ -38,8 +50,14 @@ html{scrollbar-width:thin;scrollbar-color:var(--rule) transparent;}
 .frames a:hover,.frames a[aria-current="true"]{color:var(--bone);}
 .frames a[aria-current="true"]::before{content:"";position:absolute;left:-8px;top:50%;width:0;height:0;
   margin-top:-3.5px;border-left:6px solid var(--time);border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;}
+.rebate .tail{display:flex;flex-direction:column;align-items:center;gap:12px;}
 .rebate .back{font-family:var(--mono);font-size:15px;color:var(--quiet);text-decoration:none;line-height:1;}
 .rebate .back:hover{color:var(--bone);}
+.rebate .toggle{background:none;border:0;padding:3px;margin:0;cursor:pointer;color:var(--quiet);
+  display:flex;align-items:center;justify-content:center;transition:color .15s;}
+.rebate .toggle:hover{color:var(--bone);}
+.rebate .toggle[aria-pressed="true"]{color:var(--time);}
+.rebate .toggle svg{width:14px;height:14px;display:block;overflow:visible;}
 
 main{margin-left:var(--rebate);}
 section{position:relative;padding:clamp(56px,8vh,96px) var(--gutter);max-width:1080px;}
@@ -59,11 +77,11 @@ a.inline:hover{border-bottom-width:3px;}
 /* masthead */
 .mh .a{font-family:var(--mass);font-weight:900;text-transform:uppercase;font-size:clamp(24px,4.6vw,60px);
   line-height:.95;letter-spacing:-.035em;}
-.mh .b{font-family:var(--display);font-style:italic;font-weight:500;font-optical-sizing:none;
+.mh .b{font-family:var(--display);font-weight:500;font-optical-sizing:none;
   font-variation-settings:"opsz" 34,"wght" 520;font-size:clamp(66px,14vw,190px);line-height:.8;
   letter-spacing:-.028em;margin:.05em 0 0 -.04em;-webkit-text-stroke:.35px var(--bone);}
 .mh .c{font-family:var(--mono);font-weight:500;font-size:clamp(10.5px,1.2vw,15px);letter-spacing:.26em;
-  text-transform:uppercase;color:#C4BCAF;margin-top:2em;padding-top:1em;border-top:1px solid var(--rule);display:inline-block;}
+  text-transform:uppercase;color:var(--mist);margin-top:2em;padding-top:1em;border-top:1px solid var(--rule);display:inline-block;}
 
 /* form furniture */
 .q{margin:0 0 34px;max-width:64ch;}
@@ -72,11 +90,11 @@ a.inline:hover{border-bottom-width:3px;}
 .q .help{font-size:15px;color:var(--quiet);line-height:1.5;margin:0 0 12px;}
 .q .cnt{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--quiet);text-transform:uppercase;}
 input[type=text],input[type=email],textarea,select{
-  width:100%;background:rgba(237,232,222,.03);color:var(--bone);border:0;border-bottom:1px solid var(--rule);
+  width:100%;background:rgba(var(--bone-rgb),.03);color:var(--bone);border:0;border-bottom:1px solid var(--rule);
   font-family:var(--body);font-size:17px;line-height:1.5;padding:11px 12px;appearance:none;border-radius:0;}
 textarea{min-height:104px;resize:vertical;}
-input:focus,textarea:focus,select:focus{border-bottom-color:var(--time);background:rgba(237,232,222,.05);outline:none;}
-::placeholder{color:#5C584F;}
+input:focus,textarea:focus,select:focus{border-bottom-color:var(--time);background:rgba(var(--bone-rgb),.05);outline:none;}
+::placeholder{color:var(--fade);}
 fieldset{border:0;padding:0;margin:0 0 34px;max-width:64ch;}
 .opt{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:16px;}
 .opt input{margin-top:5px;accent-color:var(--time);width:15px;height:15px;flex:0 0 auto;}
@@ -109,7 +127,8 @@ fieldset{border:0;padding:0;margin:0 0 34px;max-width:64ch;}
 
 .draftbar{position:fixed;left:var(--rebate);bottom:0;z-index:65;padding:8px 16px;
   font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--quiet);
-  background:var(--ground);border-top:1px solid var(--rule);border-right:1px solid var(--rule);}
+  background:var(--surface);border-top:1px solid var(--rule);border-right:1px solid var(--rule);
+  box-shadow:0 -6px 24px var(--shadow);}
 .draftbar button{background:none;border:0;color:var(--quiet);font-family:var(--mono);font-size:10px;
   letter-spacing:.14em;text-transform:uppercase;text-decoration:underline;text-underline-offset:2px;
   cursor:pointer;padding:0;margin-left:10px;}
@@ -118,7 +137,7 @@ fieldset{border:0;padding:0;margin:0 0 34px;max-width:64ch;}
 .opt span small{display:block;color:var(--quiet);font-size:14px;line-height:1.4;}
 
 .sealed{border-left:2px solid var(--time);padding:18px 0 4px 22px;margin:34px 0;max-width:62ch;
-  background:linear-gradient(90deg,rgba(226,98,42,.05),transparent 70%);}
+  background:linear-gradient(90deg,rgba(var(--time-rgb),.05),transparent 70%);}
 .sealed .badge{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
   color:var(--time);margin-bottom:10px;}
 .note{border-left:2px solid var(--rule);padding:2px 0 2px 20px;margin:30px 0;max-width:60ch;color:var(--quiet);font-size:16px;}
@@ -138,7 +157,7 @@ fieldset{border:0;padding:0;margin:0 0 34px;max-width:64ch;}
 #status{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;
   margin-top:24px;color:var(--quiet);min-height:1.4em;}
 #status.ok{color:var(--time);}
-#status.warn{color:#C4BCAF;}
+#status.warn{color:var(--mist);}
 #out{width:100%;max-width:64ch;min-height:220px;margin-top:22px;font-family:var(--mono);font-size:12.5px;line-height:1.7;display:none;}
 #out.on{display:block;}
 .said{font-family:var(--display);font-size:clamp(20px,2.6vw,32px);line-height:1.26;max-width:22ch;margin:8px 0 0;}
@@ -153,6 +172,7 @@ footer p{font-family:var(--mono);font-size:11px;letter-spacing:.17em;color:var(-
   .frames a{font-size:10px;width:18px;}
   .mh .b{font-size:clamp(52px,16vw,112px);-webkit-text-stroke:.25px var(--bone);}
   .mh .c{letter-spacing:.16em;font-size:11px;}
+  .rebate .toggle svg{width:12px;height:12px;}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}*{transition-duration:.01ms !important;}}
 </style>
@@ -167,7 +187,20 @@ footer p{font-family:var(--mono);font-size:11px;letter-spacing:.17em;color:var(-
     <a href="#s0">0</a><a href="#s1">1</a><a href="#s2">2</a><a href="#s3">3</a>
     <a href="#s4">4</a><a href="#s5">5</a><a href="#s6">6</a><a href="#s7">7</a><a href="#s8">8</a>
   </div>
-  <a class="back" href="./index.html" aria-label="Back to Incubator Camp">∴</a>
+  <div class="tail">
+    <button class="toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to sunrise (light) mode">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <circle cx="12" cy="12" r="4.4"/>
+        <g stroke-linecap="round">
+          <line x1="12" y1="1.4" x2="12" y2="4.6"/><line x1="12" y1="19.4" x2="12" y2="22.6"/>
+          <line x1="1.4" y1="12" x2="4.6" y2="12"/><line x1="19.4" y1="12" x2="22.6" y2="12"/>
+          <line x1="4.4" y1="4.4" x2="6.6" y2="6.6"/><line x1="17.4" y1="17.4" x2="19.6" y2="19.6"/>
+          <line x1="4.4" y1="19.6" x2="6.6" y2="17.4"/><line x1="17.4" y1="6.6" x2="19.6" y2="4.4"/>
+        </g>
+      </svg>
+    </button>
+    <a class="back" href="./index.html" aria-label="Back to Incubator Camp">∴</a>
+  </div>
 </nav>
 
 <main>
@@ -461,6 +494,31 @@ footer p{font-family:var(--mono);font-size:11px;letter-spacing:.17em;color:var(-
 (function(){
   /* Paste the Apps Script Web App URL here. See apps-script/SETUP.md */
   var ENDPOINT = 'https://script.google.com/macros/s/AKfycbxjQLemFkM6Qa8aLvigBAOKGAos-CfqmJCXTW2ERBs_dh3F9--v9z-OL_IYzZQeT-X0Rg/exec';
+
+  /* --- sunrise / sunset theme toggle --- */
+  (function(){
+    var KEY = 'ic_theme';
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    function apply(theme){
+      if (theme === 'sunrise'){ root.setAttribute('data-theme','sunrise'); }
+      else { root.removeAttribute('data-theme'); }
+      if (btn){
+        btn.setAttribute('aria-pressed', theme === 'sunrise' ? 'true' : 'false');
+        btn.setAttribute('aria-label', theme === 'sunrise' ? 'Switch to sunset (dark) mode' : 'Switch to sunrise (light) mode');
+      }
+    }
+    var saved;
+    try { saved = localStorage.getItem(KEY); } catch (err) {}
+    apply(saved === 'sunrise' ? 'sunrise' : 'sunset');
+    if (btn){
+      btn.addEventListener('click', function(){
+        var next = root.getAttribute('data-theme') === 'sunrise' ? 'sunset' : 'sunrise';
+        apply(next);
+        try { localStorage.setItem(KEY, next); } catch (err) {}
+      });
+    }
+  })();
 
   var links = [].slice.call(document.querySelectorAll('.frames a'));
   var secs  = [].slice.call(document.querySelectorAll('main section'));
