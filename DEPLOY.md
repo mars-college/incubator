@@ -15,6 +15,17 @@ DNS             DigitalOcean — A record, host `incubator`, value 76.76.21.21
 Unlike the other camp subdomains this one is **not** a proxy: the files in this
 folder are the site, uploaded straight to Vercel.
 
+## After new photographs arrive
+
+Drop the originals into `photos/` and run the derivative builder before deploying —
+no page loads an original, so a new photo is invisible until this has run:
+
+```
+node tools/optimize-images.mjs
+```
+
+See `CLAUDE.md` § Photographs for what it writes and why.
+
 ## Redeploy after an edit
 
 ```

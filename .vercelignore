@@ -3,5 +3,6 @@
 .claude/
 apps-script/
 budget/
+tools/
 *.md
 .DS_Store

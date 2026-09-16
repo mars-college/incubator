@@ -263,6 +263,41 @@ the correct live files (`./apply.html`, `./index.html`).
 
 ---
 
+## Photographs — originals in, web copies out
+
+**No page on this site loads a photograph as delivered.** The originals in `photos/` come off a
+camera at full resolution — two to ten megabytes each — and the gallery alone holds sixty of
+them. Loading those directly cost a visitor about 210 MB to open `gallery.html` and 27 MB to
+read `index.html` to the bottom.
+
+`tools/optimize-images.mjs` writes three sized copies of every original, and the pages point at
+those instead:
+
+| Set | Size | Used by |
+|---|---|---|
+| `photos/web/` | max 2000px, q80 | gallery frames, `share.html` card backgrounds |
+| `photos/thumb/` | max 900px, q78 | `index.html` strips and portrait, practitioner portraits |
+| `photos/tray/` | max 200px, q70 | the gallery filmstrip |
+
+Each copy keeps the original's relative path and base name, with a `.jpg` extension —
+`photos/Kamau Zuberi Akabueze/KzA 01.PNG` becomes `photos/thumb/Kamau Zuberi Akabueze/KzA 01.jpg`.
+
+**When new photographs arrive:** drop them in `photos/` exactly as before, then run
+`node tools/optimize-images.mjs` from the repo root. The script only rebuilds what changed. The
+originals are never renamed, moved, or overwritten — they stay the archive copy, and they are
+what the script reads next time.
+
+`gallery.html` is the one place this is invisible: its `PHOTOS` array still lists originals,
+because that array is where a photo gets added and captioned. Two helpers in that page's script
+(`derivative(src, 'web')` / `derivative(src, 'tray')`) do the mapping at runtime, so adding a
+photo there needs no knowledge of any of the above — add the original, run the script.
+
+The same page also loads its frames a few ahead of the playhead rather than all at once, so
+opening the gallery fetches two photographs instead of sixty. If you ever add a new way to move
+through the deck, route it through `show()` so `claimAround()` keeps running.
+
+---
+
 ## Working on this
 
 Static files, no build step, no dependencies.

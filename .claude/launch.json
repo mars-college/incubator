@@ -4,13 +4,7 @@
     {
       "name": "mars-incubator",
       "runtimeExecutable": "python3",
-      "runtimeArgs": [
-        "-m",
-        "http.server",
-        "8000",
-        "-d",
-        "/Users/genekogan/b2-restore/Users/gene/Mars/web/incubator.mars.college"
-      ],
+      "runtimeArgs": ["-m", "http.server", "8000"],
       "port": 8000
     }
   ]

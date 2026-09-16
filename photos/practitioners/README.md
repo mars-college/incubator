@@ -7,15 +7,27 @@ practitioner's seat already expects.
 ## How it works
 
 Each seat's portrait box in `practitioners.html` holds an `<img>` pointed at a
-specific filename in this folder, plus a fallback placeholder
-(`Portrait · 4:5 · pending`, or similar) that shows instead if the file isn't
-there yet:
+specific filename, plus a fallback placeholder (`Portrait · 4:5 · pending`, or
+similar) that shows instead if the file isn't there yet:
 
 ```html
-<img src="./photos/practitioners/kza.jpg" alt="Kamau Zuberi Akabueze"
+<img src="./photos/thumb/practitioners/kza.jpg" alt="Kamau Zuberi Akabueze"
      loading="lazy" onerror="this.remove()">
 <div class="ph">Portrait<br>4:5 · pending</div>
 ```
+
+**Note the `thumb/` in that path.** The portrait a visitor downloads is a
+web-sized copy, not the photograph you drop here — a phone camera portrait runs
+several megabytes and the box displays it about 300 pixels wide. Put the
+original in *this* folder under the name the seat expects, then run
+
+```
+node tools/optimize-images.mjs
+```
+
+from the repo root, which writes `photos/thumb/practitioners/<same-name>.jpg`
+(plus `web/` and `tray/` copies) for the page to use. Originals stay here
+untouched, and re-running the script only rebuilds what changed.
 
 If the image 404s, `onerror` removes it and the placeholder shows through —
 so an empty folder never breaks the page. The moment a correctly-named file
@@ -29,9 +41,10 @@ drop that file in and his portrait goes live.
 edits that seat in `practitioners.html` picks a filename (a short slug —
 initials, or a first name, whatever reads clearly) and adds the same
 `<img ... onerror="this.remove()">` line pointed at
-`./photos/practitioners/<that-slug>.jpg`, following seat 01 as the pattern.
-The image itself can be dropped in before or after that edit — order doesn't
-matter, only that the filename matches.
+`./photos/thumb/practitioners/<that-slug>.jpg`, following seat 01 as the
+pattern. The photograph itself goes in this folder as `<that-slug>.jpg` and
+order doesn't matter — only that the name matches and the optimizer has run
+since.
 
 ## Size and shape
 

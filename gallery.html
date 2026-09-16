@@ -320,6 +320,30 @@ const XFADE_MS = 1100;     // must match the CSS .frame transition duration
   let idx = 0, playing = true, timer = null, barTimer = null;
   const frames = [];
 
+  /* The PHOTOS entries above name the ORIGINAL file, at camera resolution —
+     that stays the one place a photo is listed. The page itself never loads an
+     original: tools/optimize-images.mjs writes a web-sized copy and a filmstrip
+     copy of every photo, and these two helpers point at those. Same relative
+     path, same base name, .jpg extension. */
+  function derivative(src, set){
+    return src.replace(/^(\.\/)?photos\//, '$1photos/' + set + '/').replace(/\.[^.\/]+$/, '.jpg');
+  }
+
+  /* Loading 62 full frames up front cost ~100MB on open, for one visible photo.
+     Frames now carry their source on data-src and claim it a few ahead of the
+     playhead, so opening the gallery fetches two photos and the rest arrive as
+     the slideshow reaches them. */
+  const PRELOAD = 2;
+  function claim(n){
+    const f = frames[(n + PHOTOS.length) % PHOTOS.length];
+    if (!f) return;
+    const img = f.querySelector('img');
+    if (img && img.dataset.src){ img.src = img.dataset.src; delete img.dataset.src; }
+  }
+  function claimAround(n){
+    for (let d = -1; d <= PRELOAD; d++) claim(n + d);
+  }
+
   PHOTOS.forEach(function(p, i){
     const f = document.createElement('div');
     f.className = 'frame';
@@ -330,7 +354,8 @@ const XFADE_MS = 1100;     // must match the CSS .frame transition duration
         f.classList.add('portrait');
       }
     };
-    img.src = p.src;
+    img.decoding = 'async';
+    img.dataset.src = derivative(p.src, 'web');
     f.appendChild(img);
     wrap.appendChild(f);
     frames.push(f);
@@ -338,7 +363,8 @@ const XFADE_MS = 1100;     // must match the CSS .frame transition duration
     const th = document.createElement('button');
     th.setAttribute('aria-label', 'Go to frame ' + (i+1));
     const timg = document.createElement('img');
-    timg.src = p.src; timg.alt = '';
+    timg.src = derivative(p.src, 'tray'); timg.alt = '';
+    timg.loading = 'lazy'; timg.decoding = 'async';
     th.appendChild(timg);
     th.addEventListener('click', function(){ show(i, true); });
     tray.appendChild(th);
@@ -357,6 +383,8 @@ const XFADE_MS = 1100;     // must match the CSS .frame transition duration
     });
     const active = tray.children[idx];
     if (active) active.scrollIntoView({ block:'nearest', inline:'center', behavior:'smooth' });
+
+    claimAround(idx);
 
     const p = PHOTOS[idx];
     metaN.textContent = String(idx+1).padStart(2,'0') + ' / ' + String(PHOTOS.length).padStart(2,'0');
